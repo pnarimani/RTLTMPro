@@ -14,12 +14,13 @@ namespace RTLTMPro
         private SerializedProperty inputSourceProp;
         private SerializedProperty isInputPasingRequiredProp;
         private SerializedProperty preserveNumbersProp;
-        private SerializedProperty farsiNumbersProp;
+        private SerializedProperty farsiProp;
         private SerializedProperty preserveTashkeelProp;
+        private SerializedProperty fixTagsProp;
         private bool changed;
         private bool foldout;
         private GUIStyle fixNumberStyle;
-
+        private RTLTextMeshPro tmpro;
 
         private new void OnEnable()
         {
@@ -27,8 +28,9 @@ namespace RTLTMPro
             foldout = true;
             textProp = serializedObject.FindProperty("m_text");
             preserveNumbersProp = serializedObject.FindProperty("preserveNumbers");
-            farsiNumbersProp = serializedObject.FindProperty("farsiNumbers");
+            farsiProp = serializedObject.FindProperty("farsi");
             preserveTashkeelProp = serializedObject.FindProperty("preserveTashkeel");
+            fixTagsProp = serializedObject.FindProperty("fixTags");
             originalTextProp = serializedObject.FindProperty("originalText");
             havePropertiesChangedProp = serializedObject.FindProperty("m_havePropertiesChanged");
             inputSourceProp = serializedObject.FindProperty("m_inputSource");
@@ -38,6 +40,7 @@ namespace RTLTMPro
         public override void OnInspectorGUI()
         {
             serializedObject.Update();
+            tmpro = (RTLTextMeshPro)target;
 
             // Copy Default GUI Toggle Style
             if (fixNumberStyle == null)
@@ -52,13 +55,12 @@ namespace RTLTMPro
 
             EditorGUILayout.BeginVertical(GUI.skin.box);
             EditorGUI.BeginChangeCheck();
-           
+            farsiProp.boolValue = GUILayout.Toggle(farsiProp.boolValue, new GUIContent("Farsi"));
             preserveNumbersProp.boolValue = GUILayout.Toggle(preserveNumbersProp.boolValue, new GUIContent("Preserve Numbers"));
-            
-            if (preserveNumbersProp.boolValue == false)
-                farsiNumbersProp.boolValue = GUILayout.Toggle(farsiNumbersProp.boolValue, new GUIContent("Farsi Numbers"));
-
             preserveTashkeelProp.boolValue = GUILayout.Toggle(preserveTashkeelProp.boolValue, new GUIContent("Preserve Tashkil"));
+
+            if (tmpro.richText)
+                fixTagsProp.boolValue = GUILayout.Toggle(fixTagsProp.boolValue, new GUIContent("FixTags"));
 
             if (GUILayout.Button("Re-Fix"))
                 changed = true;
@@ -96,7 +98,7 @@ namespace RTLTMPro
 
             if (changed)
             {
-                textProp.stringValue = ((RTLTextMeshPro)target).GetFixedText(originalTextProp.stringValue);
+                textProp.stringValue = tmpro.GetFixedText(originalTextProp.stringValue);
                 havePropertiesChangedProp.boolValue = true;
                 changed = false;
                 EditorUtility.SetDirty(target);

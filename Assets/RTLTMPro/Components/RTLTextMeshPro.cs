@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using System.Linq;
+using TMPro;
 using UnityEngine;
 
 namespace RTLTMPro
@@ -17,7 +18,7 @@ namespace RTLTMPro
             }
         }
 
-        public bool PreserveNumbers
+        public virtual bool PreserveNumbers
         {
             get { return preserveNumbers; }
             set
@@ -27,49 +28,79 @@ namespace RTLTMPro
             }
         }
 
-        [SerializeField] protected bool preserveNumbers = true;
-        [SerializeField] protected bool farsiNumbers = true;
-        [SerializeField] protected bool preserveTashkeel;
-        [SerializeField] protected string originalText;
-
-        public string GetFixedText(string input)
+        public bool Farsi
         {
-            if (string.IsNullOrEmpty(input))
-                return input;
-
-            input = input.Replace('ی', 'ي');
-            input = input.FixRTL(preserveNumbers, farsiNumbers, preserveTashkeel);
-            input = ReverseText(input);
-            isRightToLeftText = true;
-            input = input.Replace('ي', 'ى');
-            input = input.Replace('ﻲ', 'ﻰ');
-            return input;
+            get { return farsi; }
+            set
+            {
+                farsi = value;
+                havePropertiesChanged = true;
+            }
         }
 
-        private void Update()
+        public bool PreserveTashkeel
+        {
+            get { return preserveTashkeel; }
+            set
+            {
+                preserveTashkeel = value;
+                havePropertiesChanged = true;
+            }
+        }
+
+        public bool FixTags
+        {
+            get { return fixTags; }
+            set
+            {
+                fixTags = value;
+                havePropertiesChanged = true;
+            }
+        }
+
+        [SerializeField] protected bool preserveNumbers;
+        [SerializeField] protected bool farsi = true;
+        [SerializeField] protected bool preserveTashkeel;
+        [SerializeField] protected string originalText;
+        [SerializeField] protected bool fixTags;
+
+        protected RTLSupport support;
+
+        protected override void OnEnable()
+        {
+            base.OnEnable();
+
+            support = new RTLSupport();
+            UpdateSupport();
+        }
+
+        protected virtual void Update()
         {
             if (havePropertiesChanged)
             {
+                UpdateSupport();
                 base.text = GetFixedText(originalText);
             }
         }
 
-        private static string ReverseText(string source)
+        protected virtual void UpdateSupport()
         {
-            char[] split = { '\n' };
-            string[] paragraphs = source.Split(split);
-            string result = "";
-            foreach (string paragraph in paragraphs)
-            {
-                char[] output = new char[paragraph.Length];
-                for (int i = 0; i < paragraph.Length; i++)
-                {
-                    output[(output.Length - 1) - i] = paragraph[i];
-                }
-                result += new string(output);
-                result += "\n";
-            }
-            return result;
+            support.Farsi = farsi;
+            support.PreserveNumbers = preserveNumbers;
+            support.PreserveTashkeel = preserveTashkeel;
+            support.FixTags = fixTags;
+        }
+
+        public virtual string GetFixedText(string input)
+        {
+            if (string.IsNullOrEmpty(input))
+                return input;
+
+            input = support.FixRTL(input);
+            input = input.Reverse().ToArray().ArrayToString();
+            isRightToLeftText = true;
+            
+            return input;
         }
     }
 }
