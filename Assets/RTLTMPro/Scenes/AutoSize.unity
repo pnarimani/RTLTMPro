@@ -225,7 +225,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -200, y: -200}
+  m_SizeDelta: {x: -200, y: -636.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &645895903
 MonoBehaviour:
@@ -303,11 +303,11 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 60
-  m_fontSizeBase: 60
+  m_fontSize: 47.65
+  m_fontSizeBase: 66.4
   m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 21.2
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 8.9
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_textAlignment: 514
@@ -348,7 +348,7 @@ MonoBehaviour:
     spaceCount: 114
     wordCount: 115
     linkCount: 0
-    lineCount: 9
+    lineCount: 7
     pageCount: 1
     materialCount: 2
   m_havePropertiesChanged: 0
@@ -356,7 +356,7 @@ MonoBehaviour:
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
   m_isInputParsingRequired: 0
-  m_inputSource: 3
+  m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
   - {fileID: 0}
@@ -403,7 +403,6 @@ MonoBehaviour:
     \xAD\u0627\u06CC \u0631\u0627 \u062A\u0648\u0627\u0646 \u062F\u06CC\u062F\u0627\u0631
     \u0627\u0648 \u0646\u06CC\u0633\u062A."
   fixTags: 0
-  preserveSymbols: 0
 --- !u!222 &645895904
 CanvasRenderer:
   m_ObjectHideFlags: 0
