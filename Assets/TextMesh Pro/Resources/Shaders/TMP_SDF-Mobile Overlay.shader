@@ -211,12 +211,12 @@ SubShader {
 			c *= m.x * m.y;
 		#endif
 
-		#if UNITY_UI_ALPHACLIP
-			clip(c.a - 0.001);
-		#endif
-
 		#if (UNDERLAY_ON | UNDERLAY_INNER)
 			c *= input.texcoord1.z;
+		#endif
+
+    #if UNITY_UI_ALPHACLIP
+			clip(c.a - 0.001);
 		#endif
 
 			return c;

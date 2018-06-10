@@ -58,8 +58,8 @@ MonoBehaviour:
     yOffset: 115.6
     xAdvance: 128
     scale: 1
-    name: 1f60a
-    hashCode: 57188336
+    name: Smiling face with smiling eyes
+    hashCode: -1318250903
     unicode: 128522
     pivot: {x: 0.5, y: 0.5}
     sprite: {fileID: 0}
@@ -114,8 +114,8 @@ MonoBehaviour:
     yOffset: 115.6
     xAdvance: 128
     scale: 1
-    name: 1f600
-    hashCode: 57188257
+    name: Grinning face
+    hashCode: -95541379
     unicode: 128512
     pivot: {x: 0.5, y: 0.5}
     sprite: {fileID: 0}
@@ -142,8 +142,8 @@ MonoBehaviour:
     yOffset: 115.6
     xAdvance: 128
     scale: 1
-    name: 1f602
-    hashCode: 57188259
+    name: Face with tears of joy
+    hashCode: 239522663
     unicode: 128514
     pivot: {x: 0.5, y: 0.5}
     sprite: {fileID: 0}
