@@ -15,6 +15,7 @@ namespace RTLTMPro
         private SerializedProperty isInputPasingRequiredProp;
         private SerializedProperty preserveNumbersProp;
         private SerializedProperty preserveTashkil;
+        private SerializedProperty autofixMultiline;
         private bool changed;
         private bool foldout;
         private GUIStyle fixNumberStyle;
@@ -27,6 +28,7 @@ namespace RTLTMPro
             textProp = serializedObject.FindProperty("m_text");
             preserveNumbersProp = serializedObject.FindProperty("preserveNumbers");
             preserveTashkil = serializedObject.FindProperty("preserveTashkil");
+            autofixMultiline = serializedObject.FindProperty("autofixMultiline");
             originalTextProp = serializedObject.FindProperty("originalText");
             havePropertiesChangedProp = serializedObject.FindProperty("m_havePropertiesChanged");
             inputSourceProp = serializedObject.FindProperty("m_inputSource");
@@ -58,6 +60,7 @@ namespace RTLTMPro
             EditorGUI.BeginChangeCheck();
             preserveNumbersProp.boolValue = GUILayout.Toggle(preserveNumbersProp.boolValue, new GUIContent("Preserve Numbers"));
             preserveTashkil.boolValue = GUILayout.Toggle(preserveTashkil.boolValue, new GUIContent("Preserve Tashkil"));
+            autofixMultiline.boolValue = GUILayout.Toggle(autofixMultiline.boolValue, new GUIContent("AutoFix Multiline"));
             EditorGUILayout.EndVertical();
 
             if (EditorGUI.EndChangeCheck())
