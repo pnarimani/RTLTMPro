@@ -13,7 +13,7 @@ namespace RTLTMPro
         private SerializedProperty havePropertiesChangedProp;
         private SerializedProperty inputSourceProp;
         private SerializedProperty isInputPasingRequiredProp;
-        private SerializedProperty fixNumbersProp;
+        private SerializedProperty preserveNumbersProp;
         private SerializedProperty preserveTashkil;
         private bool changed;
         private bool foldout;
@@ -25,7 +25,7 @@ namespace RTLTMPro
             base.OnEnable();
             foldout = true;
             textProp = serializedObject.FindProperty("m_text");
-            fixNumbersProp = serializedObject.FindProperty("fixNumbers");
+            preserveNumbersProp = serializedObject.FindProperty("preserveNumbers");
             preserveTashkil = serializedObject.FindProperty("preserveTashkil");
             originalTextProp = serializedObject.FindProperty("originalText");
             havePropertiesChangedProp = serializedObject.FindProperty("m_havePropertiesChanged");
@@ -56,7 +56,7 @@ namespace RTLTMPro
 
             EditorGUILayout.BeginVertical(GUI.skin.box);
             EditorGUI.BeginChangeCheck();
-            fixNumbersProp.boolValue = GUILayout.Toggle(fixNumbersProp.boolValue, new GUIContent("Fix Numbers"));
+            preserveNumbersProp.boolValue = GUILayout.Toggle(preserveNumbersProp.boolValue, new GUIContent("Preserve Numbers"));
             preserveTashkil.boolValue = GUILayout.Toggle(preserveTashkil.boolValue, new GUIContent("Preserve Tashkil"));
             EditorGUILayout.EndVertical();
 
@@ -72,9 +72,6 @@ namespace RTLTMPro
             if (GUI.Button(new Rect(rect.x, rect.y, rect.width - 150, rect.height), GUIContent.none, GUI.skin.label))
                 foldout = !foldout;
 
-            GUI.Label(new Rect(rect.width - 125, rect.y + 4, 125, 24), "<i>Fix Numbers</i>", fixNumberStyle);
-            fixNumbersProp.boolValue = EditorGUI.Toggle(new Rect(rect.width - 10, rect.y + 3, 20, 24), GUIContent.none, fixNumbersProp.boolValue);
-
             if (foldout)
             {
                 EditorGUI.BeginChangeCheck();
@@ -87,6 +84,8 @@ namespace RTLTMPro
                     changed = true;
                 }
             }
+
+            serializedObject.ApplyModifiedProperties();
 
             if (changed)
             {

@@ -22,22 +22,22 @@ namespace RTLTMPro
             }
         }
 
-        public bool FixNumbers
+        public bool PreserveNumbers
         {
-            get { return fixNumbers; }
-            set { fixNumbers = value; }
+            get { return preserveNumbers; }
+            set { preserveNumbers = value; }
         }
 
         public string GetFixedText(string input)
         {
             input = input.Replace('ی', 'ي');
-            input = RTLSupport.Fix(input, preserveTashkil, fixNumbers);
+            input = RTLSupport.Fix(input, preserveTashkil, !preserveNumbers);
             input = input.Replace('ي', 'ى');
             input = input.Replace('ﻲ', 'ﻰ');
             return input;
         }
 
-        [SerializeField] protected bool fixNumbers;
+        [SerializeField] protected bool preserveNumbers = true;
         [SerializeField] protected bool preserveTashkil;
         [SerializeField] protected string originalText;
     }

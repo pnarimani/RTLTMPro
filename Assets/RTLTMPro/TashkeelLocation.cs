@@ -1,10 +1,14 @@
-internal class TashkeelLocation
+namespace RTLTMPro
 {
-    public char tashkeel;
-    public int position;
-    public TashkeelLocation(char tashkeel, int position)
+    public class TashkeelLocation
     {
-        this.tashkeel = tashkeel;
-        this.position = position;
+        public char Tashkeel { get; set; }
+        public int Position { get; set; }
+
+        public TashkeelLocation(char tashkeel, int position)
+        {
+            Tashkeel = tashkeel;
+            Position = position;
+        }
     }
 }
