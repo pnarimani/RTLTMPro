@@ -7,12 +7,12 @@ namespace RTLTMPro
     public class RTLTextMeshPro : TextMeshProUGUI
     {
         // ReSharper disable once InconsistentNaming
-        public new string text
+        public override string text
         {
-            get { return GetFixedText(originalText); }
+            get { return base.text; }
             set
             {
-                base.text = value;
+                originalText = value;
                 havePropertiesChanged = true;
             }
         }
@@ -27,25 +27,22 @@ namespace RTLTMPro
             }
         }
 
-        protected bool AutofixMultiline
-        {
-            get { return autofixMultiline; }
-            set
-            {
-                autofixMultiline = value;
-                havePropertiesChanged = true;
-            }
-        }
+        [SerializeField] protected bool preserveNumbers = true;
+        [SerializeField] protected bool farsiNumbers = true;
+        [SerializeField] protected bool preserveTashkeel;
+        [SerializeField] protected string originalText;
 
         public string GetFixedText(string input)
         {
+            if (string.IsNullOrEmpty(input))
+                return input;
+
             input = input.Replace('ی', 'ي');
-            input = autofixMultiline
-                ? input.FixRTL(this, preserveTashkil, preserveNumbers)
-                : input.FixRTL(preserveNumbers, preserveTashkil);
+            input = input.FixRTL(preserveNumbers, farsiNumbers, preserveTashkeel);
+            input = ReverseText(input);
+            isRightToLeftText = true;
             input = input.Replace('ي', 'ى');
             input = input.Replace('ﻲ', 'ﻰ');
-            
             return input;
         }
 
@@ -57,9 +54,22 @@ namespace RTLTMPro
             }
         }
 
-        [SerializeField] protected bool preserveNumbers = true;
-        [SerializeField] protected bool autofixMultiline = true;
-        [SerializeField] protected bool preserveTashkil;
-        [SerializeField] protected string originalText;
+        private static string ReverseText(string source)
+        {
+            char[] split = { '\n' };
+            string[] paragraphs = source.Split(split);
+            string result = "";
+            foreach (string paragraph in paragraphs)
+            {
+                char[] output = new char[paragraph.Length];
+                for (int i = 0; i < paragraph.Length; i++)
+                {
+                    output[(output.Length - 1) - i] = paragraph[i];
+                }
+                result += new string(output);
+                result += "\n";
+            }
+            return result;
+        }
     }
 }

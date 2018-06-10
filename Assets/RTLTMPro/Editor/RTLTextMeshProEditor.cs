@@ -14,8 +14,8 @@ namespace RTLTMPro
         private SerializedProperty inputSourceProp;
         private SerializedProperty isInputPasingRequiredProp;
         private SerializedProperty preserveNumbersProp;
-        private SerializedProperty preserveTashkil;
-        private SerializedProperty autofixMultiline;
+        private SerializedProperty farsiNumbersProp;
+        private SerializedProperty preserveTashkeelProp;
         private bool changed;
         private bool foldout;
         private GUIStyle fixNumberStyle;
@@ -27,18 +27,12 @@ namespace RTLTMPro
             foldout = true;
             textProp = serializedObject.FindProperty("m_text");
             preserveNumbersProp = serializedObject.FindProperty("preserveNumbers");
-            preserveTashkil = serializedObject.FindProperty("preserveTashkil");
-            autofixMultiline = serializedObject.FindProperty("autofixMultiline");
+            farsiNumbersProp = serializedObject.FindProperty("farsiNumbers");
+            preserveTashkeelProp = serializedObject.FindProperty("preserveTashkeel");
             originalTextProp = serializedObject.FindProperty("originalText");
             havePropertiesChangedProp = serializedObject.FindProperty("m_havePropertiesChanged");
             inputSourceProp = serializedObject.FindProperty("m_inputSource");
             isInputPasingRequiredProp = serializedObject.FindProperty("m_isInputParsingRequired");
-
-            // Collapse the normal normal input field from parent
-            // Commented out because we it collapses everything globaly
-            //var nestedFoldout = typeof(TMP_UiEditorPanel).GetNestedType("m_foldout", BindingFlags.Static | BindingFlags.NonPublic);
-            //var textInputField = nestedFoldout.GetField("textInput");
-            //textInputField.SetValue(null, false);
         }
 
         public override void OnInspectorGUI()
@@ -58,15 +52,25 @@ namespace RTLTMPro
 
             EditorGUILayout.BeginVertical(GUI.skin.box);
             EditorGUI.BeginChangeCheck();
+           
             preserveNumbersProp.boolValue = GUILayout.Toggle(preserveNumbersProp.boolValue, new GUIContent("Preserve Numbers"));
-            preserveTashkil.boolValue = GUILayout.Toggle(preserveTashkil.boolValue, new GUIContent("Preserve Tashkil"));
-            autofixMultiline.boolValue = GUILayout.Toggle(autofixMultiline.boolValue, new GUIContent("AutoFix Multiline"));
+            
+            if (preserveNumbersProp.boolValue == false)
+                farsiNumbersProp.boolValue = GUILayout.Toggle(farsiNumbersProp.boolValue, new GUIContent("Farsi Numbers"));
+
+            preserveTashkeelProp.boolValue = GUILayout.Toggle(preserveTashkeelProp.boolValue, new GUIContent("Preserve Tashkil"));
+
+            if (GUILayout.Button("Re-Fix"))
+                changed = true;
+
             EditorGUILayout.EndVertical();
 
             if (EditorGUI.EndChangeCheck())
             {
                 changed = true;
             }
+
+
 
             Rect rect = EditorGUILayout.GetControlRect(false, 25);
             rect.y += 2;

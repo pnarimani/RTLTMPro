@@ -1,17 +1,15 @@
 ﻿/*
- * This file originally created by: Abdulla Konash. Twitter: @konash
- * Original file can be found here: https://github.com/Konash/arabic-support-unity
+ * This plugin is made possible by Arabic Support plugin created by: Abdulla Konash. Twitter: @konash
+ * Original Arabic Support can be found here: https://github.com/Konash/arabic-support-unity
  */
 
-using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace RTLTMPro
 {
     public static class RTLSupport
     {
-        public static string FixRTL(this string input, bool preserveNumbers = true, bool preserveTashkeel = false)
+        public static string FixRTL(this string input, bool preserveNumbers = true, bool farsiNumbers = true, bool preserveTashkeel = false)
         {
             var tashkeelLocation = new List<TashkeelLocation>();
             string originString = RemoveTashkeel(input, tashkeelLocation);
@@ -22,84 +20,40 @@ namespace RTLTMPro
 
             for (int i = 0; i < lettersOrigin.Length; i++)
             {
-                lettersOrigin[i] = (char)GlyphTable.Convert(lettersOrigin[i]);
+                lettersOrigin[i] = (char) GlyphTable.Convert(lettersOrigin[i]);
             }
 
             for (int i = 0; i < lettersOrigin.Length; i++)
             {
-                bool skip = false;
+                bool skipNext = false;
 
                 // For special Lam Letter connections.
-                if (lettersOrigin[i] == (char)IsolatedLetters.Lam)
+                if (lettersOrigin[i] == (char) IsolatedLetters.Lam)
                 {
                     if (i < lettersOrigin.Length - 1)
                     {
-                        //lettersOrigin[i + 1] = (char)GlyphTable.ArabicMapper.Convert(lettersOrigin[i + 1]);
-                        if (lettersOrigin[i + 1] == (char)IsolatedLetters.AlefMaksoor)
-                        {
-                            lettersOrigin[i] = (char)0xFEF7;
-                            lettersFinal[i + 1] = (char)0xFFFF;
-                            skip = true;
-                        }
-                        else if (lettersOrigin[i + 1] == (char)IsolatedLetters.Alef)
-                        {
-                            lettersOrigin[i] = (char)0xFEF9;
-                            lettersFinal[i + 1] = (char)0xFFFF;
-                            skip = true;
-                        }
-                        else if (lettersOrigin[i + 1] == (char)IsolatedLetters.AlefHamza)
-                        {
-                            lettersOrigin[i] = (char)0xFEF5;
-                            lettersFinal[i + 1] = (char)0xFFFF;
-                            skip = true;
-                        }
-                        else if (lettersOrigin[i + 1] == (char)IsolatedLetters.AlefMad)
-                        {
-                            lettersOrigin[i] = (char)0xFEF3;
-                            lettersFinal[i + 1] = (char)0xFFFF;
-                            skip = true;
-                        }
+                        skipNext = HandleSpecialLam(lettersOrigin, lettersFinal, i);
                     }
                 }
 
-
-                if (!IsIgnoredCharacter(lettersOrigin[i]))
+                if (IsRTLCharacter(lettersOrigin[i]))
                 {
                     if (IsMiddleLetter(lettersOrigin, i))
-                        lettersFinal[i] = (char)(lettersOrigin[i] + 3);
+                        lettersFinal[i] = (char) (lettersOrigin[i] + 3);
                     else if (IsFinishingLetter(lettersOrigin, i))
-                        lettersFinal[i] = (char)(lettersOrigin[i] + 1);
+                        lettersFinal[i] = (char) (lettersOrigin[i] + 1);
                     else if (IsLeadingLetter(lettersOrigin, i))
-                        lettersFinal[i] = (char)(lettersOrigin[i] + 2);
+                        lettersFinal[i] = (char) (lettersOrigin[i] + 2);
                 }
 
-                if (skip)
+                if (skipNext)
                     i++;
 
 
                 //chaning numbers to hindu
                 if (!preserveNumbers)
                 {
-                    if (lettersOrigin[i] == (char)0x0030)
-                        lettersFinal[i] = (char)0x0660;
-                    else if (lettersOrigin[i] == (char)0x0031)
-                        lettersFinal[i] = (char)0x0661;
-                    else if (lettersOrigin[i] == (char)0x0032)
-                        lettersFinal[i] = (char)0x0662;
-                    else if (lettersOrigin[i] == (char)0x0033)
-                        lettersFinal[i] = (char)0x0663;
-                    else if (lettersOrigin[i] == (char)0x0034)
-                        lettersFinal[i] = (char)0x0664;
-                    else if (lettersOrigin[i] == (char)0x0035)
-                        lettersFinal[i] = (char)0x0665;
-                    else if (lettersOrigin[i] == (char)0x0036)
-                        lettersFinal[i] = (char)0x0666;
-                    else if (lettersOrigin[i] == (char)0x0037)
-                        lettersFinal[i] = (char)0x0667;
-                    else if (lettersOrigin[i] == (char)0x0038)
-                        lettersFinal[i] = (char)0x0668;
-                    else if (lettersOrigin[i] == (char)0x0039)
-                        lettersFinal[i] = (char)0x0669;
+                    FixNumbers(lettersOrigin, lettersFinal, i, farsiNumbers);
                 }
             }
 
@@ -115,7 +69,9 @@ namespace RTLTMPro
 
             for (int i = lettersFinal.Length - 1; i >= 0; i--)
             {
-                if (char.IsPunctuation(lettersFinal[i]) && i > 0 && i < lettersFinal.Length - 1 &&
+                if (char.IsPunctuation(lettersFinal[i]) &&
+                    i > 0 &&
+                    i < lettersFinal.Length - 1 &&
                     (char.IsPunctuation(lettersFinal[i - 1]) || char.IsPunctuation(lettersFinal[i + 1])))
                 {
                     if (lettersFinal[i] == '(')
@@ -134,7 +90,9 @@ namespace RTLTMPro
                         list.Add(lettersFinal[i]);
                 }
                 // For cases where english words and arabic are mixed. This allows for using arabic, english and numbers in one sentence.
-                else if (lettersFinal[i] == ' ' && i > 0 && i < lettersFinal.Length - 1 &&
+                else if (lettersFinal[i] == ' ' &&
+                         i > 0 &&
+                         i < lettersFinal.Length - 1 &&
                          (char.IsLower(lettersFinal[i - 1]) || char.IsUpper(lettersFinal[i - 1]) || char.IsNumber(lettersFinal[i - 1])) &&
                          (char.IsLower(lettersFinal[i + 1]) || char.IsUpper(lettersFinal[i + 1]) || char.IsNumber(lettersFinal[i + 1])))
 
@@ -142,8 +100,10 @@ namespace RTLTMPro
                     numberList.Add(lettersFinal[i]);
                 }
 
-                else if (char.IsNumber(lettersFinal[i]) || char.IsLower(lettersFinal[i]) ||
-                         char.IsUpper(lettersFinal[i]) || char.IsSymbol(lettersFinal[i]) ||
+                else if (char.IsNumber(lettersFinal[i]) ||
+                         char.IsLower(lettersFinal[i]) ||
+                         char.IsUpper(lettersFinal[i]) ||
+                         char.IsSymbol(lettersFinal[i]) ||
                          char.IsPunctuation(lettersFinal[i]))
                 {
                     if (lettersFinal[i] == '(')
@@ -161,8 +121,8 @@ namespace RTLTMPro
                     else
                         numberList.Add(lettersFinal[i]);
                 }
-                else if (lettersFinal[i] >= (char)0xD800 && lettersFinal[i] <= (char)0xDBFF ||
-                         lettersFinal[i] >= (char)0xDC00 && lettersFinal[i] <= (char)0xDFFF)
+                else if (lettersFinal[i] >= (char) 0xD800 && lettersFinal[i] <= (char) 0xDBFF ||
+                         lettersFinal[i] >= (char) 0xDC00 && lettersFinal[i] <= (char) 0xDFFF)
                 {
                     numberList.Add(lettersFinal[i]);
                 }
@@ -197,39 +157,60 @@ namespace RTLTMPro
             return input;
         }
 
-        public static string FixRTL(this string input, RTLTextMeshPro text, bool preserveNumbers = true, bool preserveTashkeel = false)
+        private static bool HandleSpecialLam(IList<char> lettersOrigin, IList<char> lettersFinal, int i)
         {
-            // Populate base text in rect transform and calculate number of lines.
-            if (!text.isActiveAndEnabled) return input;
+            bool skip = false;
 
-            if (string.IsNullOrEmpty(input))
-                return input;
-
-            var finalText = string.Empty;
-            var lineEndings = new[] { '\n' };
-            foreach (var lines in input.Split(lineEndings))
+            if (lettersOrigin[i + 1] == (char) IsolatedLetters.AlefMaksoor)
             {
-                var allWords = lines.Split(' ');
-                var currentLine = allWords[0].FixRTL(preserveNumbers, preserveTashkeel); // Fix line does character substitution. It doesn't work for multiline
-                for (var index = 1; index < allWords.Length; ++index)
-                {
-                    var previousPreferredHeight = text.preferredHeight;
-                    var checkLine = allWords[index].FixRTL(preserveNumbers, preserveTashkeel) + " " + currentLine;
-                    text.text = checkLine;
-                    text.Rebuild(0);
-                    if ((double)text.preferredHeight > previousPreferredHeight)
-                    {
-                        finalText = finalText + currentLine + "\n";
-                        currentLine = allWords[index].FixRTL(preserveNumbers, preserveTashkeel);
-                    }
-                    else
-                        currentLine = allWords[index].FixRTL(preserveNumbers, preserveTashkeel) + " " + currentLine;
-                }
-
-                finalText = finalText + currentLine + "\n";
+                lettersOrigin[i] = (char) 0xFEF7;
+                lettersFinal[i + 1] = (char) 0xFFFF;
+                skip = true;
+            }
+            else if (lettersOrigin[i + 1] == (char) IsolatedLetters.Alef)
+            {
+                lettersOrigin[i] = (char) 0xFEF9;
+                lettersFinal[i + 1] = (char) 0xFFFF;
+                skip = true;
+            }
+            else if (lettersOrigin[i + 1] == (char) IsolatedLetters.AlefHamza)
+            {
+                lettersOrigin[i] = (char) 0xFEF5;
+                lettersFinal[i + 1] = (char) 0xFFFF;
+                skip = true;
+            }
+            else if (lettersOrigin[i + 1] == (char) IsolatedLetters.AlefMad)
+            {
+                lettersOrigin[i] = (char) 0xFEF3;
+                lettersFinal[i + 1] = (char) 0xFFFF;
+                skip = true;
             }
 
-            return finalText.Remove(finalText.Length - 1);
+            return skip;
+        }
+
+        private static void FixNumbers(IList<char> lettersOrigin, IList<char> lettersFinal, int i, bool farsiNumbers)
+        {
+            if (lettersOrigin[i] == (char) 0x0030)
+                lettersFinal[i] = farsiNumbers ? (char) FarsiNumbers.Zero : (char) HinduNumbers.Zero;
+            else if (lettersOrigin[i] == (char) 0x0031)
+                lettersFinal[i] = farsiNumbers ? (char) FarsiNumbers.One : (char) HinduNumbers.One;
+            else if (lettersOrigin[i] == (char) 0x0032)
+                lettersFinal[i] = farsiNumbers ? (char) FarsiNumbers.Two : (char) HinduNumbers.Two;
+            else if (lettersOrigin[i] == (char) 0x0033)
+                lettersFinal[i] = farsiNumbers ? (char) FarsiNumbers.Three : (char) HinduNumbers.Three;
+            else if (lettersOrigin[i] == (char) 0x0034)
+                lettersFinal[i] = farsiNumbers ? (char) FarsiNumbers.Four : (char) HinduNumbers.Four;
+            else if (lettersOrigin[i] == (char) 0x0035)
+                lettersFinal[i] = farsiNumbers ? (char) FarsiNumbers.Five : (char) HinduNumbers.Five;
+            else if (lettersOrigin[i] == (char) 0x0036)
+                lettersFinal[i] = farsiNumbers ? (char) FarsiNumbers.Six : (char) HinduNumbers.Six;
+            else if (lettersOrigin[i] == (char) 0x0037)
+                lettersFinal[i] = farsiNumbers ? (char) FarsiNumbers.Seven : (char) HinduNumbers.Seven;
+            else if (lettersOrigin[i] == (char) 0x0038)
+                lettersFinal[i] = farsiNumbers ? (char) FarsiNumbers.Eight : (char) HinduNumbers.Eight;
+            else if (lettersOrigin[i] == (char) 0x0039)
+                lettersFinal[i] = farsiNumbers ? (char) FarsiNumbers.Nine : (char) HinduNumbers.Nine;
         }
 
         private static string RemoveTashkeel(string str, ICollection<TashkeelLocation> tashkeelLocation)
@@ -238,51 +219,51 @@ namespace RTLTMPro
 
             for (int i = 0; i < letters.Length; i++)
             {
-                if (letters[i] == (char)0x064B)
+                if (letters[i] == (char) 0x064B)
                 {
                     // Tanween Fatha
-                    tashkeelLocation.Add(new TashkeelLocation((char)0x064B, i));
+                    tashkeelLocation.Add(new TashkeelLocation((char) 0x064B, i));
                 }
-                else if (letters[i] == (char)0x064C)
+                else if (letters[i] == (char) 0x064C)
                 {
                     // Tanween Damma
-                    tashkeelLocation.Add(new TashkeelLocation((char)0x064C, i));
+                    tashkeelLocation.Add(new TashkeelLocation((char) 0x064C, i));
                 }
-                else if (letters[i] == (char)0x064D)
+                else if (letters[i] == (char) 0x064D)
                 {
                     // Tanween Kasra
-                    tashkeelLocation.Add(new TashkeelLocation((char)0x064D, i));
+                    tashkeelLocation.Add(new TashkeelLocation((char) 0x064D, i));
                 }
-                else if (letters[i] == (char)0x064E)
+                else if (letters[i] == (char) 0x064E)
                 {
-                    tashkeelLocation.Add(new TashkeelLocation((char)0x064E, i));
+                    tashkeelLocation.Add(new TashkeelLocation((char) 0x064E, i));
                 }
-                else if (letters[i] == (char)0x064F)
+                else if (letters[i] == (char) 0x064F)
                 {
-                    tashkeelLocation.Add(new TashkeelLocation((char)0x064F, i));
+                    tashkeelLocation.Add(new TashkeelLocation((char) 0x064F, i));
                 }
-                else if (letters[i] == (char)0x0650)
+                else if (letters[i] == (char) 0x0650)
                 {
-                    tashkeelLocation.Add(new TashkeelLocation((char)0x0650, i));
+                    tashkeelLocation.Add(new TashkeelLocation((char) 0x0650, i));
                 }
-                else if (letters[i] == (char)0x0651)
+                else if (letters[i] == (char) 0x0651)
                 {
-                    tashkeelLocation.Add(new TashkeelLocation((char)0x0651, i));
+                    tashkeelLocation.Add(new TashkeelLocation((char) 0x0651, i));
                 }
-                else if (letters[i] == (char)0x0652)
+                else if (letters[i] == (char) 0x0652)
                 {
                     // SUKUN
-                    tashkeelLocation.Add(new TashkeelLocation((char)0x0652, i));
+                    tashkeelLocation.Add(new TashkeelLocation((char) 0x0652, i));
                 }
-                else if (letters[i] == (char)0x0653)
+                else if (letters[i] == (char) 0x0653)
                 {
                     // MADDAH ABOVE
-                    tashkeelLocation.Add(new TashkeelLocation((char)0x0653, i));
+                    tashkeelLocation.Add(new TashkeelLocation((char) 0x0653, i));
                 }
             }
 
-            string[] split = str.Split((char)0x064B, (char)0x064C, (char)0x064D, (char)0x064E, (char)0x064F, (char)0x0650, (char)0x0651, (char)0x0652, (char)0x0653, (char)0xFC60,
-                (char)0xFC61, (char)0xFC62);
+            string[] split = str.Split((char) 0x064B, (char) 0x064C, (char) 0x064D, (char) 0x064E, (char) 0x064F, (char) 0x0650, (char) 0x0651, (char) 0x0652, (char) 0x0653, (char) 0xFC60,
+                (char) 0xFC61, (char) 0xFC62);
             str = "";
 
             foreach (string s in split)
@@ -314,152 +295,137 @@ namespace RTLTMPro
 
             return lettersWithTashkeel;
         }
-
-        /// <summary>
-        ///     English letters, numbers and punctuation characters are ignored. This checks if the ch is an ignored character.
-        /// </summary>
-        /// <param name="ch">The character to be checked for skipping</param>
-        /// <returns>True if the character should be ignored, false if it should not be ignored.</returns>
-        private static bool IsIgnoredCharacter(char ch)
+        
+        private static bool IsRTLCharacter(char ch)
         {
-            bool isPunctuation = char.IsPunctuation(ch);
-            bool isNumber = char.IsNumber(ch);
-            bool isLower = char.IsLower(ch);
-            bool isUpper = char.IsUpper(ch);
-            bool isSymbol = char.IsSymbol(ch);
-            bool isPersianCharacter = ch == (char)0xFB56 || ch == (char)0xFB7A || ch == (char)0xFB8A || ch == (char)0xFB92 || ch == (char)0xFB8E;
-            bool isPresentationFormB = ch <= (char)0xFEFF && ch >= (char)0xFE70;
-            bool isAcceptableCharacter = isPresentationFormB || isPersianCharacter || ch == (char)0xFBFC;
+            // If it's not letter, it's not RTL letter
+            if (char.IsLetter(ch) == false)
+                return false;
 
+            // Skip English letters
+            if (char.IsUpper(ch) || char.IsLower(ch))
+                return false;
 
-            return isPunctuation ||
-                   isNumber ||
-                   isLower ||
-                   isUpper ||
-                   isSymbol ||
-                   !isAcceptableCharacter ||
-                   ch == 'a' || ch == '>' || ch == '<' || ch == (char)0x061B;
+            return true;
         }
 
         /// <summary>
-        ///     Checks if the letter at index value is a leading character in Arabic or not.
+        ///     Checks if the letter at index value is a leading character or not.
         /// </summary>
         /// <param name="letters">The whole word that contains the character to be checked</param>
         /// <param name="index">The index of the character to be checked</param>
         /// <returns>True if the character at index is a leading character, else, returns false</returns>
         private static bool IsLeadingLetter(char[] letters, int index)
         {
-            bool lettersThatCannotBeBeforeALeadingLetter = index == 0
-                                                           || letters[index - 1] == ' '
-                                                           || letters[index - 1] == '*' // ??? Remove?
-                                                           || letters[index - 1] == 'A' // ??? Remove?
-                                                           || char.IsPunctuation(letters[index - 1])
-                                                           || letters[index - 1] == '>'
-                                                           || letters[index - 1] == '<'
-                                                           || letters[index - 1] == (int)IsolatedLetters.Alef
-                                                           || letters[index - 1] == (int)IsolatedLetters.Dal
-                                                           || letters[index - 1] == (int)IsolatedLetters.Thal
-                                                           || letters[index - 1] == (int)IsolatedLetters.Ra2
-                                                           || letters[index - 1] == (int)IsolatedLetters.Zeen
-                                                           || letters[index - 1] == (int)IsolatedLetters.PersianZe
-                                                           || letters[index - 1] == (int)IsolatedLetters.Waw
-                                                           || letters[index - 1] == (int)IsolatedLetters.AlefMad
-                                                           || letters[index - 1] == (int)IsolatedLetters.AlefHamza
-                                                           || letters[index - 1] == (int)IsolatedLetters.Hamza
-                                                           || letters[index - 1] == (int)IsolatedLetters.AlefMaksoor
-                                                           || letters[index - 1] == (int)IsolatedLetters.WawHamza;
+            bool previousLetterCheck = index == 0 ||
+                                       IsRTLCharacter(letters[index - 1]) == false ||
+                                       letters[index - 1] == (int) IsolatedLetters.Alef ||
+                                       letters[index - 1] == (int) IsolatedLetters.Dal ||
+                                       letters[index - 1] == (int) IsolatedLetters.Thal ||
+                                       letters[index - 1] == (int) IsolatedLetters.Ra2 ||
+                                       letters[index - 1] == (int) IsolatedLetters.Zeen ||
+                                       letters[index - 1] == (int) IsolatedLetters.PersianZe ||
+                                       letters[index - 1] == (int) IsolatedLetters.Waw ||
+                                       letters[index - 1] == (int) IsolatedLetters.AlefMad ||
+                                       letters[index - 1] == (int) IsolatedLetters.AlefHamza ||
+                                       letters[index - 1] == (int) IsolatedLetters.Hamza ||
+                                       letters[index - 1] == (int) IsolatedLetters.AlefMaksoor ||
+                                       letters[index - 1] == (int) IsolatedLetters.WawHamza;
 
-            bool lettersThatCannotBeALeadingLetter = letters[index] != ' '
-                                                     && letters[index] != (int)IsolatedLetters.Dal
-                                                     && letters[index] != (int)IsolatedLetters.Thal
-                                                     && letters[index] != (int)IsolatedLetters.Ra2
-                                                     && letters[index] != (int)IsolatedLetters.Zeen
-                                                     && letters[index] != (int)IsolatedLetters.PersianZe
-                                                     && letters[index] != (int)IsolatedLetters.Alef
-                                                     && letters[index] != (int)IsolatedLetters.AlefHamza
-                                                     && letters[index] != (int)IsolatedLetters.AlefMaksoor
-                                                     && letters[index] != (int)IsolatedLetters.AlefMad
-                                                     && letters[index] != (int)IsolatedLetters.WawHamza
-                                                     && letters[index] != (int)IsolatedLetters.Waw
-                                                     && letters[index] != (int)IsolatedLetters.Hamza;
+            bool leadingLetterCheck = letters[index] != ' ' &&
+                                      letters[index] != (int) IsolatedLetters.Dal &&
+                                      letters[index] != (int) IsolatedLetters.Thal &&
+                                      letters[index] != (int) IsolatedLetters.Ra2 &&
+                                      letters[index] != (int) IsolatedLetters.Zeen &&
+                                      letters[index] != (int) IsolatedLetters.PersianZe &&
+                                      letters[index] != (int) IsolatedLetters.Alef &&
+                                      letters[index] != (int) IsolatedLetters.AlefHamza &&
+                                      letters[index] != (int) IsolatedLetters.AlefMaksoor &&
+                                      letters[index] != (int) IsolatedLetters.AlefMad &&
+                                      letters[index] != (int) IsolatedLetters.WawHamza &&
+                                      letters[index] != (int) IsolatedLetters.Waw &&
+                                      letters[index] != (int) IsolatedLetters.Hamza;
 
-            bool lettersThatCannotBeAfterLeadingLetter = index < letters.Length - 1
-                                                         && letters[index + 1] != ' '
-                                                         && !char.IsPunctuation(letters[index + 1])
-                                                         && !char.IsNumber(letters[index + 1])
-                                                         && !char.IsSymbol(letters[index + 1])
-                                                         && !char.IsLower(letters[index + 1])
-                                                         && !char.IsUpper(letters[index + 1])
-                                                         && letters[index + 1] != (int)IsolatedLetters.Hamza;
+            bool nextLetterCheck = index < letters.Length - 1 &&
+                                   IsRTLCharacter(letters[index + 1]) && 
+                                   letters[index + 1] != (int) IsolatedLetters.Hamza;
 
-            return lettersThatCannotBeBeforeALeadingLetter && lettersThatCannotBeALeadingLetter && lettersThatCannotBeAfterLeadingLetter;
+            return previousLetterCheck && leadingLetterCheck && nextLetterCheck;
         }
 
         /// <summary>
-        ///     Checks if the letter at index value is a finishing character in Arabic or not.
+        ///     Checks if the letter at index value is a finishing character or not.
         /// </summary>
         /// <param name="letters">The whole word that contains the character to be checked</param>
         /// <param name="index">The index of the character to be checked</param>
         /// <returns>True if the character at index is a finishing character, else, returns false</returns>
-        private static bool IsFinishingLetter(char[] letters, int index)
+        private static bool IsFinishingLetter(IList<char> letters, int index)
         {
-            bool lettersThatCannotBeBeforeAFinishingLetter = index != 0 && letters[index - 1] != ' ' && letters[index - 1] != (int)IsolatedLetters.Dal &&
-                                                             letters[index - 1] != (int)IsolatedLetters.Thal && letters[index - 1] != (int)IsolatedLetters.Ra2 &&
-                                                             letters[index - 1] != (int)IsolatedLetters.Zeen && letters[index - 1] != (int)IsolatedLetters.PersianZe &&
-                                                             letters[index - 1] != (int)IsolatedLetters.Waw && letters[index - 1] != (int)IsolatedLetters.Alef &&
-                                                             letters[index - 1] != (int)IsolatedLetters.AlefMad && letters[index - 1] != (int)IsolatedLetters.AlefHamza &&
-                                                             letters[index - 1] != (int)IsolatedLetters.AlefMaksoor && letters[index - 1] != (int)IsolatedLetters.WawHamza &&
-                                                             letters[index - 1] != (int)IsolatedLetters.Hamza && !char.IsPunctuation(letters[index - 1]) && !char.IsSymbol(letters[index - 1]) &&
-                                                             letters[index - 1] != '>' && letters[index - 1] != '<';
+            bool previousLetterCheck = index != 0 &&
+                                       letters[index - 1] != ' ' &&
+                                       letters[index - 1] != (int) IsolatedLetters.Dal &&
+                                       letters[index - 1] != (int) IsolatedLetters.Thal &&
+                                       letters[index - 1] != (int) IsolatedLetters.Ra2 &&
+                                       letters[index - 1] != (int) IsolatedLetters.Zeen &&
+                                       letters[index - 1] != (int) IsolatedLetters.PersianZe &&
+                                       letters[index - 1] != (int) IsolatedLetters.Waw &&
+                                       letters[index - 1] != (int) IsolatedLetters.Alef &&
+                                       letters[index - 1] != (int) IsolatedLetters.AlefMad &&
+                                       letters[index - 1] != (int) IsolatedLetters.AlefHamza &&
+                                       letters[index - 1] != (int) IsolatedLetters.AlefMaksoor &&
+                                       letters[index - 1] != (int) IsolatedLetters.WawHamza &&
+                                       letters[index - 1] != (int) IsolatedLetters.Hamza &&
+                                       IsRTLCharacter(letters[index - 1]);
 
 
-            bool lettersThatCannotBeFinishingLetters = letters[index] != ' ' && letters[index] != (int)IsolatedLetters.Hamza;
+            bool finishingLetterCheck = letters[index] != ' ' && letters[index] != (int) IsolatedLetters.Hamza;
 
 
-            return lettersThatCannotBeBeforeAFinishingLetter && lettersThatCannotBeFinishingLetters;
+            return previousLetterCheck && finishingLetterCheck;
         }
 
         /// <summary>
-        ///     Checks if the letter at index value is a middle character in Arabic or not.
+        ///     Checks if the letter at index value is a middle character or not.
         /// </summary>
         /// <param name="letters">The whole word that contains the character to be checked</param>
         /// <param name="index">The index of the character to be checked</param>
         /// <returns>True if the character at index is a middle character, else, returns false</returns>
-        private static bool IsMiddleLetter(char[] letters, int index)
+        private static bool IsMiddleLetter(IList<char> letters, int index)
         {
-            bool lettersThatCannotBeMiddleLetters = index != 0 && letters[index] != (int)IsolatedLetters.Alef && letters[index] != (int)IsolatedLetters.Dal &&
-                                                    letters[index] != (int)IsolatedLetters.Thal && letters[index] != (int)IsolatedLetters.Ra2 && letters[index] != (int)IsolatedLetters.Zeen &&
-                                                    letters[index] != (int)IsolatedLetters.PersianZe && letters[index] != (int)IsolatedLetters.Waw &&
-                                                    letters[index] != (int)IsolatedLetters.AlefMad && letters[index] != (int)IsolatedLetters.AlefHamza &&
-                                                    letters[index] != (int)IsolatedLetters.AlefMaksoor && letters[index] != (int)IsolatedLetters.WawHamza &&
-                                                    letters[index] != (int)IsolatedLetters.Hamza;
+            bool middleLetterCheck = index != 0 &&
+                                     letters[index] != (int) IsolatedLetters.Alef &&
+                                     letters[index] != (int) IsolatedLetters.Dal &&
+                                     letters[index] != (int) IsolatedLetters.Thal &&
+                                     letters[index] != (int) IsolatedLetters.Ra2 &&
+                                     letters[index] != (int) IsolatedLetters.Zeen &&
+                                     letters[index] != (int) IsolatedLetters.PersianZe &&
+                                     letters[index] != (int) IsolatedLetters.Waw &&
+                                     letters[index] != (int) IsolatedLetters.AlefMad &&
+                                     letters[index] != (int) IsolatedLetters.AlefHamza &&
+                                     letters[index] != (int) IsolatedLetters.AlefMaksoor &&
+                                     letters[index] != (int) IsolatedLetters.WawHamza &&
+                                     letters[index] != (int) IsolatedLetters.Hamza;
 
-            bool lettersThatCannotBeBeforeMiddleCharacters = index != 0 && letters[index - 1] != (int)IsolatedLetters.Alef && letters[index - 1] != (int)IsolatedLetters.Dal &&
-                                                             letters[index - 1] != (int)IsolatedLetters.Thal && letters[index - 1] != (int)IsolatedLetters.Ra2 &&
-                                                             letters[index - 1] != (int)IsolatedLetters.Zeen && letters[index - 1] != (int)IsolatedLetters.PersianZe &&
-                                                             letters[index - 1] != (int)IsolatedLetters.Waw && letters[index - 1] != (int)IsolatedLetters.AlefMad &&
-                                                             letters[index - 1] != (int)IsolatedLetters.AlefHamza && letters[index - 1] != (int)IsolatedLetters.AlefMaksoor &&
-                                                             letters[index - 1] != (int)IsolatedLetters.WawHamza && letters[index - 1] != (int)IsolatedLetters.Hamza &&
-                                                             !char.IsPunctuation(letters[index - 1]) && letters[index - 1] != '>' && letters[index - 1] != '<' && letters[index - 1] != ' ' &&
-                                                             letters[index - 1] != '*';
+            bool previousLetterCheck = index != 0 &&
+                                       letters[index - 1] != (int) IsolatedLetters.Alef &&
+                                       letters[index - 1] != (int) IsolatedLetters.Dal &&
+                                       letters[index - 1] != (int) IsolatedLetters.Thal &&
+                                       letters[index - 1] != (int) IsolatedLetters.Ra2 &&
+                                       letters[index - 1] != (int) IsolatedLetters.Zeen &&
+                                       letters[index - 1] != (int) IsolatedLetters.PersianZe &&
+                                       letters[index - 1] != (int) IsolatedLetters.Waw &&
+                                       letters[index - 1] != (int) IsolatedLetters.AlefMad &&
+                                       letters[index - 1] != (int) IsolatedLetters.AlefHamza &&
+                                       letters[index - 1] != (int) IsolatedLetters.AlefMaksoor &&
+                                       letters[index - 1] != (int) IsolatedLetters.WawHamza &&
+                                       letters[index - 1] != (int) IsolatedLetters.Hamza &&
+                                       IsRTLCharacter(letters[index - 1]);
 
-            bool lettersThatCannotBeAfterMiddleCharacters = index < letters.Length - 1 && letters[index + 1] != ' ' && letters[index + 1] != '\r' &&
-                                                            letters[index + 1] != (int)IsolatedLetters.Hamza && !char.IsNumber(letters[index + 1]) && !char.IsSymbol(letters[index + 1]) &&
-                                                            !char.IsPunctuation(letters[index + 1]);
+            bool nextLetterCheck = index < letters.Count - 1 &&
+                                   IsRTLCharacter(letters[index + 1]) &&
+                                   letters[index + 1] != (int) IsolatedLetters.Hamza;
 
-            if (lettersThatCannotBeAfterMiddleCharacters && lettersThatCannotBeBeforeMiddleCharacters && lettersThatCannotBeMiddleLetters)
-            {
-                try
-                {
-                    return !char.IsPunctuation(letters[index + 1]);
-                }
-                catch
-                {
-                    return false;
-                }
-            }
-
-            return false;
+            return nextLetterCheck && previousLetterCheck && middleLetterCheck;
         }
     }
 }
