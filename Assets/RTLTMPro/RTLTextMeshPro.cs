@@ -14,6 +14,7 @@ namespace RTLTMPro
             set
             {
                 originalText = value;
+                base.text = GetFixedText(originalText);
                 havePropertiesChanged = true;
             }
         }
@@ -66,10 +67,9 @@ namespace RTLTMPro
 
         protected RTLSupport support;
 
-        protected override void OnEnable()
+        protected override void Awake()
         {
-            base.OnEnable();
-
+            base.Awake();
             support = new RTLSupport();
             UpdateSupport();
         }
@@ -78,6 +78,9 @@ namespace RTLTMPro
         {
             if (havePropertiesChanged)
             {
+                if(support == null)
+                    support = new RTLSupport();
+
                 UpdateSupport();
                 base.text = GetFixedText(originalText);
             }
@@ -85,6 +88,9 @@ namespace RTLTMPro
 
         protected virtual void UpdateSupport()
         {
+            if(support == null)
+                support = new RTLSupport();
+            
             support.Farsi = farsi;
             support.PreserveNumbers = preserveNumbers;
             support.PreserveTashkeel = preserveTashkeel;
@@ -95,6 +101,9 @@ namespace RTLTMPro
         {
             if (string.IsNullOrEmpty(input))
                 return input;
+
+            if(support == null)
+                support = new RTLSupport();
 
             input = support.FixRTL(input);
             input = input.Reverse().ToArray().ArrayToString();
