@@ -155,10 +155,14 @@ namespace RTLTMPro
             char[] letters = originString.ToCharArray();
             for (int i = 0; i < letters.Length; i++)
             {
-                if (Farsi && letters[i] == (int)GeneralLetters.Ya)
+                if (Farsi && letters[i] == (int) GeneralLetters.Ya)
+                {
                     letters[i] = (char)GeneralLetters.PersianYa;
-                else if (Farsi == false && letters[i] == (int)GeneralLetters.PersianYa)
+                }
+                else if (Farsi == false && letters[i] == (int) GeneralLetters.PersianYa)
+                {
                     letters[i] = (char)GeneralLetters.Ya;
+                }
 
                 letters[i] = (char)GlyphTable.Convert(letters[i]);
             }

@@ -9,7 +9,6 @@ namespace RTLTMPro
     {
         private static readonly string[] UIStateLabel = { "\t- <i>Click to expand</i> -", "\t- <i>Click to collapse</i> -" };
         private SerializedProperty originalTextProp;
-        private SerializedProperty textProp;
         private SerializedProperty havePropertiesChangedProp;
         private SerializedProperty inputSourceProp;
         private SerializedProperty isInputPasingRequiredProp;
@@ -17,7 +16,6 @@ namespace RTLTMPro
         private SerializedProperty farsiProp;
         private SerializedProperty fixTagsProp;
         private SerializedProperty forceFixProp;
-        private SerializedProperty isRightToLeftProp;
 
         private bool changed;
         private bool foldout;
@@ -28,7 +26,6 @@ namespace RTLTMPro
         {
             base.OnEnable();
             foldout = true;
-            textProp = serializedObject.FindProperty("m_text");
             preserveNumbersProp = serializedObject.FindProperty("preserveNumbers");
             farsiProp = serializedObject.FindProperty("farsi");
             fixTagsProp = serializedObject.FindProperty("fixTags");
@@ -37,7 +34,6 @@ namespace RTLTMPro
             havePropertiesChangedProp = serializedObject.FindProperty("m_havePropertiesChanged");
             inputSourceProp = serializedObject.FindProperty("m_inputSource");
             isInputPasingRequiredProp = serializedObject.FindProperty("m_isInputParsingRequired");
-            isRightToLeftProp = serializedObject.FindProperty("m_isRightToLeft");
         }
 
         public override void OnInspectorGUI()
@@ -103,16 +99,7 @@ namespace RTLTMPro
 
             if (changed)
             {
-                if (forceFixProp.boolValue == false && RTLSupport.IsRTLInput(originalTextProp.stringValue) == false)
-                {
-                    isRightToLeftProp.boolValue = false;
-                    textProp.stringValue = originalTextProp.stringValue;
-                }
-                else
-                {
-                    isRightToLeftProp.boolValue = true;
-                    textProp.stringValue = tmpro.GetFixedText(originalTextProp.stringValue);
-                }
+                tmpro.UpdateText();
                 
                 havePropertiesChangedProp.boolValue = true;
                 changed = false;

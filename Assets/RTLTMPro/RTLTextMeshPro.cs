@@ -19,20 +19,12 @@ namespace RTLTMPro
             get { return base.text; }
             set
             {
+                if (originalText == value)
+                    return;
+
                 originalText = value;
 
-                if (ForceFix == false && RTLSupport.IsRTLInput(originalText) == false)
-                {
-                    isRightToLeftText = false;
-                    base.text = originalText;
-                }
-                else
-                {
-                    isRightToLeftText = true;
-                    base.text = GetFixedText(originalText);
-                }
-
-                havePropertiesChanged = true;
+                UpdateText();
             }
         }
 
@@ -107,12 +99,28 @@ namespace RTLTMPro
         {
             if (havePropertiesChanged)
             {
-                //if (support == null)
-                //    support = new RTLSupport();
+                if (support == null)
+                    support = new RTLSupport();
 
-                //UpdateSupport();
-                //base.text = GetFixedText(originalText);
+                UpdateSupport();
+                UpdateText();
             }
+        }
+
+        public virtual void UpdateText()
+        {
+            if (ForceFix == false && RTLSupport.IsRTLInput(originalText) == false)
+            {
+                isRightToLeftText = false;
+                base.text = originalText;
+            }
+            else
+            {
+                isRightToLeftText = true;
+                base.text = GetFixedText(originalText);
+            }
+
+            havePropertiesChanged = true;
         }
 
         protected virtual void UpdateSupport()
