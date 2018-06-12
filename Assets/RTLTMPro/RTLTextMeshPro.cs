@@ -84,7 +84,7 @@ namespace RTLTMPro
         [SerializeField] protected bool farsi = true;
         [SerializeField] protected bool preserveTashkeel;
         [SerializeField] protected string originalText;
-        [SerializeField] protected bool fixTags;
+        [SerializeField] protected bool fixTags = true;
 
         protected RTLSupport support;
 
