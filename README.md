@@ -38,7 +38,7 @@ Arabic tashkeel are supported. Also you can turn them off or on for every `RTL T
 [Tashkeel Preview](Screenshots/Arabic%20Text.PNG)
 
 # How To Use
-* Go to ![release](https://github.com/sorencoder/RTLTMPro/releases) page and download latest unitypackage file (or copy `RTLTMPro` folder from source to your project.)
+* Go to [release](https://github.com/sorencoder/RTLTMPro/releases) page and download latest unitypackage file (or copy `RTLTMPro` folder from source to your project.)
 * Open one of the range files in `Assets/RTLTMPro/Ranges/` folder using your favorite text editor.
   * RTL Letters are in `LetterRanges.txt` file
   * English, Arabic and Farsi numbers are in `NumberRanges.txt` file
