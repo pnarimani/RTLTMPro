@@ -113,6 +113,76 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &116606501
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 116606504}
+  - component: {fileID: 116606503}
+  - component: {fileID: 116606502}
+  m_Layer: 0
+  m_Name: TMP SubMeshUI [segoeui RTL SDF Material + LiberationSans SDF Atlas]
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &116606502
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 116606501}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 058cba836c1846c3aa1c5fd2e28aea77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_spriteAsset: {fileID: 0}
+  m_material: {fileID: 0}
+  m_sharedMaterial: {fileID: 0}
+  m_isDefaultMaterial: 0
+  m_padding: 0.5
+  m_canvasRenderer: {fileID: 116606503}
+  m_TextComponent: {fileID: 498746951}
+  m_materialReferenceIndex: 1
+--- !u!222 &116606503
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 116606501}
+  m_CullTransparentMesh: 0
+--- !u!224 &116606504
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 116606501}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 498746950}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &282840810
 GameObject:
   m_ObjectHideFlags: 0
@@ -244,8 +314,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: This plugin gives you the option to choose between Enlgish, Farsi and Arabic
-    numbers
+  m_text: You can choose between English (Preserving Numbers), Farsi and Arabic numbers
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -312,10 +381,10 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 388640703}
-    characterCount: 84
+    characterCount: 77
     spriteCount: 0
-    spaceCount: 13
-    wordCount: 14
+    spaceCount: 10
+    wordCount: 11
     linkCount: 0
     lineCount: 2
     pageCount: 1
@@ -344,6 +413,242 @@ CanvasRenderer:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 388640701}
+  m_CullTransparentMesh: 0
+--- !u!1 &498746949
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 498746950}
+  - component: {fileID: 498746952}
+  - component: {fileID: 498746951}
+  m_Layer: 0
+  m_Name: RTLTextMeshPro (3)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &498746950
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 498746949}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 116606504}
+  - {fileID: 625182469}
+  m_Father: {fileID: 1404080890}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: -209}
+  m_SizeDelta: {x: -200, y: -978.7}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &498746951
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 498746949}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9839c2d141529145a431aef4d757ff3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_text: "\uFE8D\uFEDF\uFED8\uFEAA\uFEAD\uFE93 \uFECB\uFEE0\uFBFD \uFE8D\uFEB3\uFE98\uFEA8\uFEAA\uFE8D\uFEE1
+    \uFE8D\uFEDF\uFEAE\uFED7\uFEE2 \uFE8D\uFEF9\uFEE7\uFEA0\uFEE0\uFEF4\uFEB0\uFEF3\uFE94
+    0987654321 \uFE91\uFEF4\uFEE6 \uFE8D\uFEDF\uFEE8\uFEBA"
+  m_isRightToLeft: 1
+  m_fontAsset: {fileID: 11400000, guid: 3fbde2e562e333d488bc46986fc6f4f1, type: 2}
+  m_sharedMaterial: {fileID: 21623836076631360, guid: 3fbde2e562e333d488bc46986fc6f4f1,
+    type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_enableVertexGradient: 0
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_outlineColor:
+    serializedVersion: 2
+    rgba: 4278190080
+  m_fontSize: 60
+  m_fontSizeBase: 60
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 21.2
+  m_fontSizeMax: 72
+  m_fontStyle: 0
+  m_textAlignment: 514
+  m_isAlignmentEnumConverted: 1
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_enableWordWrapping: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_firstOverflowCharacterIndex: -1
+  m_linkedTextComponent: {fileID: 0}
+  m_isLinkedTextComponent: 0
+  m_enableKerning: 1
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_ignoreRectMaskCulling: 0
+  m_ignoreCulling: 1
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_firstVisibleCharacter: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_textInfo:
+    textComponent: {fileID: 498746951}
+    characterCount: 54
+    spriteCount: 0
+    spaceCount: 7
+    wordCount: 8
+    linkCount: 0
+    lineCount: 1
+    pageCount: 1
+    materialCount: 2
+  m_havePropertiesChanged: 0
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_spriteAnimator: {fileID: 0}
+  m_isInputParsingRequired: 0
+  m_inputSource: 0
+  m_hasFontAssetChanged: 0
+  m_subTextObjects:
+  - {fileID: 0}
+  - {fileID: 116606502}
+  - {fileID: 625182470}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+  preserveNumbers: 1
+  farsi: 0
+  preserveTashkeel: 0
+  originalText: "\u0627\u0644\u0642\u062F\u0631\u0629 \u0639\u0644\u0649 \u0627\u0633\u062A\u062E\u062F\u0627\u0645
+    \u0627\u0644\u0631\u0642\u0645 \u0627\u0644\u0625\u0646\u062C\u0644\u064A\u0632\u064A\u0629
+    1234567890 \u0628\u064A\u0646 \u0627\u0644\u0646\u0635"
+  fixTags: 0
+--- !u!222 &498746952
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 498746949}
+  m_CullTransparentMesh: 0
+--- !u!1 &625182468
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 625182469}
+  - component: {fileID: 625182471}
+  - component: {fileID: 625182470}
+  m_Layer: 0
+  m_Name: TMP SubMeshUI [segoeui RTL SDF Material + LiberationSans SDF Atlas]
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &625182469
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 625182468}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 498746950}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &625182470
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 625182468}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 058cba836c1846c3aa1c5fd2e28aea77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_spriteAsset: {fileID: 0}
+  m_material: {fileID: 0}
+  m_sharedMaterial: {fileID: 0}
+  m_isDefaultMaterial: 0
+  m_padding: 0
+  m_canvasRenderer: {fileID: 625182471}
+  m_TextComponent: {fileID: 498746951}
+  m_materialReferenceIndex: 2
+--- !u!222 &625182471
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 625182468}
   m_CullTransparentMesh: 0
 --- !u!1 &645895901
 GameObject:
@@ -379,8 +684,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 36}
-  m_SizeDelta: {x: -200, y: -793.7}
+  m_AnchoredPosition: {x: 0, y: 200}
+  m_SizeDelta: {x: -200, y: -978.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &645895903
 MonoBehaviour:
@@ -401,9 +706,9 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: 'txet ni 0987654321 srebmun hsilgnE esu ot elbissoP
-
-'
+  m_text: "\uFE8D\uFEE3\uFB91\uFE8E\uFEE5 \uFE8D\uFEB3\uFE98\uFED4\uFE8E\uFEA9\uFEE9
+    \uFE8D\uFEAF \uFECB\uFEAA\uFEA9 \uFEEB\uFE8E\uFBFC \uFE8D\uFEE7\uFB95\uFEE0\uFBFF\uFEB4\uFBFD
+    0987654321 \uFEA9\uFEAD \uFEE3\uFE98\uFEE6"
   m_isRightToLeft: 1
   m_fontAsset: {fileID: 11400000, guid: 3fbde2e562e333d488bc46986fc6f4f1, type: 2}
   m_sharedMaterial: {fileID: 21623836076631360, guid: 3fbde2e562e333d488bc46986fc6f4f1,
@@ -471,10 +776,10 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 645895903}
-    characterCount: 51
+    characterCount: 50
     spriteCount: 0
     spaceCount: 8
-    wordCount: 8
+    wordCount: 9
     linkCount: 0
     lineCount: 1
     pageCount: 1
@@ -498,9 +803,12 @@ MonoBehaviour:
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
   preserveNumbers: 1
-  farsiNumbers: 0
+  farsi: 1
   preserveTashkeel: 0
-  originalText: Possible to use English numbers 1234567890 in text
+  originalText: "\u0627\u0645\u06A9\u0627\u0646 \u0627\u0633\u062A\u0641\u0627\u062F\u0647
+    \u0627\u0632 \u0639\u062F\u062F \u0647\u0627\u064A \u0627\u0646\u06AF\u0644\u064A\u0633\u064A
+    1234567890 \u062F\u0631 \u0645\u062A\u0646"
+  fixTags: 0
 --- !u!222 &645895904
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -744,8 +1052,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -254.59998}
-  m_SizeDelta: {x: -200, y: -793.7}
+  m_AnchoredPosition: {x: 0, y: -91}
+  m_SizeDelta: {x: -200, y: -978.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1120247044
 MonoBehaviour:
@@ -766,9 +1074,9 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: "\u0627\uFEDF\uFED8\uFEAA\u0631\u0629 \uFECB\uFEE0\uFBFD \u0627\uFEB3\uFE98\uFEA8\uFEAA\u0627\u0645
-    \u0627\uFEDF\uFEAE\uFED7\uFEE2 \u0627\uFEDF\uFECC\uFEAE\uFE91\uFEF0 \u0660\u0669\u0668\u0667\u0666\u0665\u0664\u0663\u0662\u0661
-    \uFE91\uFEF4\uFEE6 \u0627\uFEDF\uFEE8\uFEBA\n"
+  m_text: "\uFE8D\uFEDF\uFED8\uFEAA\uFEAD\uFE93 \uFECB\uFEE0\uFBFD \uFE8D\uFEB3\uFE98\uFEA8\uFEAA\uFE8D\uFEE1
+    \uFE8D\uFEDF\uFEAE\uFED7\uFEE2 \uFE8D\uFEDF\uFECC\uFEAE\uFE91\uFEF2 \u0660\u0669\u0668\u0667\u0666\u0665\u0664\u0663\u0662\u0661
+    \uFE91\uFEF4\uFEE6 \uFE8D\uFEDF\uFEE8\uFEBA"
   m_isRightToLeft: 1
   m_fontAsset: {fileID: 11400000, guid: 3fbde2e562e333d488bc46986fc6f4f1, type: 2}
   m_sharedMaterial: {fileID: 21623836076631360, guid: 3fbde2e562e333d488bc46986fc6f4f1,
@@ -836,9 +1144,9 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 1120247044}
-    characterCount: 52
+    characterCount: 51
     spriteCount: 0
-    spaceCount: 8
+    spaceCount: 7
     wordCount: 8
     linkCount: 0
     lineCount: 1
@@ -849,7 +1157,7 @@ MonoBehaviour:
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
   m_isInputParsingRequired: 0
-  m_inputSource: 0
+  m_inputSource: 3
   m_hasFontAssetChanged: 0
   m_subTextObjects:
   - {fileID: 0}
@@ -863,11 +1171,12 @@ MonoBehaviour:
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
   preserveNumbers: 0
-  farsiNumbers: 0
+  farsi: 0
   preserveTashkeel: 0
   originalText: "\u0627\u0644\u0642\u062F\u0631\u0629 \u0639\u0644\u0649 \u0627\u0633\u062A\u062E\u062F\u0627\u0645
     \u0627\u0644\u0631\u0642\u0645 \u0627\u0644\u0639\u0631\u0628\u064A 1234567890
     \u0628\u064A\u0646 \u0627\u0644\u0646\u0635"
+  fixTags: 0
 --- !u!222 &1120247045
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1013,6 +1322,7 @@ RectTransform:
   - {fileID: 1427394966}
   - {fileID: 1120247043}
   - {fileID: 388640702}
+  - {fileID: 498746950}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1076,8 +1386,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -101}
-  m_SizeDelta: {x: -200, y: -793.7}
+  m_AnchoredPosition: {x: 0, y: 83}
+  m_SizeDelta: {x: -200, y: -990.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1427394967
 MonoBehaviour:
@@ -1098,10 +1408,10 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: "\u0627\uFEE3\uFB91\uFE8E\u0646 \u0627\uFEB3\uFE98\uFED4\uFE8E\u062F\u0647
-    \u0627\u0632 \uFECB\uFEAA\u062F \uFEEB\uFE8E\u0649 \uFED3\uFE8E\u0631\uFEB3\uFEF0
-    \u0660\u0669\u0668\u0667\u0666\u0665\u0664\u0663\u0662\u0661 \u062F\u0631 \uFE91\uFEF4\uFEE6
-    \uFEE3\uFE98\uFEE6\n"
+  m_text: "\uFE8D\uFEE3\uFB91\uFE8E\uFEE5 \uFE8D\uFEB3\uFE98\uFED4\uFE8E\uFEA9\uFEE9
+    \uFE8D\uFEAF \uFECB\uFEAA\uFEA9 \uFEEB\uFE8E\uFBFC \uFED3\uFE8E\uFEAD\uFEB3\uFBFD
+    \u06F0\u06F9\u06F8\u06F7\u06F6\u06F5\u06F4\u06F3\u06F2\u06F1 \uFEA9\uFEAD \uFE91\uFBFF\uFEE6
+    \uFEE3\uFE98\uFEE6"
   m_isRightToLeft: 1
   m_fontAsset: {fileID: 11400000, guid: 3fbde2e562e333d488bc46986fc6f4f1, type: 2}
   m_sharedMaterial: {fileID: 21623836076631360, guid: 3fbde2e562e333d488bc46986fc6f4f1,
@@ -1169,9 +1479,9 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 1427394967}
-    characterCount: 53
+    characterCount: 52
     spriteCount: 0
-    spaceCount: 10
+    spaceCount: 9
     wordCount: 10
     linkCount: 0
     lineCount: 1
@@ -1196,11 +1506,12 @@ MonoBehaviour:
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
   preserveNumbers: 0
-  farsiNumbers: 0
+  farsi: 1
   preserveTashkeel: 0
   originalText: "\u0627\u0645\u06A9\u0627\u0646 \u0627\u0633\u062A\u0641\u0627\u062F\u0647
     \u0627\u0632 \u0639\u062F\u062F \u0647\u0627\u064A \u0641\u0627\u0631\u0633\u064A
     1234567890 \u062F\u0631 \u0628\u064A\u0646 \u0645\u062A\u0646"
+  fixTags: 0
 --- !u!222 &1427394968
 CanvasRenderer:
   m_ObjectHideFlags: 0
