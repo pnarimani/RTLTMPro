@@ -39,8 +39,31 @@ Arabic tashkeel are supported. Also you can turn them off or on for every `RTL T
 
 # How To Use
 * Import latest unitypcakage to your project.
-* Use `GameObject->UI->* - RTLTMP` menu to create RTL UI elements.
-  Alternatively you can replace 
+* Open one of the range files in `Assets/RTLTMPro/Ranges/` folder using your favorite text editor.
+  * RTL Letters are in `LetterRanges.txt` file
+  * English, Arabic and Farsi numbers are in `NumberRanges.txt` file
+  * Arabic tashil are in `TashkilRanges.txt` file.
+* Make sure you have copied ranges that you want to use
+* Open `Window/TextMeshPro/Font Asset Creator` window.
+* Assign your font in `Font Source` field (Your font must support RTL characters)
+* Set `Character Set` to `Unicode Range`
+* Paste copied ranges inside  `Character Sequence (Hex)`
+* Press `Generate Font Atlas` button and wait for it to generate the atlas file.
+* Press `Save TextMeshPro Font Asset` and save the asset.
+* Use `GameObject/UI/* - RTLTMP` menu to create RTL UI elements. (Alternatively you can replace `Text Mesh Pro UGUI` components with `RTL Text Mesh Pro`)
+* Assign your font asset `Font Asset` property in `RTL Text Mesh Pro` component 
+* Enter text in `RTL TEXT INPUT BOX` secion.
+  
+## Usage Description
+### Farsi
+When checked, English numbers will be converted to Farsi numbers.
+When unchecked, English numbers will be converted to Arabic numbers.
+### Preserve Numbers
+When checked numbers will not be converted.
+### Preserve Tashkeel
+When checked Arabic tashkeel will be shown in final text.
+### Fix Tags
+When checked, RTL Text Mesh Pro will try to fix rich text tags.
 
 # Known Issues
 * Multiline has issues with English text.
