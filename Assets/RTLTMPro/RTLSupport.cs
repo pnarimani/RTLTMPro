@@ -6,6 +6,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
+using TMPro;
 using UnityEngine;
 
 namespace RTLTMPro
@@ -14,18 +16,25 @@ namespace RTLTMPro
     {
         // Because we are initializing these properties in constructor, we cannot make them virtual
         public bool PreserveNumbers { get; set; }
-        public bool FixTags { get; set; }
+        //public bool FixTags { get; set; }
         public bool Farsi { get; set; }
 
         protected readonly ICollection<TashkeelLocation> TashkeelLocation;
+        protected readonly Regex LTRTagFixer;
+        protected readonly Regex RTLTagFixer;
+        protected readonly Regex LoneTagFixer;
 
         public RTLSupport()
         {
             PreserveNumbers = false;
             Farsi = true;
-            FixTags = false;
+            //FixTags = false;
 
             TashkeelLocation = new List<TashkeelLocation>();
+            //TagFixer = new Regex("(?<closing>>[^ /]+/<)(?<content>.*)(?<opening>>([^ /])+<)");
+            LTRTagFixer = new Regex("(?<opening><([^ /])+>)(?<content>.*)(?<closing></[^ /]+>)");
+            RTLTagFixer= new Regex("(?<closing></[^ /]+>)(?<content>.*)(?<opening><([^ /])+>)");
+            LoneTagFixer = new Regex("<[^ /]+/?>");
         }
 
         public virtual string FixRTL(string input)
@@ -37,125 +46,89 @@ namespace RTLTMPro
             char[] fixedLetters = FixGlyphs(letters);
             FixLigature(fixedLetters, finalLetters);
 
-            if (FixTags)
-                FixTextTags(finalLetters);
+            //if (FixTags)
+            //    FixTextTags(finalLetters);
 
-            return new string(finalLetters.ToArray());
+
+            var rtl = new string(finalLetters.ToArray());
+            rtl = FixTextTags(rtl);
+            return rtl;
         }
-
-        protected virtual void FixTextTags(List<char> finalLetters)
+        
+        protected virtual string FixTextTags(string input)
         {
-            int openIndex = -1;
-            List<char> tag = new List<char>();
+            List<Vector2Int> fixedTags = new List<Vector2Int>();
+            Debug.Log(input);
+            var tags = LTRTagFixer.Matches(input);
 
-            for (int i = 0; i < finalLetters.Count; i++)
+            foreach (Match match in tags)
             {
-                if (finalLetters[i] == '<')
-                {
-                    openIndex = i;
-                }
+                var tagRange = new Vector2Int(match.Index, match.Index + match.Length);
+                var findIndex = fixedTags.FindIndex(i => i.x < tagRange.y || i.y > tagRange.x );
+                Debug.Log("Tag '" + match.Value + "' with Tag Range: " + tagRange + " with FindIndex: " + findIndex);
+                if (findIndex > -1)
+                    continue;
+                fixedTags.Add(tagRange);
 
-                if (openIndex > -1)
-                {
-                    if (IsRTLCharacter(finalLetters[i]) || finalLetters[i] == ' ')
-                    {
-                        // cancel operation
-                        openIndex = -1;
-                        continue;
-                    }
-                }
+                input = input.Remove(match.Index, match.Length);
+                string opening = match.Groups["opening"].Value.Reverse().ToArray().ArrayToString();
+                string closing = match.Groups["closing"].Value.Reverse().ToArray().ArrayToString();
+                string content = match.Groups["content"].Value;
 
-                if (finalLetters[i] == '>')
-                {
-                    if (openIndex == -1)
-                        continue;
+                //input = input.Insert(match.Index, opening);
+                //input = input.Insert(match.Index + opening.Length, content);
+                //input = input.Insert(match.Index + opening.Length + content.Length, closing);
 
-                    tag.Clear();
-                    for (int j = openIndex; j <= i; j++)
-                    {
-                        if (Farsi)
-                        {
-                            switch (finalLetters[j])
-                            {
-                                case (char)FarsiNumbers.Zero:
-                                    finalLetters[j] = (char)EnglishNumbers.Zero;
-                                    break;
-                                case (char)FarsiNumbers.One:
-                                    finalLetters[j] = (char)EnglishNumbers.One;
-                                    break;
-                                case (char)FarsiNumbers.Two:
-                                    finalLetters[j] = (char)EnglishNumbers.Two;
-                                    break;
-                                case (char)FarsiNumbers.Three:
-                                    finalLetters[j] = (char)EnglishNumbers.Three;
-                                    break;
-                                case (char)FarsiNumbers.Four:
-                                    finalLetters[j] = (char)EnglishNumbers.Four;
-                                    break;
-                                case (char)FarsiNumbers.Five:
-                                    finalLetters[j] = (char)EnglishNumbers.Five;
-                                    break;
-                                case (char)FarsiNumbers.Six:
-                                    finalLetters[j] = (char)EnglishNumbers.Six;
-                                    break;
-                                case (char)FarsiNumbers.Seven:
-                                    finalLetters[j] = (char)EnglishNumbers.Seven;
-                                    break;
-                                case (char)FarsiNumbers.Eight:
-                                    finalLetters[j] = (char)EnglishNumbers.Eight;
-                                    break;
-                                case (char)FarsiNumbers.Nine:
-                                    finalLetters[j] = (char)EnglishNumbers.Nine;
-                                    break;
-                            }
-                        }
-                        else
-                        {
-                            switch (finalLetters[j])
-                            {
-                                case (char)HinduNumbers.Zero:
-                                    finalLetters[j] = (char)EnglishNumbers.Zero;
-                                    break;
-                                case (char)HinduNumbers.One:
-                                    finalLetters[j] = (char)EnglishNumbers.One;
-                                    break;
-                                case (char)HinduNumbers.Two:
-                                    finalLetters[j] = (char)EnglishNumbers.Two;
-                                    break;
-                                case (char)HinduNumbers.Three:
-                                    finalLetters[j] = (char)EnglishNumbers.Three;
-                                    break;
-                                case (char)HinduNumbers.Four:
-                                    finalLetters[j] = (char)EnglishNumbers.Four;
-                                    break;
-                                case (char)HinduNumbers.Five:
-                                    finalLetters[j] = (char)EnglishNumbers.Five;
-                                    break;
-                                case (char)HinduNumbers.Six:
-                                    finalLetters[j] = (char)EnglishNumbers.Six;
-                                    break;
-                                case (char)HinduNumbers.Seven:
-                                    finalLetters[j] = (char)EnglishNumbers.Seven;
-                                    break;
-                                case (char)HinduNumbers.Eight:
-                                    finalLetters[j] = (char)EnglishNumbers.Eight;
-                                    break;
-                                case (char)HinduNumbers.Nine:
-                                    finalLetters[j] = (char)EnglishNumbers.Nine;
-                                    break;
-                            }
-                        }
-
-                        tag.Add(finalLetters[j]);
-                    }
-
-                    tag.Reverse();
-                    finalLetters.RemoveRange(openIndex, tag.Count);
-                    finalLetters.InsertRange(openIndex, tag);
-
-                    openIndex = -1;
-                }
+                input = input.Insert(match.Index, closing);
+                input = input.Insert(match.Index + closing.Length, content);
+                input = input.Insert(match.Index + closing.Length + content.Length, opening);
             }
+
+            tags = RTLTagFixer.Matches(input);
+
+            foreach (Match match in tags)
+            {
+                var tagRange = new Vector2Int(match.Index, match.Index + match.Length);
+                var findIndex = fixedTags.FindIndex(i => i.x < tagRange.y || i.y > tagRange.x );
+                Debug.Log("Tag '" + match.Value + "' with Tag Range: " + tagRange + " with FindIndex: " + findIndex);
+                if (findIndex > -1)
+                    continue;
+                fixedTags.Add(tagRange);
+
+                input = input.Remove(match.Index, match.Length);
+                string opening = match.Groups["opening"].Value.Reverse().ToArray().ArrayToString();
+                string closing = match.Groups["closing"].Value.Reverse().ToArray().ArrayToString();
+                string content = match.Groups["content"].Value;
+
+                //input = input.Insert(match.Index, opening);
+                //input = input.Insert(match.Index + opening.Length, content);
+                //input = input.Insert(match.Index + opening.Length + content.Length, closing);
+
+                input = input.Insert(match.Index, closing);
+                input = input.Insert(match.Index + closing.Length, content);
+                input = input.Insert(match.Index + closing.Length + content.Length, opening);
+            }
+
+            tags = LoneTagFixer.Matches(input);
+            foreach (Match match in tags)
+            {
+                var tagRange = new Vector2Int(match.Index, match.Index + match.Length);
+                var findIndex = fixedTags.FindIndex(i => i.x < tagRange.y || i.y > tagRange.x );
+                Debug.Log("Tag '" + match.Value + "' with Tag Range: " + tagRange + " with FindIndex: " + findIndex);
+                if (findIndex > -1)
+                    continue;
+                fixedTags.Add(tagRange);
+
+                input = input.Remove(match.Index, match.Length);
+                string opening = match.Value.Reverse().ToArray().ArrayToString();
+
+                //input = input.Insert(match.Index, opening);
+                //input = input.Insert(match.Index + opening.Length, content);
+                //input = input.Insert(match.Index + opening.Length + content.Length, closing);
+
+                input = input.Insert(match.Index, opening);
+            }
+            return input;
         }
 
         protected virtual char[] PrepareInput(string input)
@@ -314,7 +287,7 @@ namespace RTLTMPro
             {
                 if (char.IsPunctuation(fixedLetters[i]) || char.IsSymbol(fixedLetters[i]))
                 {
-                    if (FixTags)
+                    //if (FixTags)
                     {
                         if (fixedLetters[i] == '>')
                         {
@@ -357,8 +330,8 @@ namespace RTLTMPro
                         preserveOrder.Add(fixedLetters[i]);
                     }
 
-                    if (FixTags)
-                    {
+                    //if (FixTags)
+                    //{
                         if (fixedLetters[i] == '<')
                         {
                             if (preserveOrder.Count > 0)
@@ -368,7 +341,7 @@ namespace RTLTMPro
                                 preserveOrder.Clear();
                             }
                         }
-                    }
+                    //}
                     continue;
                 }
 
