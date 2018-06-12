@@ -15,7 +15,6 @@ namespace RTLTMPro
         private SerializedProperty isInputPasingRequiredProp;
         private SerializedProperty preserveNumbersProp;
         private SerializedProperty farsiProp;
-        private SerializedProperty preserveTashkeelProp;
         private SerializedProperty fixTagsProp;
         private SerializedProperty forceFixProp;
         private SerializedProperty isRightToLeftProp;
@@ -32,7 +31,6 @@ namespace RTLTMPro
             textProp = serializedObject.FindProperty("m_text");
             preserveNumbersProp = serializedObject.FindProperty("preserveNumbers");
             farsiProp = serializedObject.FindProperty("farsi");
-            preserveTashkeelProp = serializedObject.FindProperty("preserveTashkeel");
             fixTagsProp = serializedObject.FindProperty("fixTags");
             forceFixProp = serializedObject.FindProperty("forceFix");
             originalTextProp = serializedObject.FindProperty("originalText");
@@ -59,19 +57,22 @@ namespace RTLTMPro
             }
 
             EditorGUILayout.BeginVertical(GUI.skin.box);
+            EditorGUILayout.BeginHorizontal();
             EditorGUI.BeginChangeCheck();
             farsiProp.boolValue = GUILayout.Toggle(farsiProp.boolValue, new GUIContent("Farsi"));
             forceFixProp.boolValue = GUILayout.Toggle(forceFixProp.boolValue, new GUIContent("Force Fix"));
             preserveNumbersProp.boolValue = GUILayout.Toggle(preserveNumbersProp.boolValue, new GUIContent("Preserve Numbers"));
-            preserveTashkeelProp.boolValue = GUILayout.Toggle(preserveTashkeelProp.boolValue, new GUIContent("Preserve Tashkeel"));
 
             if (tmpro.richText)
                 fixTagsProp.boolValue = GUILayout.Toggle(fixTagsProp.boolValue, new GUIContent("FixTags"));
+            EditorGUILayout.EndHorizontal();
 
+            EditorGUILayout.BeginHorizontal();
             if (GUILayout.Button("Re-Fix"))
                 changed = true;
-
+            EditorGUILayout.EndHorizontal();
             EditorGUILayout.EndVertical();
+
 
             if (EditorGUI.EndChangeCheck())
             {

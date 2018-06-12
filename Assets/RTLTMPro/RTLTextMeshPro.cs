@@ -62,19 +62,6 @@ namespace RTLTMPro
             }
         }
 
-        public bool PreserveTashkeel
-        {
-            get { return preserveTashkeel; }
-            set
-            {
-                if (preserveTashkeel == value)
-                    return;
-
-                preserveTashkeel = value;
-                havePropertiesChanged = true;
-            }
-        }
-
         public bool FixTags
         {
             get { return fixTags; }
@@ -103,7 +90,6 @@ namespace RTLTMPro
 
         [SerializeField] protected bool preserveNumbers;
         [SerializeField] protected bool farsi = true;
-        [SerializeField] protected bool preserveTashkeel;
         [SerializeField] protected string originalText;
         [SerializeField] protected bool fixTags = true;
         [SerializeField] protected bool forceFix;
@@ -136,7 +122,6 @@ namespace RTLTMPro
 
             support.Farsi = farsi;
             support.PreserveNumbers = preserveNumbers;
-            support.PreserveTashkeel = preserveTashkeel;
             support.FixTags = fixTags;
         }
 

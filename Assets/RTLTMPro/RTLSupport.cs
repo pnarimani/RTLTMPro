@@ -6,7 +6,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 
 namespace RTLTMPro
 {
@@ -14,7 +13,6 @@ namespace RTLTMPro
     {
         // Because we are initializing these properties in constructor, we cannot make them virtual
         public bool PreserveNumbers { get; set; }
-        public bool PreserveTashkeel { get; set; }
         public bool FixTags { get; set; }
         public bool Farsi { get; set; }
 
@@ -23,7 +21,6 @@ namespace RTLTMPro
         public RTLSupport()
         {
             PreserveNumbers = false;
-            PreserveTashkeel = false;
             Farsi = true;
             FixTags = false;
 
@@ -173,51 +170,48 @@ namespace RTLTMPro
         {
             char[] letters = str.ToCharArray();
 
-            if (PreserveTashkeel)
+            for (int i = 0; i < letters.Length; i++)
             {
-                for (int i = 0; i < letters.Length; i++)
+                if (letters[i] == (char)0x064B)
                 {
-                    if (letters[i] == (char)0x064B)
-                    {
-                        // Tanween Fatha
-                        TashkeelLocation.Add(new TashkeelLocation((char)0x064B, i));
-                    }
-                    else if (letters[i] == (char)0x064C)
-                    {
-                        // Tanween Damma
-                        TashkeelLocation.Add(new TashkeelLocation((char)0x064C, i));
-                    }
-                    else if (letters[i] == (char)0x064D)
-                    {
-                        // Tanween Kasra
-                        TashkeelLocation.Add(new TashkeelLocation((char)0x064D, i));
-                    }
-                    else if (letters[i] == (char)0x064E)
-                    {
-                        TashkeelLocation.Add(new TashkeelLocation((char)0x064E, i));
-                    }
-                    else if (letters[i] == (char)0x064F)
-                    {
-                        TashkeelLocation.Add(new TashkeelLocation((char)0x064F, i));
-                    }
-                    else if (letters[i] == (char)0x0650)
-                    {
-                        TashkeelLocation.Add(new TashkeelLocation((char)0x0650, i));
-                    }
-                    else if (letters[i] == (char)0x0651)
-                    {
-                        TashkeelLocation.Add(new TashkeelLocation((char)0x0651, i));
-                    }
-                    else if (letters[i] == (char)0x0652)
-                    {
-                        // SUKUN
-                        TashkeelLocation.Add(new TashkeelLocation((char)0x0652, i));
-                    }
-                    else if (letters[i] == (char)0x0653)
-                    {
-                        // MADDAH ABOVE
-                        TashkeelLocation.Add(new TashkeelLocation((char)0x0653, i));
-                    }
+                    // Tanween Fatha
+                    TashkeelLocation.Add(new TashkeelLocation((char)0x064B, i));
+                }
+                else if (letters[i] == (char)0x064C)
+                {
+                    // Tanween Damma
+                    TashkeelLocation.Add(new TashkeelLocation((char)0x064C, i));
+                }
+                else if (letters[i] == (char)0x064D)
+                {
+                    // Tanween Kasra
+                    TashkeelLocation.Add(new TashkeelLocation((char)0x064D, i));
+                }
+                else if (letters[i] == (char)0x064E)
+                {
+                    TashkeelLocation.Add(new TashkeelLocation((char)0x064E, i));
+                }
+                else if (letters[i] == (char)0x064F)
+                {
+                    TashkeelLocation.Add(new TashkeelLocation((char)0x064F, i));
+                }
+                else if (letters[i] == (char)0x0650)
+                {
+                    TashkeelLocation.Add(new TashkeelLocation((char)0x0650, i));
+                }
+                else if (letters[i] == (char)0x0651)
+                {
+                    TashkeelLocation.Add(new TashkeelLocation((char)0x0651, i));
+                }
+                else if (letters[i] == (char)0x0652)
+                {
+                    // SUKUN
+                    TashkeelLocation.Add(new TashkeelLocation((char)0x0652, i));
+                }
+                else if (letters[i] == (char)0x0653)
+                {
+                    // MADDAH ABOVE
+                    TashkeelLocation.Add(new TashkeelLocation((char)0x0653, i));
                 }
             }
 
@@ -267,8 +261,7 @@ namespace RTLTMPro
             }
 
             //Restore tashkeel to their places.
-            if (PreserveTashkeel)
-                lettersFinal = RestoreTashkeel(lettersFinal);
+            lettersFinal = RestoreTashkeel(lettersFinal);
             return lettersFinal;
         }
 
@@ -528,7 +521,7 @@ namespace RTLTMPro
 
             if (ch >= (char)IsolatedLetters.PersianGaf2 && ch <= (char)IsolatedLetters.PersianGaf2 + 3)
                 return true;
-            
+
             // Special Lam Alef
             if (ch == 0xFEF3)
                 return true;
@@ -541,7 +534,7 @@ namespace RTLTMPro
 
             if (ch == 0xFEF9)
                 return true;
-            
+
             // Input string that goes to FixGlyph method does not have any general letter.
             // Code below is for IsRTLInput function
             switch (ch)
