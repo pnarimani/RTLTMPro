@@ -57,13 +57,18 @@ Arabic tashkeel are supported. Also you can turn them off or on for every `RTL T
 ## Usage Description
 ### Farsi
 When checked, English numbers will be converted to Farsi numbers.
-When unchecked, English numbers will be converted to Arabic numbers.
+When unchecked, English numbers will be converted to Arabic numbers.  
+
 ### Preserve Numbers
-When checked numbers will not be converted.
-### Preserve Tashkeel
-When checked Arabic tashkeel will be shown in final text.
+When checked numbers will not be converted.  
+
+### Force Fix
+RTL Text Mesh Pro does not fix texts that start with English characters. 
+Checking this checkbox forces RTL TextMeshPro to fix the text even when it starts with English character. 
+**Multiline English texts will have problem on components that have `ForceFix` checked.  
+
 ### Fix Tags
-When checked, RTL Text Mesh Pro will try to fix rich text tags.
+When checked, RTL Text Mesh Pro will try to fix rich text tags.  
 
 # Known Issues
 * InputField (and anything that was designed to work with TextMeshProUGUI script) will not work.  
