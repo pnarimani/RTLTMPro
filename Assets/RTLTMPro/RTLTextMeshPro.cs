@@ -1,4 +1,4 @@
-﻿//#define RTL_OVERRIDE
+﻿#define RTL_OVERRIDE
 
 using System.Linq;
 using TMPro;
@@ -19,11 +19,19 @@ namespace RTLTMPro
             get { return base.text; }
             set
             {
-                if (originalText == value)
-                    return;
-
                 originalText = value;
-                base.text = GetFixedText(originalText);
+
+                if (ForceFix == false && RTLSupport.IsRTLInput(originalText) == false)
+                {
+                    isRightToLeftText = false;
+                    base.text = originalText;
+                }
+                else
+                {
+                    isRightToLeftText = true;
+                    base.text = GetFixedText(originalText);
+                }
+
                 havePropertiesChanged = true;
             }
         }
@@ -80,11 +88,25 @@ namespace RTLTMPro
             }
         }
 
+        protected bool ForceFix
+        {
+            get { return forceFix; }
+            set
+            {
+                if (forceFix == value)
+                    return;
+
+                forceFix = value;
+                havePropertiesChanged = true;
+            }
+        }
+
         [SerializeField] protected bool preserveNumbers;
         [SerializeField] protected bool farsi = true;
         [SerializeField] protected bool preserveTashkeel;
         [SerializeField] protected string originalText;
         [SerializeField] protected bool fixTags = true;
+        [SerializeField] protected bool forceFix;
 
         protected RTLSupport support;
 
@@ -99,11 +121,11 @@ namespace RTLTMPro
         {
             if (havePropertiesChanged)
             {
-                if (support == null)
-                    support = new RTLSupport();
+                //if (support == null)
+                //    support = new RTLSupport();
 
-                UpdateSupport();
-                base.text = GetFixedText(originalText);
+                //UpdateSupport();
+                //base.text = GetFixedText(originalText);
             }
         }
 
@@ -128,9 +150,9 @@ namespace RTLTMPro
 
             input = support.FixRTL(input);
             input = input.Reverse().ToArray().ArrayToString();
-            isRightToLeftText = true;
 
             return input;
         }
+
     }
 }

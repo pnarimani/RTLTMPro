@@ -6,6 +6,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace RTLTMPro
 {
@@ -254,7 +255,10 @@ namespace RTLTMPro
                 }
 
                 if (skipNext)
+                {
                     i++;
+                    continue;
+                }
 
                 if (!PreserveNumbers && char.IsDigit(letters[i]))
                 {
@@ -402,15 +406,190 @@ namespace RTLTMPro
 
         public static bool IsRTLCharacter(char ch)
         {
-            // If it's not letter, it's not RTL letter
-            if (char.IsLetter(ch) == false)
-                return false;
+            if (ch >= (char)IsolatedLetters.Hamza && ch <= (char)IsolatedLetters.Hamza + 3)
+                return true;
 
-            // Skip English letters
-            if (char.IsUpper(ch) || char.IsLower(ch))
-                return false;
+            if (ch >= (char)IsolatedLetters.Alef && ch <= (char)IsolatedLetters.Alef + 3)
+                return true;
 
-            return true;
+            if (ch >= (char)IsolatedLetters.AlefHamza && ch <= (char)IsolatedLetters.AlefHamza + 3)
+                return true;
+
+            if (ch >= (char)IsolatedLetters.WawHamza && ch <= (char)IsolatedLetters.WawHamza + 3)
+                return true;
+
+            if (ch >= (char)IsolatedLetters.AlefMaksoor && ch <= (char)IsolatedLetters.AlefMaksoor + 3)
+                return true;
+
+            if (ch >= (char)IsolatedLetters.AlefMaksora && ch <= (char)IsolatedLetters.AlefMaksora + 3)
+                return true;
+
+            if (ch >= (char)IsolatedLetters.HamzaNabera && ch <= (char)IsolatedLetters.HamzaNabera + 3)
+                return true;
+
+            if (ch >= (char)IsolatedLetters.Ba && ch <= (char)IsolatedLetters.Ba + 3)
+                return true;
+
+            if (ch >= (char)IsolatedLetters.Ta && ch <= (char)IsolatedLetters.Ta + 3)
+                return true;
+
+            if (ch >= (char)IsolatedLetters.Tha2 && ch <= (char)IsolatedLetters.Tha2 + 3)
+                return true;
+
+            if (ch >= (char)IsolatedLetters.Jeem && ch <= (char)IsolatedLetters.Jeem + 3)
+                return true;
+
+            if (ch >= (char)IsolatedLetters.H7aa && ch <= (char)IsolatedLetters.H7aa + 3)
+                return true;
+
+            if (ch >= (char)IsolatedLetters.Khaa2 && ch <= (char)IsolatedLetters.Khaa2 + 3)
+                return true;
+
+            if (ch >= (char)IsolatedLetters.Dal && ch <= (char)IsolatedLetters.Dal + 3)
+                return true;
+
+            if (ch >= (char)IsolatedLetters.Thal && ch <= (char)IsolatedLetters.Thal + 3)
+                return true;
+
+            if (ch >= (char)IsolatedLetters.Ra2 && ch <= (char)IsolatedLetters.Ra2 + 3)
+                return true;
+
+            if (ch >= (char)IsolatedLetters.Zeen && ch <= (char)IsolatedLetters.Zeen + 3)
+                return true;
+
+            if (ch >= (char)IsolatedLetters.Seen && ch <= (char)IsolatedLetters.Seen + 3)
+                return true;
+
+            if (ch >= (char)IsolatedLetters.Sheen && ch <= (char)IsolatedLetters.Sheen + 3)
+                return true;
+
+            if (ch >= (char)IsolatedLetters.S9a && ch <= (char)IsolatedLetters.S9a + 3)
+                return true;
+
+            if (ch >= (char)IsolatedLetters.Dha && ch <= (char)IsolatedLetters.Dha + 3)
+                return true;
+
+            if (ch >= (char)IsolatedLetters.T6a && ch <= (char)IsolatedLetters.T6a + 3)
+                return true;
+
+            if (ch >= (char)IsolatedLetters.T6ha && ch <= (char)IsolatedLetters.T6ha + 3)
+                return true;
+
+            if (ch >= (char)IsolatedLetters.Ain && ch <= (char)IsolatedLetters.Ain + 3)
+                return true;
+
+            if (ch >= (char)IsolatedLetters.Gain && ch <= (char)IsolatedLetters.Gain + 3)
+                return true;
+
+            if (ch >= (char)IsolatedLetters.Fa && ch <= (char)IsolatedLetters.Fa + 3)
+                return true;
+
+            if (ch >= (char)IsolatedLetters.Gaf && ch <= (char)IsolatedLetters.Gaf + 3)
+                return true;
+
+            if (ch >= (char)IsolatedLetters.Kaf && ch <= (char)IsolatedLetters.Kaf + 3)
+                return true;
+
+            if (ch >= (char)IsolatedLetters.Lam && ch <= (char)IsolatedLetters.Lam + 3)
+                return true;
+
+            if (ch >= (char)IsolatedLetters.Meem && ch <= (char)IsolatedLetters.Meem + 3)
+                return true;
+
+            if (ch >= (char)IsolatedLetters.Noon && ch <= (char)IsolatedLetters.Noon + 3)
+                return true;
+
+            if (ch >= (char)IsolatedLetters.Ha && ch <= (char)IsolatedLetters.Ha + 3)
+                return true;
+
+            if (ch >= (char)IsolatedLetters.Waw && ch <= (char)IsolatedLetters.Waw + 3)
+                return true;
+
+            if (ch >= (char)IsolatedLetters.Ya && ch <= (char)IsolatedLetters.Ya + 3)
+                return true;
+
+            if (ch >= (char)IsolatedLetters.AlefMad && ch <= (char)IsolatedLetters.AlefMad + 3)
+                return true;
+
+            if (ch >= (char)IsolatedLetters.TaMarboota && ch <= (char)IsolatedLetters.TaMarboota + 3)
+                return true;
+
+            if (ch >= (char)IsolatedLetters.PersianPe && ch <= (char)IsolatedLetters.PersianPe + 3)
+                return true;
+
+            if (ch >= (char)IsolatedLetters.PersianChe && ch <= (char)IsolatedLetters.PersianChe + 3)
+                return true;
+
+            if (ch >= (char)IsolatedLetters.PersianZe && ch <= (char)IsolatedLetters.PersianZe + 3)
+                return true;
+
+            if (ch >= (char)IsolatedLetters.PersianGaf && ch <= (char)IsolatedLetters.PersianGaf + 3)
+                return true;
+
+            if (ch >= (char)IsolatedLetters.PersianGaf2 && ch <= (char)IsolatedLetters.PersianGaf2 + 3)
+                return true;
+            
+            // Special Lam Alef
+            if (ch == 0xFEF3)
+                return true;
+
+            if (ch == 0xFEF5)
+                return true;
+
+            if (ch == 0xFEF7)
+                return true;
+
+            if (ch == 0xFEF9)
+                return true;
+            
+            // Input string that goes to FixGlyph method does not have any general letter.
+            // Code below is for IsRTLInput function
+            switch (ch)
+            {
+                case (char)GeneralLetters.Hamza:
+                case (char)GeneralLetters.Alef:
+                case (char)GeneralLetters.AlefHamza:
+                case (char)GeneralLetters.WawHamza:
+                case (char)GeneralLetters.AlefMaksoor:
+                case (char)GeneralLetters.HamzaNabera:
+                case (char)GeneralLetters.Ba:
+                case (char)GeneralLetters.Ta:
+                case (char)GeneralLetters.Tha2:
+                case (char)GeneralLetters.Jeem:
+                case (char)GeneralLetters.H7aa:
+                case (char)GeneralLetters.Khaa2:
+                case (char)GeneralLetters.Dal:
+                case (char)GeneralLetters.Thal:
+                case (char)GeneralLetters.Ra2:
+                case (char)GeneralLetters.Zeen:
+                case (char)GeneralLetters.Seen:
+                case (char)GeneralLetters.Sheen:
+                case (char)GeneralLetters.S9a:
+                case (char)GeneralLetters.Dha:
+                case (char)GeneralLetters.T6a:
+                case (char)GeneralLetters.T6ha:
+                case (char)GeneralLetters.Ain:
+                case (char)GeneralLetters.Gain:
+                case (char)GeneralLetters.Fa:
+                case (char)GeneralLetters.Gaf:
+                case (char)GeneralLetters.Kaf:
+                case (char)GeneralLetters.Lam:
+                case (char)GeneralLetters.Meem:
+                case (char)GeneralLetters.Noon:
+                case (char)GeneralLetters.Ha:
+                case (char)GeneralLetters.Waw:
+                case (char)GeneralLetters.Ya:
+                case (char)GeneralLetters.AlefMad:
+                case (char)GeneralLetters.TaMarboota:
+                case (char)GeneralLetters.PersianPe:
+                case (char)GeneralLetters.PersianChe:
+                case (char)GeneralLetters.PersianZe:
+                case (char)GeneralLetters.PersianGaf:
+                case (char)GeneralLetters.PersianGaf2:
+                    return true;
+            }
+
+            return false;
         }
 
         public static bool IsRTLInput(string input)
@@ -421,41 +600,55 @@ namespace RTLTMPro
 
         public static bool IsRTLInput(IEnumerable<char> chars)
         {
-            return (from character in chars
-                    where char.IsLetter(character)
-                    select IsRTLCharacter(character)).FirstOrDefault();
+            foreach (var character in chars)
+            {
+                switch (character)
+                {
+                    // Arabic Tashkeel
+                    case (char)0x064B:
+                    case (char)0x064C:
+                    case (char)0x064D:
+                    case (char)0x064E:
+                    case (char)0x064F:
+                    case (char)0x0650:
+                    case (char)0x0651:
+                    case (char)0x0652:
+                    case (char)0x0653:
+                        return true;
+                }
+
+                if (char.IsLetter(character))
+                {
+                    return IsRTLCharacter(character);
+                }
+            }
+
+            return false;
         }
 
-        protected static bool HandleSpecialLam(IList<char> letters, IList<char> lettersFinal, int i)
+        protected static bool HandleSpecialLam(char[] letters, char[] lettersFinal, int i)
         {
-            bool skip = false;
-
-            if (letters[i + 1] == (char)IsolatedLetters.AlefMaksoor)
+            switch (letters[i + 1])
             {
-                letters[i] = (char)0xFEF7;
-                lettersFinal[i + 1] = (char)0xFFFF;
-                skip = true;
-            }
-            else if (letters[i + 1] == (char)IsolatedLetters.Alef)
-            {
-                letters[i] = (char)0xFEF9;
-                lettersFinal[i + 1] = (char)0xFFFF;
-                skip = true;
-            }
-            else if (letters[i + 1] == (char)IsolatedLetters.AlefHamza)
-            {
-                letters[i] = (char)0xFEF5;
-                lettersFinal[i + 1] = (char)0xFFFF;
-                skip = true;
-            }
-            else if (letters[i + 1] == (char)IsolatedLetters.AlefMad)
-            {
-                letters[i] = (char)0xFEF3;
-                lettersFinal[i + 1] = (char)0xFFFF;
-                skip = true;
+                case (char)IsolatedLetters.AlefMaksoor:
+                    letters[i] = (char)0xFEF7;
+                    lettersFinal[i + 1] = (char)0xFFFF;
+                    return true;
+                case (char)IsolatedLetters.Alef:
+                    letters[i] = (char)0xFEF9;
+                    lettersFinal[i + 1] = (char)0xFFFF;
+                    return true;
+                case (char)IsolatedLetters.AlefHamza:
+                    letters[i] = (char)0xFEF5;
+                    lettersFinal[i + 1] = (char)0xFFFF;
+                    return true;
+                case (char)IsolatedLetters.AlefMad:
+                    letters[i] = (char)0xFEF3;
+                    lettersFinal[i + 1] = (char)0xFFFF;
+                    return true;
             }
 
-            return skip;
+            return false;
         }
 
         protected static bool IsLeadingLetter(IList<char> letters, int index)

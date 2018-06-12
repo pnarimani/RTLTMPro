@@ -17,6 +17,9 @@ namespace RTLTMPro
         private SerializedProperty farsiProp;
         private SerializedProperty preserveTashkeelProp;
         private SerializedProperty fixTagsProp;
+        private SerializedProperty forceFixProp;
+        private SerializedProperty isRightToLeftProp;
+
         private bool changed;
         private bool foldout;
         private GUIStyle fixNumberStyle;
@@ -31,10 +34,12 @@ namespace RTLTMPro
             farsiProp = serializedObject.FindProperty("farsi");
             preserveTashkeelProp = serializedObject.FindProperty("preserveTashkeel");
             fixTagsProp = serializedObject.FindProperty("fixTags");
+            forceFixProp = serializedObject.FindProperty("forceFix");
             originalTextProp = serializedObject.FindProperty("originalText");
             havePropertiesChangedProp = serializedObject.FindProperty("m_havePropertiesChanged");
             inputSourceProp = serializedObject.FindProperty("m_inputSource");
             isInputPasingRequiredProp = serializedObject.FindProperty("m_isInputParsingRequired");
+            isRightToLeftProp = serializedObject.FindProperty("m_isRightToLeft");
         }
 
         public override void OnInspectorGUI()
@@ -56,6 +61,7 @@ namespace RTLTMPro
             EditorGUILayout.BeginVertical(GUI.skin.box);
             EditorGUI.BeginChangeCheck();
             farsiProp.boolValue = GUILayout.Toggle(farsiProp.boolValue, new GUIContent("Farsi"));
+            forceFixProp.boolValue = GUILayout.Toggle(forceFixProp.boolValue, new GUIContent("Force Fix"));
             preserveNumbersProp.boolValue = GUILayout.Toggle(preserveNumbersProp.boolValue, new GUIContent("Preserve Numbers"));
             preserveTashkeelProp.boolValue = GUILayout.Toggle(preserveTashkeelProp.boolValue, new GUIContent("Preserve Tashkeel"));
 
@@ -71,8 +77,6 @@ namespace RTLTMPro
             {
                 changed = true;
             }
-
-
 
             Rect rect = EditorGUILayout.GetControlRect(false, 25);
             rect.y += 2;
@@ -98,7 +102,17 @@ namespace RTLTMPro
 
             if (changed)
             {
-                textProp.stringValue = tmpro.GetFixedText(originalTextProp.stringValue);
+                if (forceFixProp.boolValue == false && RTLSupport.IsRTLInput(originalTextProp.stringValue) == false)
+                {
+                    isRightToLeftProp.boolValue = false;
+                    textProp.stringValue = originalTextProp.stringValue;
+                }
+                else
+                {
+                    isRightToLeftProp.boolValue = true;
+                    textProp.stringValue = tmpro.GetFixedText(originalTextProp.stringValue);
+                }
+                
                 havePropertiesChangedProp.boolValue = true;
                 changed = false;
                 EditorUtility.SetDirty(target);
