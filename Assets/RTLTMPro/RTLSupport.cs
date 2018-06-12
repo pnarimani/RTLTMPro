@@ -46,6 +46,7 @@ namespace RTLTMPro
         {
             int openIndex = -1;
             List<char> tag = new List<char>();
+
             for (int i = 0; i < finalLetters.Count; i++)
             {
                 if (finalLetters[i] == '<')
@@ -55,91 +56,98 @@ namespace RTLTMPro
 
                 if (openIndex > -1)
                 {
-                    if (Farsi)
+                    if (IsRTLCharacter(finalLetters[i]) || finalLetters[i] == ' ')
                     {
-                        switch (finalLetters[i])
-                        {
-                            case (char)FarsiNumbers.Zero:
-                                finalLetters[i] = (char)EnglishNumbers.Zero;
-                                break;
-                            case (char)FarsiNumbers.One:
-                                finalLetters[i] = (char)EnglishNumbers.One;
-                                break;
-                            case (char)FarsiNumbers.Two:
-                                finalLetters[i] = (char)EnglishNumbers.Two;
-                                break;
-                            case (char)FarsiNumbers.Three:
-                                finalLetters[i] = (char)EnglishNumbers.Three;
-                                break;
-                            case (char)FarsiNumbers.Four:
-                                finalLetters[i] = (char)EnglishNumbers.Four;
-                                break;
-                            case (char)FarsiNumbers.Five:
-                                finalLetters[i] = (char)EnglishNumbers.Five;
-                                break;
-                            case (char)FarsiNumbers.Six:
-                                finalLetters[i] = (char)EnglishNumbers.Six;
-                                break;
-                            case (char)FarsiNumbers.Seven:
-                                finalLetters[i] = (char)EnglishNumbers.Seven;
-                                break;
-                            case (char)FarsiNumbers.Eight:
-                                finalLetters[i] = (char)EnglishNumbers.Eight;
-                                break;
-                            case (char)FarsiNumbers.Nine:
-                                finalLetters[i] = (char)EnglishNumbers.Nine;
-                                break;
-                        }
-                    }
-                    else
-                    {
-                        switch (finalLetters[i])
-                        {
-                            case (char)HinduNumbers.Zero:
-                                finalLetters[i] = (char)EnglishNumbers.Zero;
-                                break;
-                            case (char)HinduNumbers.One:
-                                finalLetters[i] = (char)EnglishNumbers.One;
-                                break;
-                            case (char)HinduNumbers.Two:
-                                finalLetters[i] = (char)EnglishNumbers.Two;
-                                break;
-                            case (char)HinduNumbers.Three:
-                                finalLetters[i] = (char)EnglishNumbers.Three;
-                                break;
-                            case (char)HinduNumbers.Four:
-                                finalLetters[i] = (char)EnglishNumbers.Four;
-                                break;
-                            case (char)HinduNumbers.Five:
-                                finalLetters[i] = (char)EnglishNumbers.Five;
-                                break;
-                            case (char)HinduNumbers.Six:
-                                finalLetters[i] = (char)EnglishNumbers.Six;
-                                break;
-                            case (char)HinduNumbers.Seven:
-                                finalLetters[i] = (char)EnglishNumbers.Seven;
-                                break;
-                            case (char)HinduNumbers.Eight:
-                                finalLetters[i] = (char)EnglishNumbers.Eight;
-                                break;
-                            case (char)HinduNumbers.Nine:
-                                finalLetters[i] = (char)EnglishNumbers.Nine;
-                                break;
-                        }
+                        // cancel operation
+                        openIndex = -1;
+                        continue;
                     }
                 }
 
                 if (finalLetters[i] == '>')
                 {
                     if (openIndex == -1)
-                        return;
-
+                        continue;
+                    
                     tag.Clear();
                     for (int j = openIndex; j <= i; j++)
                     {
+                        if (Farsi)
+                        {
+                            switch (finalLetters[j])
+                            {
+                                case (char)FarsiNumbers.Zero:
+                                    finalLetters[j] = (char)EnglishNumbers.Zero;
+                                    break;
+                                case (char)FarsiNumbers.One:
+                                    finalLetters[j] = (char)EnglishNumbers.One;
+                                    break;
+                                case (char)FarsiNumbers.Two:
+                                    finalLetters[j] = (char)EnglishNumbers.Two;
+                                    break;
+                                case (char)FarsiNumbers.Three:
+                                    finalLetters[j] = (char)EnglishNumbers.Three;
+                                    break;
+                                case (char)FarsiNumbers.Four:
+                                    finalLetters[j] = (char)EnglishNumbers.Four;
+                                    break;
+                                case (char)FarsiNumbers.Five:
+                                    finalLetters[j] = (char)EnglishNumbers.Five;
+                                    break;
+                                case (char)FarsiNumbers.Six:
+                                    finalLetters[j] = (char)EnglishNumbers.Six;
+                                    break;
+                                case (char)FarsiNumbers.Seven:
+                                    finalLetters[j] = (char)EnglishNumbers.Seven;
+                                    break;
+                                case (char)FarsiNumbers.Eight:
+                                    finalLetters[j] = (char)EnglishNumbers.Eight;
+                                    break;
+                                case (char)FarsiNumbers.Nine:
+                                    finalLetters[j] = (char)EnglishNumbers.Nine;
+                                    break;
+                            }
+                        }
+                        else
+                        {
+                            switch (finalLetters[j])
+                            {
+                                case (char)HinduNumbers.Zero:
+                                    finalLetters[j] = (char)EnglishNumbers.Zero;
+                                    break;
+                                case (char)HinduNumbers.One:
+                                    finalLetters[j] = (char)EnglishNumbers.One;
+                                    break;
+                                case (char)HinduNumbers.Two:
+                                    finalLetters[j] = (char)EnglishNumbers.Two;
+                                    break;
+                                case (char)HinduNumbers.Three:
+                                    finalLetters[j] = (char)EnglishNumbers.Three;
+                                    break;
+                                case (char)HinduNumbers.Four:
+                                    finalLetters[j] = (char)EnglishNumbers.Four;
+                                    break;
+                                case (char)HinduNumbers.Five:
+                                    finalLetters[j] = (char)EnglishNumbers.Five;
+                                    break;
+                                case (char)HinduNumbers.Six:
+                                    finalLetters[j] = (char)EnglishNumbers.Six;
+                                    break;
+                                case (char)HinduNumbers.Seven:
+                                    finalLetters[j] = (char)EnglishNumbers.Seven;
+                                    break;
+                                case (char)HinduNumbers.Eight:
+                                    finalLetters[j] = (char)EnglishNumbers.Eight;
+                                    break;
+                                case (char)HinduNumbers.Nine:
+                                    finalLetters[j] = (char)EnglishNumbers.Nine;
+                                    break;
+                            }
+                        }
+
                         tag.Add(finalLetters[j]);
                     }
-
+                    
                     tag.Reverse();
                     finalLetters.RemoveRange(openIndex, tag.Count);
                     finalLetters.InsertRange(openIndex, tag);
@@ -155,11 +163,11 @@ namespace RTLTMPro
             char[] letters = originString.ToCharArray();
             for (int i = 0; i < letters.Length; i++)
             {
-                if (Farsi && letters[i] == (int) GeneralLetters.Ya)
+                if (Farsi && letters[i] == (int)GeneralLetters.Ya)
                 {
                     letters[i] = (char)GeneralLetters.PersianYa;
                 }
-                else if (Farsi == false && letters[i] == (int) GeneralLetters.PersianYa)
+                else if (Farsi == false && letters[i] == (int)GeneralLetters.PersianYa)
                 {
                     letters[i] = (char)GeneralLetters.Ya;
                 }
@@ -305,12 +313,32 @@ namespace RTLTMPro
             {
                 if (char.IsPunctuation(fixedLetters[i]) || char.IsSymbol(fixedLetters[i]))
                 {
+                    if (FixTags)
+                    {
+                        if (fixedLetters[i] == '>')
+                        {
+                            if (preserveOrder.Count > 0)
+                            {
+                                for (int j = 0; j < preserveOrder.Count; j++)
+                                    finalLetters.Add(preserveOrder[preserveOrder.Count - 1 - j]);
+                                preserveOrder.Clear();
+                            }
+                        }
+                    }
+
                     if (i > 0 && i < fixedLetters.Count - 1)
                     {
-                        if (IsRTLCharacter(fixedLetters[i - 1]) && IsRTLCharacter(fixedLetters[i + 1]) ||
-                            char.IsWhiteSpace(fixedLetters[i + 1]) && (fixedLetters[i] == '.' || fixedLetters[i] == '،' || fixedLetters[i] == '؛') ||
-                            char.IsWhiteSpace(fixedLetters[i - 1]) && IsRTLCharacter(fixedLetters[i + 1]) ||
-                            IsRTLCharacter(fixedLetters[i - 1]) && char.IsWhiteSpace(fixedLetters[i + 1]))
+                        // NOTE: Array is reversed. i + 1 is behind and i - 1 is ahead
+                        bool isAfterRTLCharacter = IsRTLCharacter(fixedLetters[i + 1]);
+                        bool isBeforeRTLCharacter = IsRTLCharacter(fixedLetters[i - 1]);
+                        bool isBeforeWhiteSpace = char.IsWhiteSpace(fixedLetters[i - 1]);
+                        bool isAfterWhiteSpace = char.IsWhiteSpace(fixedLetters[i + 1]);
+                        bool isSpecialPunctuation = fixedLetters[i] == '.' || fixedLetters[i] == '،' || fixedLetters[i] == '؛';
+
+                        if (isBeforeRTLCharacter && isAfterRTLCharacter ||
+                            isAfterWhiteSpace && isSpecialPunctuation ||
+                            isBeforeWhiteSpace && isAfterRTLCharacter ||
+                            isBeforeRTLCharacter && isAfterWhiteSpace)
                         {
                             finalLetters.Add(fixedLetters[i]);
                         }
@@ -332,15 +360,29 @@ namespace RTLTMPro
                             preserveOrder.Add(fixedLetters[i]);
                     }
 
+                    if (FixTags)
+                    {
+                        if (fixedLetters[i] == '<')
+                        {
+                            if (preserveOrder.Count > 0)
+                            {
+                                for (int j = 0; j < preserveOrder.Count; j++)
+                                    finalLetters.Add(preserveOrder[preserveOrder.Count - 1 - j]);
+                                preserveOrder.Clear();
+                            }
+                        }
+                    }
                     continue;
                 }
 
+
                 // For cases where english words and arabic are mixed. This allows for using arabic, english and numbers in one sentence.
+                // If the space is between numbers,symbols or English words, keep the order
                 if (fixedLetters[i] == ' ' &&
                     i > 0 &&
                     i < fixedLetters.Count - 1 &&
-                    (char.IsLower(fixedLetters[i - 1]) || char.IsUpper(fixedLetters[i - 1]) || char.IsNumber(fixedLetters[i - 1])) &&
-                    (char.IsLower(fixedLetters[i + 1]) || char.IsUpper(fixedLetters[i + 1]) || char.IsNumber(fixedLetters[i + 1])))
+                    (char.IsLower(fixedLetters[i - 1]) || char.IsUpper(fixedLetters[i - 1]) || char.IsNumber(fixedLetters[i - 1]) || char.IsSymbol(fixedLetters[i - 1])) &&
+                    (char.IsLower(fixedLetters[i + 1]) || char.IsUpper(fixedLetters[i + 1]) || char.IsNumber(fixedLetters[i + 1]) || char.IsSymbol(fixedLetters[i + 1])))
 
                 {
                     preserveOrder.Add(fixedLetters[i]);
