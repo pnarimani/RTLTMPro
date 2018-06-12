@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿//#define RTL_OVERRIDE
+
+using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -8,7 +10,11 @@ namespace RTLTMPro
     public class RTLTextMeshPro : TextMeshProUGUI
     {
         // ReSharper disable once InconsistentNaming
+#if RTL_OVERRIDE
         public override string text
+#else
+        public new string text
+#endif
         {
             get { return base.text; }
             set
@@ -93,7 +99,7 @@ namespace RTLTMPro
         {
             if (havePropertiesChanged)
             {
-                if(support == null)
+                if (support == null)
                     support = new RTLSupport();
 
                 UpdateSupport();
@@ -103,9 +109,9 @@ namespace RTLTMPro
 
         protected virtual void UpdateSupport()
         {
-            if(support == null)
+            if (support == null)
                 support = new RTLSupport();
-            
+
             support.Farsi = farsi;
             support.PreserveNumbers = preserveNumbers;
             support.PreserveTashkeel = preserveTashkeel;
@@ -117,13 +123,13 @@ namespace RTLTMPro
             if (string.IsNullOrEmpty(input))
                 return input;
 
-            if(support == null)
+            if (support == null)
                 support = new RTLSupport();
 
             input = support.FixRTL(input);
             input = input.Reverse().ToArray().ArrayToString();
             isRightToLeftText = true;
-            
+
             return input;
         }
     }

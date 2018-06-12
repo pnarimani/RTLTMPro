@@ -555,7 +555,6 @@ MonoBehaviour:
   preserveTashkeel: 0
   originalText: "\u0645\u062A\u0646 123 \u0633\u0627\u062F\u0647"
   fixTags: 0
-  preserveSymbols: 0
 --- !u!222 &605342366
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -619,7 +618,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: "\uFEE3\uFE98\uFEE6 \uFEB3\uFE8E\uFEA9\uFEE9"
+  m_text: "\uFEA7\uFEAA\uFE8D\uFEED\uFEE7\uFEAA\uFBFC"
   m_isRightToLeft: 1
   m_fontAsset: {fileID: 11400000, guid: 3fbde2e562e333d488bc46986fc6f4f1, type: 2}
   m_sharedMaterial: {fileID: 21623836076631360, guid: 3fbde2e562e333d488bc46986fc6f4f1,
@@ -687,10 +686,10 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 645895903}
-    characterCount: 8
+    characterCount: 7
     spriteCount: 0
-    spaceCount: 1
-    wordCount: 2
+    spaceCount: 0
+    wordCount: 1
     linkCount: 0
     lineCount: 1
     pageCount: 1
@@ -716,9 +715,8 @@ MonoBehaviour:
   preserveNumbers: 0
   farsi: 1
   preserveTashkeel: 0
-  originalText: "\u0645\u062A\u0646 \u0633\u0627\u062F\u0647"
+  originalText: "\u062E\u062F\u0627\u0648\u0646\u062F\u064A"
   fixTags: 0
-  preserveSymbols: 0
 --- !u!222 &645895904
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1223,7 +1221,6 @@ MonoBehaviour:
   preserveTashkeel: 0
   originalText: "\u0645\u062A\u0646<English>\u0633\u0627\u062F\u0647"
   fixTags: 0
-  preserveSymbols: 0
 --- !u!222 &1332193558
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1695,7 +1692,6 @@ MonoBehaviour:
   preserveTashkeel: 0
   originalText: 1.2
   fixTags: 0
-  preserveSymbols: 0
 --- !u!222 &1607234752
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1928,7 +1924,6 @@ MonoBehaviour:
   preserveTashkeel: 0
   originalText: " \u0645\u062A\u0646\u060C \u0633\u0627\u062F\u0647"
   fixTags: 0
-  preserveSymbols: 0
 --- !u!222 &2030634300
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2161,7 +2156,6 @@ MonoBehaviour:
   preserveTashkeel: 0
   originalText: "\u0645\u062A\u0646 {123} \u0633\u0627\u062F\u0647."
   fixTags: 0
-  preserveSymbols: 1
 --- !u!222 &2134552159
 CanvasRenderer:
   m_ObjectHideFlags: 0

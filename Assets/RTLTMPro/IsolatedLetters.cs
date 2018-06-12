@@ -41,7 +41,8 @@ namespace RTLTMPro
         Ya = 0xFEF1,
         AlefMad = 0xFE81,
         TaMarboota = 0xFE93,
-        PersianPe = 0xFB56, // Persian Letters;
+        PersianYa = 0xFBFC,
+        PersianPe = 0xFB56,
         PersianChe = 0xFB7A,
         PersianZe = 0xFB8A,
         PersianGaf = 0xFB92,
