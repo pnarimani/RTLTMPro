@@ -38,7 +38,7 @@ Arabic tashkeel are supported. Also you can turn them off or on for every `RTL T
 ![Tashkeel Preview](Screenshots/Arabic%20Text.PNG)
 
 # How To Use
-* Import latest unitypcakage to your project.
+* Copy `RTLTMPro` folder to your project.
 * Open one of the range files in `Assets/RTLTMPro/Ranges/` folder using your favorite text editor.
   * RTL Letters are in `LetterRanges.txt` file
   * English, Arabic and Farsi numbers are in `NumberRanges.txt` file
@@ -67,7 +67,8 @@ When checked, RTL Text Mesh Pro will try to fix rich text tags.
 
 # Known Issues
 * Multiline has issues with English text.
-* InputField (and anything that was designed to work with TextMeshProUGUI script) will not work unless you do these steps:
+* InputField (and anything that was designed to work with TextMeshProUGUI script) will not work.  
+  Why it doesn't work? We need to override the `text` property of `TextMeshProUGUI`. But the `text` property is not defined `virtual`. You need to manually make the property virtual.
   * Open `TMP_Text.cs` from TextMeshPro source code
   * add virtual keyword to text property.  
   ![Text](Screenshots/TextProperty.PNG)
