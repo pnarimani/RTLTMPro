@@ -13,6 +13,9 @@ namespace RTLTMPro
             get { return base.text; }
             set
             {
+                if (originalText == value)
+                    return;
+
                 originalText = value;
                 base.text = GetFixedText(originalText);
                 havePropertiesChanged = true;
@@ -24,6 +27,9 @@ namespace RTLTMPro
             get { return preserveNumbers; }
             set
             {
+                if (preserveNumbers == value)
+                    return;
+
                 preserveNumbers = value;
                 havePropertiesChanged = true;
             }
@@ -34,6 +40,9 @@ namespace RTLTMPro
             get { return farsi; }
             set
             {
+                if (farsi == value)
+                    return;
+
                 farsi = value;
                 havePropertiesChanged = true;
             }
@@ -44,6 +53,9 @@ namespace RTLTMPro
             get { return preserveTashkeel; }
             set
             {
+                if (preserveTashkeel == value)
+                    return;
+
                 preserveTashkeel = value;
                 havePropertiesChanged = true;
             }
@@ -54,6 +66,9 @@ namespace RTLTMPro
             get { return fixTags; }
             set
             {
+                if (fixTags == value)
+                    return;
+
                 fixTags = value;
                 havePropertiesChanged = true;
             }
