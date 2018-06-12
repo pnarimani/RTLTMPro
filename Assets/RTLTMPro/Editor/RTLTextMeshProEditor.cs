@@ -57,7 +57,7 @@ namespace RTLTMPro
             EditorGUI.BeginChangeCheck();
             farsiProp.boolValue = GUILayout.Toggle(farsiProp.boolValue, new GUIContent("Farsi"));
             preserveNumbersProp.boolValue = GUILayout.Toggle(preserveNumbersProp.boolValue, new GUIContent("Preserve Numbers"));
-            preserveTashkeelProp.boolValue = GUILayout.Toggle(preserveTashkeelProp.boolValue, new GUIContent("Preserve Tashkil"));
+            preserveTashkeelProp.boolValue = GUILayout.Toggle(preserveTashkeelProp.boolValue, new GUIContent("Preserve Tashkeel"));
 
             if (tmpro.richText)
                 fixTagsProp.boolValue = GUILayout.Toggle(fixTagsProp.boolValue, new GUIContent("FixTags"));
