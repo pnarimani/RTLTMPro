@@ -6,6 +6,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace RTLTMPro
 {
@@ -27,7 +28,7 @@ namespace RTLTMPro
             TashkeelLocation = new List<TashkeelLocation>();
         }
 
-        public string FixRTL(string input)
+        public virtual string FixRTL(string input)
         {
             List<char> finalLetters = new List<char>();
             TashkeelLocation.Clear();
@@ -443,7 +444,7 @@ namespace RTLTMPro
             return lettersWithTashkeel;
         }
 
-        public static bool IsRTLCharacter(char ch)
+        public virtual bool IsRTLCharacter(char ch)
         {
             if (ch >= (char)IsolatedLetters.Hamza && ch <= (char)IsolatedLetters.Hamza + 3)
                 return true;
@@ -631,13 +632,13 @@ namespace RTLTMPro
             return false;
         }
 
-        public static bool IsRTLInput(string input)
+        public virtual bool IsRTLInput(string input)
         {
             char[] chars = input.ToCharArray();
             return IsRTLInput(chars);
         }
 
-        public static bool IsRTLInput(IEnumerable<char> chars)
+        public virtual bool IsRTLInput(IEnumerable<char> chars)
         {
             foreach (var character in chars)
             {
@@ -665,7 +666,7 @@ namespace RTLTMPro
             return false;
         }
 
-        protected static bool HandleSpecialLam(char[] letters, char[] lettersFinal, int i)
+        protected virtual bool HandleSpecialLam(char[] letters, char[] lettersFinal, int i)
         {
             switch (letters[i + 1])
             {
@@ -690,7 +691,7 @@ namespace RTLTMPro
             return false;
         }
 
-        protected static bool IsLeadingLetter(IList<char> letters, int index)
+        protected virtual bool IsLeadingLetter(IList<char> letters, int index)
         {
             bool previousLetterCheck = index == 0 ||
                                        IsRTLCharacter(letters[index - 1]) == false ||
@@ -728,7 +729,7 @@ namespace RTLTMPro
             return previousLetterCheck && leadingLetterCheck && nextLetterCheck;
         }
 
-        protected static bool IsFinishingLetter(IList<char> letters, int index)
+        protected virtual bool IsFinishingLetter(IList<char> letters, int index)
         {
             bool previousLetterCheck = index != 0 &&
                                        letters[index - 1] != ' ' &&
@@ -753,7 +754,7 @@ namespace RTLTMPro
             return previousLetterCheck && finishingLetterCheck;
         }
 
-        protected static bool IsMiddleLetter(IList<char> letters, int index)
+        protected virtual bool IsMiddleLetter(IList<char> letters, int index)
         {
             bool middleLetterCheck = index != 0 &&
                                      letters[index] != (int)IsolatedLetters.Alef &&
