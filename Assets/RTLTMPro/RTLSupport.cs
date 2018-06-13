@@ -270,10 +270,18 @@ namespace RTLTMPro
         /// <returns><see langword="true" /> if input is RTL. otherwise <see langword="false" /></returns>
         public virtual bool IsRTLInput(IEnumerable<char> chars)
         {
+            bool insideTag = false;
             foreach (var character in chars)
             {
                 switch (character)
                 {
+                    case '<':
+                        insideTag = true;
+                        continue;
+                    case '>':
+                        insideTag = false;
+                        continue;
+
                     // Arabic Tashkeel
                     case (char) 0x064B:
                     case (char) 0x064C:
@@ -286,6 +294,9 @@ namespace RTLTMPro
                     case (char) 0x0653:
                         return true;
                 }
+
+                if (insideTag)
+                    continue;
 
                 if (char.IsLetter(character))
                 {
