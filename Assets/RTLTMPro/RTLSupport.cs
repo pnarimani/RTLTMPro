@@ -69,7 +69,7 @@ namespace RTLTMPro
                 {
                     if (openIndex == -1)
                         continue;
-                    
+
                     tag.Clear();
                     for (int j = openIndex; j <= i; j++)
                     {
@@ -148,7 +148,7 @@ namespace RTLTMPro
 
                         tag.Add(finalLetters[j]);
                     }
-                    
+
                     tag.Reverse();
                     finalLetters.RemoveRange(openIndex, tag.Count);
                     finalLetters.InsertRange(openIndex, tag);
@@ -354,11 +354,7 @@ namespace RTLTMPro
                     }
                     else if (i == fixedLetters.Count - 1)
                     {
-                        // If the punctuation is at the ending of the text, if the text is not RTL, preserve order
-                        if (IsRTLInput(fixedLetters))
-                            finalLetters.Add(fixedLetters[i]);
-                        else
-                            preserveOrder.Add(fixedLetters[i]);
+                        preserveOrder.Add(fixedLetters[i]);
                     }
 
                     if (FixTags)
