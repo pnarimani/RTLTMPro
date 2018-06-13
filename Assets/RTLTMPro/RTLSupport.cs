@@ -17,6 +17,7 @@ namespace RTLTMPro
         // Because we are initializing these properties in constructor, we cannot make them virtual
         public bool PreserveNumbers { get; set; }
         public bool Farsi { get; set; }
+        public bool FixTextTags { get; set; }
 
         protected readonly ICollection<TashkeelLocation> TashkeelLocation;
         protected readonly Regex RTLTagFixer;
@@ -27,8 +28,8 @@ namespace RTLTMPro
             PreserveNumbers = false;
             Farsi = true;
             TashkeelLocation = new List<TashkeelLocation>();
-            RTLTagFixer= new Regex("(?<closing></(?<closingName>[^ /]+)>)(?<content>(.|\\n)+?)(?<opening><\\k<closingName>=[^ /]+>)");
-            LoneTagFixer = new Regex("(?<!(</(?![^ /])+>)(.*))(<[a-zA-Z0-9=]+/?>)");
+            RTLTagFixer = new Regex("(?<closing></(?<closingName>[^ /]+)>)(?<content>(.|\\n)+?)(?<opening><\\k<closingName>=[^ /]+>)");
+            LoneTagFixer = new Regex("(?<!</[^ ء-ی/]+>.*)(<[^ ء-ی/]+=[^ ء-ی/]+/?>)");
         }
 
         public virtual string FixRTL(string input)
@@ -39,315 +40,10 @@ namespace RTLTMPro
             char[] letters = PrepareInput(input);
             char[] fixedLetters = FixGlyphs(letters);
             FixLigature(fixedLetters, finalLetters);
-            return FixTags(new string(finalLetters.ToArray()));
-        }
-        
-        protected virtual string FixTags(string input)
-        {
-            var tags = RTLTagFixer.Matches(input);
-
-            foreach (Match match in tags)
-            {
-                input = input.Remove(match.Index, match.Length);
-                string opening = match.Groups["opening"].Value.Reverse().ToArray().ArrayToString();
-                string closing = match.Groups["closing"].Value.Reverse().ToArray().ArrayToString();
-                string content = match.Groups["content"].Value;
-
-                input = input.Insert(match.Index, closing);
-                input = input.Insert(match.Index + closing.Length, content);
-                input = input.Insert(match.Index + closing.Length + content.Length, opening);
-            }
-            
-            tags = LoneTagFixer.Matches(input);
-            foreach (Match match in tags)
-            {
-                input = input.Remove(match.Index, match.Length);
-                string opening = match.Value.Reverse().ToArray().ArrayToString();
-                input = input.Insert(match.Index, opening);
-            }
+            input = new string(finalLetters.ToArray());
+            if (FixTextTags)
+                input = FixTags(input);
             return input;
-        }
-
-        protected virtual char[] PrepareInput(string input)
-        {
-            string originString = RemoveTashkeel(input);
-            char[] letters = originString.ToCharArray();
-            for (int i = 0; i < letters.Length; i++)
-            {
-                if (Farsi && letters[i] == (int)GeneralLetters.Ya)
-                {
-                    letters[i] = (char)GeneralLetters.PersianYa;
-                }
-                else if (Farsi == false && letters[i] == (int)GeneralLetters.PersianYa)
-                {
-                    letters[i] = (char)GeneralLetters.Ya;
-                }
-
-                letters[i] = (char)GlyphTable.Convert(letters[i]);
-            }
-
-            return letters;
-        }
-
-        protected virtual string RemoveTashkeel(string str)
-        {
-            char[] letters = str.ToCharArray();
-
-            for (int i = 0; i < letters.Length; i++)
-            {
-                if (letters[i] == (char)0x064B)
-                {
-                    // Tanween Fatha
-                    TashkeelLocation.Add(new TashkeelLocation((char)0x064B, i));
-                }
-                else if (letters[i] == (char)0x064C)
-                {
-                    // Tanween Damma
-                    TashkeelLocation.Add(new TashkeelLocation((char)0x064C, i));
-                }
-                else if (letters[i] == (char)0x064D)
-                {
-                    // Tanween Kasra
-                    TashkeelLocation.Add(new TashkeelLocation((char)0x064D, i));
-                }
-                else if (letters[i] == (char)0x064E)
-                {
-                    TashkeelLocation.Add(new TashkeelLocation((char)0x064E, i));
-                }
-                else if (letters[i] == (char)0x064F)
-                {
-                    TashkeelLocation.Add(new TashkeelLocation((char)0x064F, i));
-                }
-                else if (letters[i] == (char)0x0650)
-                {
-                    TashkeelLocation.Add(new TashkeelLocation((char)0x0650, i));
-                }
-                else if (letters[i] == (char)0x0651)
-                {
-                    TashkeelLocation.Add(new TashkeelLocation((char)0x0651, i));
-                }
-                else if (letters[i] == (char)0x0652)
-                {
-                    // SUKUN
-                    TashkeelLocation.Add(new TashkeelLocation((char)0x0652, i));
-                }
-                else if (letters[i] == (char)0x0653)
-                {
-                    // MADDAH ABOVE
-                    TashkeelLocation.Add(new TashkeelLocation((char)0x0653, i));
-                }
-            }
-
-            string[] split = str.Split((char)0x064B, (char)0x064C, (char)0x064D, (char)0x064E, (char)0x064F, (char)0x0650, (char)0x0651, (char)0x0652, (char)0x0653, (char)0xFC60,
-                (char)0xFC61, (char)0xFC62);
-
-            return split.Aggregate("", (current, s) => current + s);
-        }
-
-        protected virtual char[] FixGlyphs(char[] letters)
-        {
-            char[] lettersFinal = new char[letters.Length];
-            Array.Copy(letters, lettersFinal, letters.Length);
-            for (int i = 0; i < letters.Length; i++)
-            {
-                bool skipNext = false;
-
-                // For special Lam Letter connections.
-                if (letters[i] == (char)IsolatedLetters.Lam)
-                {
-                    if (i < letters.Length - 1)
-                    {
-                        skipNext = HandleSpecialLam(letters, lettersFinal, i);
-                    }
-                }
-
-                if (IsRTLCharacter(letters[i]))
-                {
-                    if (IsMiddleLetter(letters, i))
-                        lettersFinal[i] = (char)(letters[i] + 3);
-                    else if (IsFinishingLetter(letters, i))
-                        lettersFinal[i] = (char)(letters[i] + 1);
-                    else if (IsLeadingLetter(letters, i))
-                        lettersFinal[i] = (char)(letters[i] + 2);
-                }
-
-                if (skipNext)
-                {
-                    i++;
-                    continue;
-                }
-
-                if (!PreserveNumbers && char.IsDigit(letters[i]))
-                {
-                    lettersFinal[i] = FixNumbers(letters[i]);
-                }
-            }
-
-            //Restore tashkeel to their places.
-            lettersFinal = RestoreTashkeel(lettersFinal);
-            return lettersFinal;
-        }
-
-        protected virtual char FixNumbers(char num)
-        {
-            switch (num)
-            {
-                case (char)EnglishNumbers.Zero:
-                    return Farsi ? (char)FarsiNumbers.Zero : (char)HinduNumbers.Zero;
-                case (char)EnglishNumbers.One:
-                    return Farsi ? (char)FarsiNumbers.One : (char)HinduNumbers.One;
-                case (char)EnglishNumbers.Two:
-                    return Farsi ? (char)FarsiNumbers.Two : (char)HinduNumbers.Two;
-                case (char)EnglishNumbers.Three:
-                    return Farsi ? (char)FarsiNumbers.Three : (char)HinduNumbers.Three;
-                case (char)EnglishNumbers.Four:
-                    return Farsi ? (char)FarsiNumbers.Four : (char)HinduNumbers.Four;
-                case (char)EnglishNumbers.Five:
-                    return Farsi ? (char)FarsiNumbers.Five : (char)HinduNumbers.Five;
-                case (char)EnglishNumbers.Six:
-                    return Farsi ? (char)FarsiNumbers.Six : (char)HinduNumbers.Six;
-                case (char)EnglishNumbers.Seven:
-                    return Farsi ? (char)FarsiNumbers.Seven : (char)HinduNumbers.Seven;
-                case (char)EnglishNumbers.Eight:
-                    return Farsi ? (char)FarsiNumbers.Eight : (char)HinduNumbers.Eight;
-                case (char)EnglishNumbers.Nine:
-                    return Farsi ? (char)FarsiNumbers.Nine : (char)HinduNumbers.Nine;
-            }
-
-            return num;
-        }
-
-        protected virtual void FixLigature(IList<char> fixedLetters, ICollection<char> finalLetters)
-        {
-            List<char> preserveOrder = new List<char>();
-            for (int i = fixedLetters.Count - 1; i >= 0; i--)
-            {
-                if (char.IsPunctuation(fixedLetters[i]) || char.IsSymbol(fixedLetters[i]))
-                {
-                    //if (FixTags)
-                    //{
-                    if (fixedLetters[i] == '>')
-                    {
-                        if (preserveOrder.Count > 0)
-                        {
-                            for (int j = 0; j < preserveOrder.Count; j++)
-                                finalLetters.Add(preserveOrder[preserveOrder.Count - 1 - j]);
-                            preserveOrder.Clear();
-                        }
-                    }
-                    //}
-
-                    if (i > 0 && i < fixedLetters.Count - 1)
-                    {
-                        // NOTE: Array is reversed. i + 1 is behind and i - 1 is ahead
-                        bool isAfterRTLCharacter = IsRTLCharacter(fixedLetters[i + 1]);
-                        bool isBeforeRTLCharacter = IsRTLCharacter(fixedLetters[i - 1]);
-                        bool isBeforeWhiteSpace = char.IsWhiteSpace(fixedLetters[i - 1]);
-                        bool isAfterWhiteSpace = char.IsWhiteSpace(fixedLetters[i + 1]);
-                        bool isSpecialPunctuation = fixedLetters[i] == '.' || fixedLetters[i] == '،' || fixedLetters[i] == '؛';
-
-                        if (isBeforeRTLCharacter && isAfterRTLCharacter ||
-                            isAfterWhiteSpace && isSpecialPunctuation ||
-                            isBeforeWhiteSpace && isAfterRTLCharacter ||
-                            isBeforeRTLCharacter && isAfterWhiteSpace)
-                        {
-                            finalLetters.Add(fixedLetters[i]);
-                        }
-                        else
-                        {
-                            preserveOrder.Add(fixedLetters[i]);
-                        }
-                    }
-                    else if (i == 0)
-                    {
-                        finalLetters.Add(fixedLetters[i]);
-                    }
-                    else if (i == fixedLetters.Count - 1)
-                    {
-                        preserveOrder.Add(fixedLetters[i]);
-                    }
-
-                    //if (FixTags)
-                    //{
-                    if (fixedLetters[i] == '<')
-                    {
-                        if (preserveOrder.Count > 0)
-                        {
-                            for (int j = 0; j < preserveOrder.Count; j++)
-                                finalLetters.Add(preserveOrder[preserveOrder.Count - 1 - j]);
-                            preserveOrder.Clear();
-                        }
-                    }
-                    //}
-                    continue;
-                }
-
-
-                // For cases where english words and arabic are mixed. This allows for using arabic, english and numbers in one sentence.
-                // If the space is between numbers,symbols or English words, keep the order
-                if (fixedLetters[i] == ' ' &&
-                    i > 0 &&
-                    i < fixedLetters.Count - 1 &&
-                    (char.IsLower(fixedLetters[i - 1]) || char.IsUpper(fixedLetters[i - 1]) || char.IsNumber(fixedLetters[i - 1]) || char.IsSymbol(fixedLetters[i - 1])) &&
-                    (char.IsLower(fixedLetters[i + 1]) || char.IsUpper(fixedLetters[i + 1]) || char.IsNumber(fixedLetters[i + 1]) || char.IsSymbol(fixedLetters[i + 1])))
-
-                {
-                    preserveOrder.Add(fixedLetters[i]);
-                }
-
-                else if (char.IsNumber(fixedLetters[i]) ||
-                         char.IsLower(fixedLetters[i]) ||
-                         char.IsUpper(fixedLetters[i]))
-                {
-                    preserveOrder.Add(fixedLetters[i]);
-                }
-                else if (fixedLetters[i] >= (char)0xD800 && fixedLetters[i] <= (char)0xDBFF ||
-                         fixedLetters[i] >= (char)0xDC00 && fixedLetters[i] <= (char)0xDFFF)
-                {
-                    preserveOrder.Add(fixedLetters[i]);
-                }
-                else
-                {
-                    if (preserveOrder.Count > 0)
-                    {
-                        for (int j = 0; j < preserveOrder.Count; j++)
-                            finalLetters.Add(preserveOrder[preserveOrder.Count - 1 - j]);
-                        preserveOrder.Clear();
-                    }
-
-                    if (fixedLetters[i] != 0xFFFF)
-                        finalLetters.Add(fixedLetters[i]);
-                }
-            }
-
-            if (preserveOrder.Count > 0)
-            {
-                for (int j = 0; j < preserveOrder.Count; j++)
-                    finalLetters.Add(preserveOrder[preserveOrder.Count - 1 - j]);
-                preserveOrder.Clear();
-            }
-        }
-
-        protected virtual char[] RestoreTashkeel(ICollection<char> letters)
-        {
-            char[] lettersWithTashkeel = new char[letters.Count + TashkeelLocation.Count];
-
-            int letterWithTashkeelTracker = 0;
-            foreach (var t in letters)
-            {
-                lettersWithTashkeel[letterWithTashkeelTracker] = t;
-                letterWithTashkeelTracker++;
-                foreach (TashkeelLocation hLocation in TashkeelLocation)
-                {
-                    if (hLocation.Position == letterWithTashkeelTracker)
-                    {
-                        lettersWithTashkeel[letterWithTashkeelTracker] = hLocation.Tashkeel;
-                        letterWithTashkeelTracker++;
-                    }
-                }
-            }
-
-            return lettersWithTashkeel;
         }
 
         public virtual bool IsRTLCharacter(char ch)
@@ -570,6 +266,314 @@ namespace RTLTMPro
             }
 
             return false;
+        }
+
+        protected virtual string FixTags(string input)
+        {
+            var tags = RTLTagFixer.Matches(input);
+
+            foreach (Match match in tags)
+            {
+                input = input.Remove(match.Index, match.Length);
+                string opening = match.Groups["opening"].Value.Reverse().ToArray().ArrayToString();
+                string closing = match.Groups["closing"].Value.Reverse().ToArray().ArrayToString();
+                string content = match.Groups["content"].Value;
+
+                input = input.Insert(match.Index, closing);
+                input = input.Insert(match.Index + closing.Length, content);
+                input = input.Insert(match.Index + closing.Length + content.Length, opening);
+            }
+
+            tags = LoneTagFixer.Matches(input);
+            foreach (Match match in tags)
+            {
+                input = input.Remove(match.Index, match.Length);
+                string opening = match.Value.Reverse().ToArray().ArrayToString();
+                input = input.Insert(match.Index, opening);
+            }
+            return input;
+        }
+
+        protected virtual char[] PrepareInput(string input)
+        {
+            string originString = RemoveTashkeel(input);
+            char[] letters = originString.ToCharArray();
+            for (int i = 0; i < letters.Length; i++)
+            {
+                if (Farsi && letters[i] == (int)GeneralLetters.Ya)
+                {
+                    letters[i] = (char)GeneralLetters.PersianYa;
+                }
+                else if (Farsi == false && letters[i] == (int)GeneralLetters.PersianYa)
+                {
+                    letters[i] = (char)GeneralLetters.Ya;
+                }
+
+                letters[i] = (char)GlyphTable.Convert(letters[i]);
+            }
+
+            return letters;
+        }
+
+        protected virtual string RemoveTashkeel(string str)
+        {
+            char[] letters = str.ToCharArray();
+
+            for (int i = 0; i < letters.Length; i++)
+            {
+                if (letters[i] == (char)0x064B)
+                {
+                    // Tanween Fatha
+                    TashkeelLocation.Add(new TashkeelLocation((char)0x064B, i));
+                }
+                else if (letters[i] == (char)0x064C)
+                {
+                    // Tanween Damma
+                    TashkeelLocation.Add(new TashkeelLocation((char)0x064C, i));
+                }
+                else if (letters[i] == (char)0x064D)
+                {
+                    // Tanween Kasra
+                    TashkeelLocation.Add(new TashkeelLocation((char)0x064D, i));
+                }
+                else if (letters[i] == (char)0x064E)
+                {
+                    TashkeelLocation.Add(new TashkeelLocation((char)0x064E, i));
+                }
+                else if (letters[i] == (char)0x064F)
+                {
+                    TashkeelLocation.Add(new TashkeelLocation((char)0x064F, i));
+                }
+                else if (letters[i] == (char)0x0650)
+                {
+                    TashkeelLocation.Add(new TashkeelLocation((char)0x0650, i));
+                }
+                else if (letters[i] == (char)0x0651)
+                {
+                    TashkeelLocation.Add(new TashkeelLocation((char)0x0651, i));
+                }
+                else if (letters[i] == (char)0x0652)
+                {
+                    // SUKUN
+                    TashkeelLocation.Add(new TashkeelLocation((char)0x0652, i));
+                }
+                else if (letters[i] == (char)0x0653)
+                {
+                    // MADDAH ABOVE
+                    TashkeelLocation.Add(new TashkeelLocation((char)0x0653, i));
+                }
+            }
+
+            string[] split = str.Split((char)0x064B, (char)0x064C, (char)0x064D, (char)0x064E, (char)0x064F, (char)0x0650, (char)0x0651, (char)0x0652, (char)0x0653, (char)0xFC60,
+                (char)0xFC61, (char)0xFC62);
+
+            return split.Aggregate("", (current, s) => current + s);
+        }
+
+        protected virtual char[] FixGlyphs(char[] letters)
+        {
+            char[] lettersFinal = new char[letters.Length];
+            Array.Copy(letters, lettersFinal, letters.Length);
+            for (int i = 0; i < letters.Length; i++)
+            {
+                bool skipNext = false;
+
+                // For special Lam Letter connections.
+                if (letters[i] == (char)IsolatedLetters.Lam)
+                {
+                    if (i < letters.Length - 1)
+                    {
+                        skipNext = HandleSpecialLam(letters, lettersFinal, i);
+                    }
+                }
+
+                if (IsRTLCharacter(letters[i]))
+                {
+                    if (IsMiddleLetter(letters, i))
+                        lettersFinal[i] = (char)(letters[i] + 3);
+                    else if (IsFinishingLetter(letters, i))
+                        lettersFinal[i] = (char)(letters[i] + 1);
+                    else if (IsLeadingLetter(letters, i))
+                        lettersFinal[i] = (char)(letters[i] + 2);
+                }
+
+                if (skipNext)
+                {
+                    i++;
+                    continue;
+                }
+
+                if (!PreserveNumbers && char.IsDigit(letters[i]))
+                {
+                    lettersFinal[i] = FixNumbers(letters[i]);
+                }
+            }
+
+            //Restore tashkeel to their places.
+            lettersFinal = RestoreTashkeel(lettersFinal);
+            return lettersFinal;
+        }
+
+        protected virtual char FixNumbers(char num)
+        {
+            switch (num)
+            {
+                case (char)EnglishNumbers.Zero:
+                    return Farsi ? (char)FarsiNumbers.Zero : (char)HinduNumbers.Zero;
+                case (char)EnglishNumbers.One:
+                    return Farsi ? (char)FarsiNumbers.One : (char)HinduNumbers.One;
+                case (char)EnglishNumbers.Two:
+                    return Farsi ? (char)FarsiNumbers.Two : (char)HinduNumbers.Two;
+                case (char)EnglishNumbers.Three:
+                    return Farsi ? (char)FarsiNumbers.Three : (char)HinduNumbers.Three;
+                case (char)EnglishNumbers.Four:
+                    return Farsi ? (char)FarsiNumbers.Four : (char)HinduNumbers.Four;
+                case (char)EnglishNumbers.Five:
+                    return Farsi ? (char)FarsiNumbers.Five : (char)HinduNumbers.Five;
+                case (char)EnglishNumbers.Six:
+                    return Farsi ? (char)FarsiNumbers.Six : (char)HinduNumbers.Six;
+                case (char)EnglishNumbers.Seven:
+                    return Farsi ? (char)FarsiNumbers.Seven : (char)HinduNumbers.Seven;
+                case (char)EnglishNumbers.Eight:
+                    return Farsi ? (char)FarsiNumbers.Eight : (char)HinduNumbers.Eight;
+                case (char)EnglishNumbers.Nine:
+                    return Farsi ? (char)FarsiNumbers.Nine : (char)HinduNumbers.Nine;
+            }
+
+            return num;
+        }
+
+        protected virtual void FixLigature(IList<char> fixedLetters, ICollection<char> finalLetters)
+        {
+            List<char> preserveOrder = new List<char>();
+            for (int i = fixedLetters.Count - 1; i >= 0; i--)
+            {
+                if (char.IsPunctuation(fixedLetters[i]) || char.IsSymbol(fixedLetters[i]))
+                {
+                    if (FixTextTags)
+                    {
+                        if (fixedLetters[i] == '>')
+                        {
+                            if (preserveOrder.Count > 0)
+                            {
+                                for (int j = 0; j < preserveOrder.Count; j++)
+                                    finalLetters.Add(preserveOrder[preserveOrder.Count - 1 - j]);
+                                preserveOrder.Clear();
+                            }
+                        }
+                    }
+
+                    if (i > 0 && i < fixedLetters.Count - 1)
+                    {
+                        // NOTE: Array is reversed. i + 1 is behind and i - 1 is ahead
+                        bool isAfterRTLCharacter = IsRTLCharacter(fixedLetters[i + 1]);
+                        bool isBeforeRTLCharacter = IsRTLCharacter(fixedLetters[i - 1]);
+                        bool isBeforeWhiteSpace = char.IsWhiteSpace(fixedLetters[i - 1]);
+                        bool isAfterWhiteSpace = char.IsWhiteSpace(fixedLetters[i + 1]);
+                        bool isSpecialPunctuation = fixedLetters[i] == '.' || fixedLetters[i] == '،' || fixedLetters[i] == '؛';
+
+                        if (isBeforeRTLCharacter && isAfterRTLCharacter ||
+                            isAfterWhiteSpace && isSpecialPunctuation ||
+                            isBeforeWhiteSpace && isAfterRTLCharacter ||
+                            isBeforeRTLCharacter && isAfterWhiteSpace)
+                        {
+                            finalLetters.Add(fixedLetters[i]);
+                        }
+                        else
+                        {
+                            preserveOrder.Add(fixedLetters[i]);
+                        }
+                    }
+                    else if (i == 0)
+                    {
+                        finalLetters.Add(fixedLetters[i]);
+                    }
+                    else if (i == fixedLetters.Count - 1)
+                    {
+                        preserveOrder.Add(fixedLetters[i]);
+                    }
+
+                    if (FixTextTags)
+                    {
+                        if (fixedLetters[i] == '<')
+                        {
+                            if (preserveOrder.Count > 0)
+                            {
+                                for (int j = 0; j < preserveOrder.Count; j++)
+                                    finalLetters.Add(preserveOrder[preserveOrder.Count - 1 - j]);
+                                preserveOrder.Clear();
+                            }
+                        }
+                    }
+                    continue;
+                }
+
+
+                // For cases where english words and arabic are mixed. This allows for using arabic, english and numbers in one sentence.
+                // If the space is between numbers,symbols or English words, keep the order
+                if (fixedLetters[i] == ' ' &&
+                    i > 0 &&
+                    i < fixedLetters.Count - 1 &&
+                    (char.IsLower(fixedLetters[i - 1]) || char.IsUpper(fixedLetters[i - 1]) || char.IsNumber(fixedLetters[i - 1]) || char.IsSymbol(fixedLetters[i - 1])) &&
+                    (char.IsLower(fixedLetters[i + 1]) || char.IsUpper(fixedLetters[i + 1]) || char.IsNumber(fixedLetters[i + 1]) || char.IsSymbol(fixedLetters[i + 1])))
+
+                {
+                    preserveOrder.Add(fixedLetters[i]);
+                }
+
+                else if (char.IsNumber(fixedLetters[i]) ||
+                         char.IsLower(fixedLetters[i]) ||
+                         char.IsUpper(fixedLetters[i]))
+                {
+                    preserveOrder.Add(fixedLetters[i]);
+                }
+                else if (fixedLetters[i] >= (char)0xD800 && fixedLetters[i] <= (char)0xDBFF ||
+                         fixedLetters[i] >= (char)0xDC00 && fixedLetters[i] <= (char)0xDFFF)
+                {
+                    preserveOrder.Add(fixedLetters[i]);
+                }
+                else
+                {
+                    if (preserveOrder.Count > 0)
+                    {
+                        for (int j = 0; j < preserveOrder.Count; j++)
+                            finalLetters.Add(preserveOrder[preserveOrder.Count - 1 - j]);
+                        preserveOrder.Clear();
+                    }
+
+                    if (fixedLetters[i] != 0xFFFF)
+                        finalLetters.Add(fixedLetters[i]);
+                }
+            }
+
+            if (preserveOrder.Count > 0)
+            {
+                for (int j = 0; j < preserveOrder.Count; j++)
+                    finalLetters.Add(preserveOrder[preserveOrder.Count - 1 - j]);
+                preserveOrder.Clear();
+            }
+        }
+
+        protected virtual char[] RestoreTashkeel(ICollection<char> letters)
+        {
+            char[] lettersWithTashkeel = new char[letters.Count + TashkeelLocation.Count];
+
+            int letterWithTashkeelTracker = 0;
+            foreach (var t in letters)
+            {
+                lettersWithTashkeel[letterWithTashkeelTracker] = t;
+                letterWithTashkeelTracker++;
+                foreach (TashkeelLocation hLocation in TashkeelLocation)
+                {
+                    if (hLocation.Position == letterWithTashkeelTracker)
+                    {
+                        lettersWithTashkeel[letterWithTashkeelTracker] = hLocation.Tashkeel;
+                        letterWithTashkeelTracker++;
+                    }
+                }
+            }
+
+            return lettersWithTashkeel;
         }
 
         protected virtual bool HandleSpecialLam(char[] letters, char[] lettersFinal, int i)

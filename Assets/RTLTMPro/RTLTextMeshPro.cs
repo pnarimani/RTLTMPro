@@ -130,7 +130,7 @@ namespace RTLTMPro
 
             support.Farsi = farsi;
             support.PreserveNumbers = preserveNumbers;
-            //support.FixTags = fixTags;
+            support.FixTextTags = fixTags;
         }
 
         public virtual string GetFixedText(string input)
