@@ -16,11 +16,9 @@ namespace RTLTMPro
     {
         // Because we are initializing these properties in constructor, we cannot make them virtual
         public bool PreserveNumbers { get; set; }
-        //public bool FixTags { get; set; }
         public bool Farsi { get; set; }
 
         protected readonly ICollection<TashkeelLocation> TashkeelLocation;
-        protected readonly Regex LTRTagFixer;
         protected readonly Regex RTLTagFixer;
         protected readonly Regex LoneTagFixer;
 
@@ -28,13 +26,9 @@ namespace RTLTMPro
         {
             PreserveNumbers = false;
             Farsi = true;
-            //FixTags = false;
-
             TashkeelLocation = new List<TashkeelLocation>();
-            //TagFixer = new Regex("(?<closing>>[^ /]+/<)(?<content>.*)(?<opening>>([^ /])+<)");
-            LTRTagFixer = new Regex("(?<opening><([^ /])+>)(?<content>.*)(?<closing></[^ /]+>)");
-            RTLTagFixer= new Regex("(?<closing></[^ /]+>)(?<content>.*)(?<opening><([^ /])+>)");
-            LoneTagFixer = new Regex("<[^ /]+/?>");
+            RTLTagFixer= new Regex("(?<closing></(?<closingName>[^ /]+)>)(?<content>(.|\\n)+?)(?<opening><\\k<closingName>=[^ /]+>)");
+            LoneTagFixer = new Regex("(?<!(</(?![^ /])+>)(.*))(<[a-zA-Z0-9=]+/?>)");
         }
 
         public virtual string FixRTL(string input)
@@ -45,87 +39,30 @@ namespace RTLTMPro
             char[] letters = PrepareInput(input);
             char[] fixedLetters = FixGlyphs(letters);
             FixLigature(fixedLetters, finalLetters);
-
-            //if (FixTags)
-            //    FixTextTags(finalLetters);
-
-
-            var rtl = new string(finalLetters.ToArray());
-            //rtl = FixTextTags(rtl);
-            return rtl;
+            return FixTags(new string(finalLetters.ToArray()));
         }
         
-        protected virtual string FixTextTags(string input)
+        protected virtual string FixTags(string input)
         {
-            List<Vector2Int> fixedTags = new List<Vector2Int>();
-            Debug.Log(input);
-            var tags = LTRTagFixer.Matches(input);
+            var tags = RTLTagFixer.Matches(input);
 
             foreach (Match match in tags)
             {
-                var tagRange = new Vector2Int(match.Index, match.Index + match.Length);
-                var findIndex = fixedTags.FindIndex(i => i.x < tagRange.y || i.y > tagRange.x );
-                Debug.Log("Tag '" + match.Value + "' with Tag Range: " + tagRange + " with FindIndex: " + findIndex);
-                if (findIndex > -1)
-                    continue;
-                fixedTags.Add(tagRange);
-
                 input = input.Remove(match.Index, match.Length);
                 string opening = match.Groups["opening"].Value.Reverse().ToArray().ArrayToString();
                 string closing = match.Groups["closing"].Value.Reverse().ToArray().ArrayToString();
                 string content = match.Groups["content"].Value;
 
-                //input = input.Insert(match.Index, opening);
-                //input = input.Insert(match.Index + opening.Length, content);
-                //input = input.Insert(match.Index + opening.Length + content.Length, closing);
-
                 input = input.Insert(match.Index, closing);
                 input = input.Insert(match.Index + closing.Length, content);
                 input = input.Insert(match.Index + closing.Length + content.Length, opening);
             }
-
-            tags = RTLTagFixer.Matches(input);
-
-            foreach (Match match in tags)
-            {
-                var tagRange = new Vector2Int(match.Index, match.Index + match.Length);
-                var findIndex = fixedTags.FindIndex(i => i.x < tagRange.y || i.y > tagRange.x );
-                Debug.Log("Tag '" + match.Value + "' with Tag Range: " + tagRange + " with FindIndex: " + findIndex);
-                if (findIndex > -1)
-                    continue;
-                fixedTags.Add(tagRange);
-
-                input = input.Remove(match.Index, match.Length);
-                string opening = match.Groups["opening"].Value.Reverse().ToArray().ArrayToString();
-                string closing = match.Groups["closing"].Value.Reverse().ToArray().ArrayToString();
-                string content = match.Groups["content"].Value;
-
-                //input = input.Insert(match.Index, opening);
-                //input = input.Insert(match.Index + opening.Length, content);
-                //input = input.Insert(match.Index + opening.Length + content.Length, closing);
-
-                input = input.Insert(match.Index, closing);
-                input = input.Insert(match.Index + closing.Length, content);
-                input = input.Insert(match.Index + closing.Length + content.Length, opening);
-            }
-
+            
             tags = LoneTagFixer.Matches(input);
             foreach (Match match in tags)
             {
-                var tagRange = new Vector2Int(match.Index, match.Index + match.Length);
-                var findIndex = fixedTags.FindIndex(i => i.x < tagRange.y || i.y > tagRange.x );
-                Debug.Log("Tag '" + match.Value + "' with Tag Range: " + tagRange + " with FindIndex: " + findIndex);
-                if (findIndex > -1)
-                    continue;
-                fixedTags.Add(tagRange);
-
                 input = input.Remove(match.Index, match.Length);
                 string opening = match.Value.Reverse().ToArray().ArrayToString();
-
-                //input = input.Insert(match.Index, opening);
-                //input = input.Insert(match.Index + opening.Length, content);
-                //input = input.Insert(match.Index + opening.Length + content.Length, closing);
-
                 input = input.Insert(match.Index, opening);
             }
             return input;
