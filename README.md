@@ -1,6 +1,6 @@
 # RTL Text Mesh Pro
 This plugin adds Right-to-left language support to "Text Mesh Pro" Unity plugin.  
-This project used [ArabicSupprt](https://www.assetstore.unity3d.com/en/#!/content/2674) for Unity Asset. [ArabicSupprt for Unity now on Github.](https://github.com/Konash/arabic-support-unity)
+This project used [ArabicSupprt](https://www.assetstore.unity3d.com/en/#!/content/2674). [ArabicSupprt for Unity now on Github.](https://github.com/Konash/arabic-support-unity)
 
 # Features
 ### Realtime RTL Text
@@ -33,9 +33,9 @@ Auto Font Size is fully supported.
 ![Numbers Preview](Screenshots/Numbers.PNG)
 
 ### Arabic Tashkeel
-Arabic tashkeel are supported. Also you can turn them off or on for every `RTL Text Mesh Pro` object.
+Arabic tashkeel are supported.  
   
-[Tashkeel Preview](Screenshots/Arabic%20Text.PNG)
+[Tashkeel Preview](Screenshots/Arabic%20Text.PNG)  
 
 # How To Use
 * You need to have `TextMeshPro` plugin in your project. You can install TMPro via `Package Manager` or `AssetStore`
@@ -66,7 +66,7 @@ When checked numbers will not be converted.
 ### Force Fix
 RTL Text Mesh Pro does not fix texts that start with English characters. 
 Checking this checkbox forces RTL TextMeshPro to fix the text even when it starts with English character. 
-**Multiline English texts will have problem on components that have `ForceFix` checked.  
+**Multiline English texts will have problem on components that have `ForceFix` checked.**  
 
 ### Fix Tags
 When checked, RTL Text Mesh Pro will try to fix rich text tags.  
