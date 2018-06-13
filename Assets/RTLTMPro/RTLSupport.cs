@@ -51,7 +51,7 @@ namespace RTLTMPro
 
 
             var rtl = new string(finalLetters.ToArray());
-            rtl = FixTextTags(rtl);
+            //rtl = FixTextTags(rtl);
             return rtl;
         }
         
@@ -288,17 +288,17 @@ namespace RTLTMPro
                 if (char.IsPunctuation(fixedLetters[i]) || char.IsSymbol(fixedLetters[i]))
                 {
                     //if (FixTags)
+                    //{
+                    if (fixedLetters[i] == '>')
                     {
-                        if (fixedLetters[i] == '>')
+                        if (preserveOrder.Count > 0)
                         {
-                            if (preserveOrder.Count > 0)
-                            {
-                                for (int j = 0; j < preserveOrder.Count; j++)
-                                    finalLetters.Add(preserveOrder[preserveOrder.Count - 1 - j]);
-                                preserveOrder.Clear();
-                            }
+                            for (int j = 0; j < preserveOrder.Count; j++)
+                                finalLetters.Add(preserveOrder[preserveOrder.Count - 1 - j]);
+                            preserveOrder.Clear();
                         }
                     }
+                    //}
 
                     if (i > 0 && i < fixedLetters.Count - 1)
                     {
@@ -332,15 +332,15 @@ namespace RTLTMPro
 
                     //if (FixTags)
                     //{
-                        if (fixedLetters[i] == '<')
+                    if (fixedLetters[i] == '<')
+                    {
+                        if (preserveOrder.Count > 0)
                         {
-                            if (preserveOrder.Count > 0)
-                            {
-                                for (int j = 0; j < preserveOrder.Count; j++)
-                                    finalLetters.Add(preserveOrder[preserveOrder.Count - 1 - j]);
-                                preserveOrder.Clear();
-                            }
+                            for (int j = 0; j < preserveOrder.Count; j++)
+                                finalLetters.Add(preserveOrder[preserveOrder.Count - 1 - j]);
+                            preserveOrder.Clear();
                         }
+                    }
                     //}
                     continue;
                 }
