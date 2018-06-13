@@ -22,27 +22,32 @@ namespace RTLTMPro
         protected readonly ICollection<TashkeelLocation> TashkeelLocation;
         protected readonly Regex RTLTagFixer;
         protected readonly Regex LoneTagFixer;
+        protected readonly List<char> FinalLetters;
 
         public RTLSupport()
         {
             PreserveNumbers = false;
             Farsi = true;
+            FixTextTags = true;
+            FinalLetters = new List<char>();
             TashkeelLocation = new List<TashkeelLocation>();
-            RTLTagFixer = new Regex(@"(?<closing></(?<tagName>\p{Ll}+)>)(?<content>(.|\n)+?)(?<opening><\k<tagName>=?(\p{Ll}|\p{N})*>)");
+            RTLTagFixer = new Regex(@"(?<closing></(?<tagName>\p{Ll}+)>)(?<content>(.|\n)+?)(?<opening><\k<tagName>=?(\p{Ll}|\p{N}|-|\+|#)*>)");
             LoneTagFixer = new Regex(@"(?<!</\p{Ll}+>.*)(<\p{Ll}+=?(\p{Ll}|\p{N})+/?>)");
         }
 
         public virtual string FixRTL(string input)
         {
-            List<char> finalLetters = new List<char>();
+            FinalLetters.Clear();
             TashkeelLocation.Clear();
 
-            char[] letters = PrepareInput(input);
-            char[] fixedLetters = FixGlyphs(letters);
-            FixLigature(fixedLetters, finalLetters);
-            input = new string(finalLetters.ToArray());
+            char[] preparedLetters = PrepareInput(input);
+            char[] shapeFixedLetters = FixGlyphs(preparedLetters);
+            FixLigature(shapeFixedLetters);
+            input = new string(FinalLetters.ToArray());
+            Debug.Log(input);
             if (FixTextTags)
                 input = FixTags(input);
+            Debug.Log(input);
             return input;
         }
 
@@ -294,10 +299,15 @@ namespace RTLTMPro
             return input;
         }
 
+        /// <summary>
+        /// Removes tashkeel. Converts general RTL letters to isolated form. Also fixes Farsi and Arabic ی letter.
+        /// </summary>
+        /// <param name="input">Input to prepare</param>
+        /// <returns>Prepared input in char array</returns>
         protected virtual char[] PrepareInput(string input)
         {
-            string originString = RemoveTashkeel(input);
-            char[] letters = originString.ToCharArray();
+            input = RemoveTashkeel(input);
+            char[] letters = input.ToCharArray();
             for (int i = 0; i < letters.Length; i++)
             {
                 if (Farsi && letters[i] == (int)GeneralLetters.Ya)
@@ -315,6 +325,9 @@ namespace RTLTMPro
             return letters;
         }
 
+        /// <summary>
+        /// Removes tashkeel from text.
+        /// </summary>
         protected virtual string RemoveTashkeel(string str)
         {
             char[] letters = str.ToCharArray();
@@ -370,6 +383,11 @@ namespace RTLTMPro
             return split.Aggregate("", (current, s) => current + s);
         }
 
+        /// <summary>
+        /// Fixes the shape of letters based on their position.
+        /// </summary>
+        /// <param name="letters"></param>
+        /// <returns></returns>
         protected virtual char[] FixGlyphs(char[] letters)
         {
             char[] lettersFinal = new char[letters.Length];
@@ -414,6 +432,11 @@ namespace RTLTMPro
             return lettersFinal;
         }
 
+        /// <summary>
+        /// Converts English numbers to Persian or Arabic numbers. Depending on <see cref="Farsi"/> property.
+        /// </summary>
+        /// <param name="num">Number to convert.</param>
+        /// <returns>Converted number</returns>
         protected virtual char FixNumbers(char num)
         {
             switch (num)
@@ -443,145 +466,170 @@ namespace RTLTMPro
             return num;
         }
 
-        protected virtual void FixLigature(IList<char> fixedLetters, ICollection<char> finalLetters)
+        /// <summary>
+        /// Fixes the flow of the text and stores the output in <see cref="FinalLetters"/> list.
+        /// </summary>
+        /// <param name="shapeFixedLetters">Output of <see cref="FixGlyphs"/> method.</param>
+        protected virtual void FixLigature(IList<char> shapeFixedLetters)
         {
-            List<char> preserveOrder = new List<char>();
-            for (int i = fixedLetters.Count - 1; i >= 0; i--)
-            {
-                if (char.IsPunctuation(fixedLetters[i]) || char.IsSymbol(fixedLetters[i]))
-                {
-                    bool isAfterRTLCharacter = IsRTLCharacter(fixedLetters[i + 1]);
-                    bool isBeforeRTLCharacter = IsRTLCharacter(fixedLetters[i - 1]);
-                    bool isBeforeWhiteSpace = char.IsWhiteSpace(fixedLetters[i - 1]);
-                    bool isAfterWhiteSpace = char.IsWhiteSpace(fixedLetters[i + 1]);
-                    bool isSpecialPunctuation = fixedLetters[i] == '.' || fixedLetters[i] == '،' || fixedLetters[i] == '؛';
+            // NOTE: shapeFixedLetters are in reveresed order. 0th element is the last character of the text.
 
+            // Some texts like tags, English words and numbers need to be displayed in their original order.
+            // This list keeps the characters that their order should be reserved and streams reserved texts into final letters.
+            List<char> ltrText = new List<char>();
+            for (int i = shapeFixedLetters.Count - 1; i >= 0; i--)
+            {
+                bool isInMiddle = i > 0 && i < shapeFixedLetters.Count - 1;
+                bool isAtEnd = i == shapeFixedLetters.Count - 1;
+                bool isAtBegining = i == 0;
+
+                if (char.IsPunctuation(shapeFixedLetters[i]) || char.IsSymbol(shapeFixedLetters[i]))
+                {
                     if (FixTextTags)
                     {
-                        if (fixedLetters[i] == '>' && isBeforeWhiteSpace == false)
+                        if (shapeFixedLetters[i] == '>')
                         {
                             bool valid = false;
-                            for (int j = i - 1; j >= 0; j--)
+                            //if (isAtBegining == false)
                             {
-                                if (fixedLetters[j] == ' ')
+                                for (int j = i - 1; j >= 0; j--)
                                 {
-                                    break;
-                                }
+                                    if (shapeFixedLetters[j] == ' ')
+                                    {
+                                        break;
+                                    }
 
-                                if (fixedLetters[j] == '<')
-                                {
-                                    valid = true;
-                                    break;
+                                    if (shapeFixedLetters[j] == '<')
+                                    {
+                                        valid = true;
+                                        break;
+                                    }
                                 }
                             }
 
-                            if (preserveOrder.Count > 0 && valid)
+                            if (ltrText.Count > 0 && valid)
                             {
-                                for (int j = 0; j < preserveOrder.Count; j++)
-                                    finalLetters.Add(preserveOrder[preserveOrder.Count - 1 - j]);
-                                preserveOrder.Clear();
+                                for (int j = 0; j < ltrText.Count; j++)
+                                    FinalLetters.Add(ltrText[ltrText.Count - 1 - j]);
+                                ltrText.Clear();
                             }
                         }
                     }
 
-                    if (i > 0 && i < fixedLetters.Count - 1)
+                    if (isInMiddle)
                     {
                         // NOTE: Array is reversed. i + 1 is behind and i - 1 is ahead
+                        bool isAfterRTLCharacter = IsRTLCharacter(shapeFixedLetters[i + 1]);
+                        bool isBeforeRTLCharacter = IsRTLCharacter(shapeFixedLetters[i - 1]);
+                        bool isBeforeWhiteSpace = char.IsWhiteSpace(shapeFixedLetters[i - 1]);
+                        bool isAfterWhiteSpace = char.IsWhiteSpace(shapeFixedLetters[i + 1]);
+                        bool isSpecialPunctuation = shapeFixedLetters[i] == '.' || shapeFixedLetters[i] == '،' || shapeFixedLetters[i] == '؛';
 
                         if (isBeforeRTLCharacter && isAfterRTLCharacter ||
                             isAfterWhiteSpace && isSpecialPunctuation ||
                             isBeforeWhiteSpace && isAfterRTLCharacter ||
                             isBeforeRTLCharacter && isAfterWhiteSpace)
                         {
-                            finalLetters.Add(fixedLetters[i]);
+                            FinalLetters.Add(shapeFixedLetters[i]);
                         }
                         else
                         {
-                            preserveOrder.Add(fixedLetters[i]);
+                            ltrText.Add(shapeFixedLetters[i]);
                         }
                     }
-                    else if (i == 0)
+                    else if (isAtBegining)
                     {
-                        finalLetters.Add(fixedLetters[i]);
+                        FinalLetters.Add(shapeFixedLetters[i]);
                     }
-                    else if (i == fixedLetters.Count - 1)
+                    else if (isAtEnd)
                     {
-                        preserveOrder.Add(fixedLetters[i]);
+                        ltrText.Add(shapeFixedLetters[i]);
                     }
 
                     if (FixTextTags)
                     {
-                        if (fixedLetters[i] == '<' && isAfterWhiteSpace == false)
+                        if (shapeFixedLetters[i] == '<')
                         {
                             bool valid = false;
-                            for (int j = i + 1; j < fixedLetters.Count; j++)
-                            {
-                                if (fixedLetters[j] == ' ')
-                                {
-                                    break;
-                                }
 
-                                if (fixedLetters[j] == '>')
+                            //if (isAtEnd == false)
+                            {
+                                for (int j = i + 1; j < shapeFixedLetters.Count; j++)
                                 {
-                                    valid = true;
-                                    break;
+                                    if (shapeFixedLetters[j] == ' ')
+                                    {
+                                        break;
+                                    }
+
+                                    if (shapeFixedLetters[j] == '>')
+                                    {
+                                        valid = true;
+                                        break;
+                                    }
                                 }
                             }
 
-                            if (preserveOrder.Count > 0 && valid)
+                            if (ltrText.Count > 0 && valid)
                             {
-                                for (int j = 0; j < preserveOrder.Count; j++)
-                                    finalLetters.Add(preserveOrder[preserveOrder.Count - 1 - j]);
-                                preserveOrder.Clear();
+                                for (int j = 0; j < ltrText.Count; j++)
+                                    FinalLetters.Add(ltrText[ltrText.Count - 1 - j]);
+                                ltrText.Clear();
                             }
                         }
                     }
                     continue;
                 }
 
+                if (isInMiddle)
+                {
+                    bool isAfterEnglishChar = char.IsLower(shapeFixedLetters[i + 1]) || char.IsUpper(shapeFixedLetters[i + 1]);
+                    bool isBeforeEnglishChar = char.IsLower(shapeFixedLetters[i - 1]) || char.IsUpper(shapeFixedLetters[i - 1]);
+                    bool isAfterNumber = char.IsNumber(shapeFixedLetters[i + 1]);
+                    bool isBeforeNumber = char.IsNumber(shapeFixedLetters[i - 1]);
+                    bool isAfterSymbol = char.IsSymbol(shapeFixedLetters[i + 1]);
+                    bool isBeforeSymbol = char.IsSymbol(shapeFixedLetters[i - 1]);
 
-                // For cases where english words and arabic are mixed. This allows for using arabic, english and numbers in one sentence.
-                // If the space is between numbers,symbols or English words, keep the order
-                if (fixedLetters[i] == ' ' &&
-                    i > 0 &&
-                    i < fixedLetters.Count - 1 &&
-                    (char.IsLower(fixedLetters[i - 1]) || char.IsUpper(fixedLetters[i - 1]) || char.IsNumber(fixedLetters[i - 1]) || char.IsSymbol(fixedLetters[i - 1])) &&
-                    (char.IsLower(fixedLetters[i + 1]) || char.IsUpper(fixedLetters[i + 1]) || char.IsNumber(fixedLetters[i + 1]) || char.IsSymbol(fixedLetters[i + 1])))
+                    // For cases where english words and arabic are mixed. This allows for using arabic, english and numbers in one sentence.
+                    // If the space is between numbers,symbols or English words, keep the order
+                    if (shapeFixedLetters[i] == ' ' &&
+                        (isBeforeEnglishChar || isBeforeNumber || isBeforeSymbol) &&
+                        (isAfterEnglishChar || isAfterNumber || isAfterSymbol))
 
-                {
-                    preserveOrder.Add(fixedLetters[i]);
-                }
-
-                else if (char.IsNumber(fixedLetters[i]) ||
-                         char.IsLower(fixedLetters[i]) ||
-                         char.IsUpper(fixedLetters[i]))
-                {
-                    preserveOrder.Add(fixedLetters[i]);
-                }
-                else if (fixedLetters[i] >= (char)0xD800 && fixedLetters[i] <= (char)0xDBFF ||
-                         fixedLetters[i] >= (char)0xDC00 && fixedLetters[i] <= (char)0xDFFF)
-                {
-                    preserveOrder.Add(fixedLetters[i]);
-                }
-                else
-                {
-                    if (preserveOrder.Count > 0)
                     {
-                        for (int j = 0; j < preserveOrder.Count; j++)
-                            finalLetters.Add(preserveOrder[preserveOrder.Count - 1 - j]);
-                        preserveOrder.Clear();
+                        ltrText.Add(shapeFixedLetters[i]);
+                        continue;
                     }
-
-                    if (fixedLetters[i] != 0xFFFF)
-                        finalLetters.Add(fixedLetters[i]);
                 }
+
+                if (char.IsNumber(shapeFixedLetters[i]) || char.IsLower(shapeFixedLetters[i]) || char.IsUpper(shapeFixedLetters[i]))
+                {
+                    ltrText.Add(shapeFixedLetters[i]);
+                    continue;
+                }
+
+                if (shapeFixedLetters[i] >= (char)0xD800 && shapeFixedLetters[i] <= (char)0xDBFF ||
+                    shapeFixedLetters[i] >= (char)0xDC00 && shapeFixedLetters[i] <= (char)0xDFFF)
+                {
+                    ltrText.Add(shapeFixedLetters[i]);
+                    continue;
+                }
+
+                if (ltrText.Count > 0)
+                {
+                    for (int j = 0; j < ltrText.Count; j++)
+                        FinalLetters.Add(ltrText[ltrText.Count - 1 - j]);
+                    ltrText.Clear();
+                }
+
+                if (shapeFixedLetters[i] != 0xFFFF)
+                    FinalLetters.Add(shapeFixedLetters[i]);
             }
 
-            if (preserveOrder.Count > 0)
+            if (ltrText.Count > 0)
             {
-                for (int j = 0; j < preserveOrder.Count; j++)
-                    finalLetters.Add(preserveOrder[preserveOrder.Count - 1 - j]);
-                preserveOrder.Clear();
+                for (int j = 0; j < ltrText.Count; j++)
+                    FinalLetters.Add(ltrText[ltrText.Count - 1 - j]);
+                ltrText.Clear();
             }
         }
 

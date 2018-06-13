@@ -246,8 +246,8 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: "\uFB90\uFEE0\uFEE4\uFEEA \uFEEB\uFE8E \uFEA3\uFE98\uFEF0 \uFEE3\uFEF4\uFE98\uFEEE\uFE8D\uFEE7\uFEE8\uFEAA
-    <voffset=1em>\uFE91\uFE8E\uFEFB</voffset> \uFEF3\uFE8E <voffset=-1em>\uFB58\uFE8E\uFEF3\uFEF4\uFEE6</voffset>
+  m_text: "\uFB90\uFEE0\uFEE4\uFEEA \uFEEB\uFE8E \uFEA3\uFE98\uFBFD \uFEE3\uFBFF\uFE98\uFEEE\uFE8D\uFEE7\uFEE8\uFEAA
+    <voffset=1em>\uFE91\uFE8E\uFEFB</voffset> \uFBFE\uFE8E <voffset=-1em>\uFB58\uFE8E\uFBFE\uFBFF\uFEE6</voffset>
     \uFE91\uFE8E\uFEB7\uFEE8\uFEAA"
   m_isRightToLeft: 1
   m_fontAsset: {fileID: 11400000, guid: 3fbde2e562e333d488bc46986fc6f4f1, type: 2}
@@ -344,11 +344,11 @@ MonoBehaviour:
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
   preserveNumbers: 1
   farsi: 1
-  preserveTashkeel: 0
   originalText: "\u06A9\u0644\u0645\u0647 \u0647\u0627 \u062D\u062A\u064A \u0645\u064A\u062A\u0648\u0627\u0646\u0646\u062F
     <voffset=1em>\u0628\u0627\u0644\u0627</voffset> \u064A\u0627 <voffset=-1em>\u067E\u0627\u064A\u064A\u0646</voffset>
     \u0628\u0627\u0634\u0646\u062F"
   fixTags: 1
+  forceFix: 0
 --- !u!222 &483174609
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -578,9 +578,9 @@ MonoBehaviour:
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
   preserveNumbers: 1
   farsi: 1
-  preserveTashkeel: 0
   originalText: "\u0645\u062A\u0646 <color=yellow>\u0632\u0631\u062F</color> \u0633\u0627\u062F\u0647"
   fixTags: 1
+  forceFix: 0
 --- !u!222 &645895904
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1152,7 +1152,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: "\uFB90\uFEE0\uFEE4\uFEEA \uFEEB\uFE8E \uFEE3\uFEF4\uFE98\uFEEE\uFE8D\uFEE7\uFEE8\uFEAA
+  m_text: "\uFB90\uFEE0\uFEE4\uFEEA \uFEEB\uFE8E \uFEE3\uFBFF\uFE98\uFEEE\uFE8D\uFEE7\uFEE8\uFEAA
     \uFEA9\uFEAD \uFEED\uFEB3\uFEC2 \uFE9F\uFEE4\uFEE0\uFEEA <size=100>\uFE91\uFEB0\uFEAD\uFB92</size>
     \uFE91\uFE8E\uFEB7\uFEE8\uFEAA"
   m_isRightToLeft: 1
@@ -1250,11 +1250,11 @@ MonoBehaviour:
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
   preserveNumbers: 1
   farsi: 1
-  preserveTashkeel: 0
   originalText: "\u06A9\u0644\u0645\u0647 \u0647\u0627 \u0645\u064A\u062A\u0648\u0627\u0646\u0646\u062F
     \u062F\u0631 \u0648\u0633\u0637 \u062C\u0645\u0644\u0647 <size=100>\u0628\u0632\u0631\u06AF</size>
     \u0628\u0627\u0634\u0646\u062F"
   fixTags: 1
+  forceFix: 0
 --- !u!222 &1817191383
 CanvasRenderer:
   m_ObjectHideFlags: 0
