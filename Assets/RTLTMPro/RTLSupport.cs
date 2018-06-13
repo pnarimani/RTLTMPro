@@ -19,7 +19,7 @@ namespace RTLTMPro
         public bool FixTextTags { get; set; }
 
         protected readonly ICollection<TashkeelLocation> TashkeelLocation;
-        protected readonly Regex RTLTagFixer;
+        protected readonly Regex PairedTagFixer;
         protected readonly Regex LoneTagFixer;
         protected readonly List<char> FinalLetters;
 
@@ -30,7 +30,7 @@ namespace RTLTMPro
             FixTextTags = true;
             FinalLetters = new List<char>();
             TashkeelLocation = new List<TashkeelLocation>();
-            RTLTagFixer = new Regex(@"(?<closing></(?<tagName>\p{Ll}+)>)(?<content>(.|\n)+?)(?<opening><\k<tagName>=?(\p{Ll}|\p{N}|-|\+|#)*>)");
+            PairedTagFixer = new Regex(@"(?<closing></(?<tagName>\p{Ll}+)>)(?<content>(.|\n)+?)(?<opening><\k<tagName>=?(\p{Ll}|\p{N}|-|\+|#)*>)");
             LoneTagFixer = new Regex(@"(?<!</\p{Ll}+>.*)(<\p{Ll}+=?(\p{Ll}|\p{N})+/?>)");
         }
 
@@ -305,13 +305,15 @@ namespace RTLTMPro
         /// <exception cref="InvalidOperationException">If you call this method when <see cref="FixTextTags" /> is false</exception>
         protected virtual string FixTags(string input)
         {
-            if (FixTextTags)
+            if (FixTextTags == false)
                 throw new InvalidOperationException("FixTextTags is false but you have called FixTags method. This method will not work properly when FixTextTags is false");
 
-            var tags = RTLTagFixer.Matches(input);
-
+            var tags = PairedTagFixer.Matches(input);
             foreach (Match match in tags)
             {
+                // Opening and closing tags need to be reversed. 
+                // Also, we need to swap opening and closing tags.
+
                 input = input.Remove(match.Index, match.Length);
                 string opening = match.Groups["opening"].Value.Reverse().ToArray().ArrayToString();
                 string closing = match.Groups["closing"].Value.Reverse().ToArray().ArrayToString();
@@ -325,6 +327,7 @@ namespace RTLTMPro
             tags = LoneTagFixer.Matches(input);
             foreach (Match match in tags)
             {
+                // Lone tags need to be reversed.
                 input = input.Remove(match.Index, match.Length);
                 string opening = match.Value.Reverse().ToArray().ArrayToString();
                 input = input.Insert(match.Index, opening);
@@ -451,6 +454,8 @@ namespace RTLTMPro
                         lettersFinal[i] = (char) (letters[i] + 2);
                 }
 
+                // If this letter as Lam and special Lam-Alef connection was made, We want to skip the Alef
+                // (Lam-Alef occupies 1 space)
                 if (skipNext)
                 {
                     i++;
@@ -525,15 +530,22 @@ namespace RTLTMPro
                     {
                         if (shapeFixedLetters[i] == '>')
                         {
+                            // We need to check if it is actually the begining of a tag.
                             bool valid = false;
-                            //if (isAtBegining == false)
+                            // If > is at the end of the text (At begining of the array), it can't be a tag
+                            if (isAtBegining == false)
                             {
                                 for (int j = i - 1; j >= 0; j--)
                                 {
+                                    // Tags do not have space inside
                                     if (shapeFixedLetters[j] == ' ')
                                     {
                                         break;
                                     }
+
+                                    // Tags do not have RTL characters inside
+                                    if (IsRTLCharacter(shapeFixedLetters[j]))
+                                        break;
 
                                     if (shapeFixedLetters[j] == '<')
                                     {
@@ -588,14 +600,19 @@ namespace RTLTMPro
                         {
                             bool valid = false;
 
-                            //if (isAtEnd == false)
+                            if (isAtEnd == false)
                             {
                                 for (int j = i + 1; j < shapeFixedLetters.Count; j++)
                                 {
+                                    // Tags do not have space inside
                                     if (shapeFixedLetters[j] == ' ')
                                     {
                                         break;
                                     }
+
+                                    // Tags do not have RTL characters inside
+                                    if (IsRTLCharacter(shapeFixedLetters[j]))
+                                        break;
 
                                     if (shapeFixedLetters[j] == '>')
                                     {

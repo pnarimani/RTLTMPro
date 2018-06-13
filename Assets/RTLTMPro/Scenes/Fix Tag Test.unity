@@ -246,8 +246,8 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: "\uFEED\uFED7\uFE98\uFBFD 1 > 3 \uFE91\uFE8E\uFEB7\uFEAA\u060C \uFED7\uFEC4\uFECC\uFE8E
-    \uFEB3\uFEEA < \uFBFE\uFB8F \uFE8D\uFEB3\uFE96"
+  m_text: "\uFEED\uFED7\uFE98\uFBFD 1 > 3 \uFE91\uFE8E\uFEB7\uFEAA\u060C \uFEB3\uFEEA
+    < \uFBFE\uFB8F \uFE8D\uFEB3\uFE96"
   m_isRightToLeft: 1
   m_fontAsset: {fileID: 11400000, guid: 3fbde2e562e333d488bc46986fc6f4f1, type: 2}
   m_sharedMaterial: {fileID: 21623836076631360, guid: 3fbde2e562e333d488bc46986fc6f4f1,
@@ -315,10 +315,10 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 645895903}
-    characterCount: 33
+    characterCount: 28
     spriteCount: 0
-    spaceCount: 9
-    wordCount: 8
+    spaceCount: 8
+    wordCount: 7
     linkCount: 0
     lineCount: 1
     pageCount: 1
@@ -328,7 +328,7 @@ MonoBehaviour:
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
   m_isInputParsingRequired: 0
-  m_inputSource: 0
+  m_inputSource: 3
   m_hasFontAssetChanged: 0
   m_subTextObjects:
   - {fileID: 0}
@@ -343,8 +343,8 @@ MonoBehaviour:
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
   preserveNumbers: 1
   farsi: 1
-  originalText: "\u0648\u0642\u062A\u064A 3 > 1 \u0628\u0627\u0634\u062F\u060C \u0642\u0637\u0639\u0627
-    \u0633\u0647 < \u064A\u06A9 \u0627\u0633\u062A"
+  originalText: "\u0648\u0642\u062A\u064A 3 > 1 \u0628\u0627\u0634\u062F\u060C \u0633\u0647
+    < \u064A\u06A9 \u0627\u0633\u062A"
   fixTags: 1
   forceFix: 0
 --- !u!222 &645895904
