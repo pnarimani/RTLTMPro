@@ -28,8 +28,8 @@ namespace RTLTMPro
             PreserveNumbers = false;
             Farsi = true;
             TashkeelLocation = new List<TashkeelLocation>();
-            RTLTagFixer = new Regex("(?<closing></(?<closingName>[^ /]+)>)(?<content>(.|\\n)+?)(?<opening><\\k<closingName>=[^ /]+>)");
-            LoneTagFixer = new Regex("(?<!</[^ ء-ی/]+>.*)(<[^ ء-ی/]+=[^ ء-ی/]+/?>)");
+            RTLTagFixer = new Regex(@"(?<closing></(?<tagName>\p{Ll}+)>)(?<content>(.|\n)+?)(?<opening><\k<tagName>=?(\p{Ll}|\p{N})*>)");
+            LoneTagFixer = new Regex(@"(?<!</\p{Ll}+>.*)(<\p{Ll}+=?(\p{Ll}|\p{N})+/?>)");
         }
 
         public virtual string FixRTL(string input)
@@ -450,11 +450,32 @@ namespace RTLTMPro
             {
                 if (char.IsPunctuation(fixedLetters[i]) || char.IsSymbol(fixedLetters[i]))
                 {
+                    bool isAfterRTLCharacter = IsRTLCharacter(fixedLetters[i + 1]);
+                    bool isBeforeRTLCharacter = IsRTLCharacter(fixedLetters[i - 1]);
+                    bool isBeforeWhiteSpace = char.IsWhiteSpace(fixedLetters[i - 1]);
+                    bool isAfterWhiteSpace = char.IsWhiteSpace(fixedLetters[i + 1]);
+                    bool isSpecialPunctuation = fixedLetters[i] == '.' || fixedLetters[i] == '،' || fixedLetters[i] == '؛';
+
                     if (FixTextTags)
                     {
-                        if (fixedLetters[i] == '>')
+                        if (fixedLetters[i] == '>' && isBeforeWhiteSpace == false)
                         {
-                            if (preserveOrder.Count > 0)
+                            bool valid = false;
+                            for (int j = i - 1; j >= 0; j--)
+                            {
+                                if (fixedLetters[j] == ' ')
+                                {
+                                    break;
+                                }
+
+                                if (fixedLetters[j] == '<')
+                                {
+                                    valid = true;
+                                    break;
+                                }
+                            }
+
+                            if (preserveOrder.Count > 0 && valid)
                             {
                                 for (int j = 0; j < preserveOrder.Count; j++)
                                     finalLetters.Add(preserveOrder[preserveOrder.Count - 1 - j]);
@@ -466,11 +487,6 @@ namespace RTLTMPro
                     if (i > 0 && i < fixedLetters.Count - 1)
                     {
                         // NOTE: Array is reversed. i + 1 is behind and i - 1 is ahead
-                        bool isAfterRTLCharacter = IsRTLCharacter(fixedLetters[i + 1]);
-                        bool isBeforeRTLCharacter = IsRTLCharacter(fixedLetters[i - 1]);
-                        bool isBeforeWhiteSpace = char.IsWhiteSpace(fixedLetters[i - 1]);
-                        bool isAfterWhiteSpace = char.IsWhiteSpace(fixedLetters[i + 1]);
-                        bool isSpecialPunctuation = fixedLetters[i] == '.' || fixedLetters[i] == '،' || fixedLetters[i] == '؛';
 
                         if (isBeforeRTLCharacter && isAfterRTLCharacter ||
                             isAfterWhiteSpace && isSpecialPunctuation ||
@@ -495,9 +511,24 @@ namespace RTLTMPro
 
                     if (FixTextTags)
                     {
-                        if (fixedLetters[i] == '<')
+                        if (fixedLetters[i] == '<' && isAfterWhiteSpace == false)
                         {
-                            if (preserveOrder.Count > 0)
+                            bool valid = false;
+                            for (int j = i + 1; j < fixedLetters.Count; j++)
+                            {
+                                if (fixedLetters[j] == ' ')
+                                {
+                                    break;
+                                }
+
+                                if (fixedLetters[j] == '>')
+                                {
+                                    valid = true;
+                                    break;
+                                }
+                            }
+
+                            if (preserveOrder.Count > 0 && valid)
                             {
                                 for (int j = 0; j < preserveOrder.Count; j++)
                                     finalLetters.Add(preserveOrder[preserveOrder.Count - 1 - j]);
