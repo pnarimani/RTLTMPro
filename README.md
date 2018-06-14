@@ -16,7 +16,11 @@ All `Text Mesh Pro`'s tags are available in `RTL Text Mesh Pro`
 ### RTL InputField (See [known issues](#known-issues))
 Realtime InputField is supported.  
   
-![Input Field Preview](Screenshots/InputField.gif)
+![Input Field Preview](Screenshots/InputField.gif)  
+
+### RTL Dropdown (See [known issues](#known-issues))
+  
+![Dropdown Preview](Screenshots/Dropdown.gif)
 
 ### Multiline
 Yes, This plugin has no problem with multiline RTL texts.
@@ -35,7 +39,7 @@ Auto Font Size is fully supported.
 ### Arabic Tashkeel
 Arabic tashkeel are supported.  
   
-[Tashkeel Preview](Screenshots/Arabic%20Text.PNG)  
+![Tashkeel Preview](Screenshots/Arabic%20Text.PNG)  
 
 # How To Use
 * You need to have `TextMeshPro` plugin in your project. You can install TMPro via `Package Manager` or `AssetStore`
@@ -72,13 +76,13 @@ Checking this checkbox forces RTL TextMeshPro to fix the text even when it start
 When checked, RTL Text Mesh Pro will try to fix rich text tags.  
 
 # Known Issues
-* InputField (and anything that was designed to work with TextMeshProUGUI script) will not work.  
-  Why it doesn't work? We need to override the `text` property of `TextMeshProUGUI`. But the `text` property is not defined `virtual`. You need to manually make the property virtual.
+* InputField, Dropdown (and anything that was designed to work with TextMeshProUGUI script) will not work unless you do these steps below.  
+  **Why it doesn't work?** We need to override the `text` property of `TextMeshProUGUI`. But the `text` property is not defined `virtual`. You need to manually make the property virtual.  
   * Open `TMP_Text.cs` from TextMeshPro source code
   * add virtual keyword to text property.  
   ![Text](Screenshots/TextProperty.PNG)
   * Open `RTLTextMeshPro.cs` and uncomment the top line where it says `//#define RTL_OVERRIDE`
-  * Now you can use InputFields (and Dropdowns in future)
+  * Now you can use InputFields and Dropdowns.
   
 # Contribution
 All contributions are welcomed. Just make sure you follow the project's code style.  
