@@ -39,6 +39,8 @@ namespace RTLTMPro
                 // Add a Graphic Raycaster Component as well
                 canvas.gameObject.AddComponent<GraphicRaycaster>();
 
+                canvas.gameObject.AddComponent<CanvasScaler>();
+
                 Undo.RegisterCreatedObjectUndo(canvasObject, "Create " + canvasObject.name);
             }
 
@@ -113,7 +115,44 @@ namespace RTLTMPro
             GameObject go = RTLDefaultControls.CreateDropdown(GetStandardResources());
             PlaceUIElementRoot(go, menuCommand);
         }
-       
+
+        [MenuItem("GameObject/UI/Button - RTLTMP", false, 2005)]
+        public static void CreateButton(MenuCommand command)
+        {
+            var canvas = GetOrCreateCanvasGameObject().transform;
+            var buttonGo = new GameObject("Button", typeof(RectTransform), typeof(Image), typeof(Button));
+            var buttonTransform = buttonGo.GetComponent<RectTransform>();
+            var buttonImage = buttonGo.GetComponent<Image>();
+
+            buttonTransform.SetParent(canvas, false);
+            buttonTransform.sizeDelta = new Vector2(160, 30);
+
+            buttonImage.sprite = GetStandardResources().standard;
+            buttonImage.type = Image.Type.Sliced;
+            buttonImage.fillCenter = true;
+
+            var textGo = new GameObject("Text", typeof(RectTransform), typeof(RTLTextMeshPro));
+            var goRectTransform = textGo.GetComponent<RectTransform>();
+            var textMeshPro = textGo.GetComponent<RTLTextMeshPro>();
+
+            GameObjectUtility.SetParentAndAlign(textGo, buttonGo);
+
+            goRectTransform.sizeDelta = Vector2.zero;
+            goRectTransform.anchorMin = Vector2.zero;
+            goRectTransform.anchorMax = Vector2.one;
+
+            textMeshPro.text = "دکمه";
+            textMeshPro.enableAutoSizing = true;
+            textMeshPro.fontSizeMin = 10;
+            textMeshPro.fontSizeMax = 100;
+            textMeshPro.alignment = TextAlignmentOptions.Center;
+            textMeshPro.color = new Color(0.1254902F, 0.1254902F, 0.1254902F);
+            textMeshPro.margin = new Vector4(0,3.5f,0,4.5f);
+
+            Undo.RegisterCreatedObjectUndo(buttonGo, "Created Button");
+            Selection.activeGameObject = buttonGo;
+        }
+
         private static RTLDefaultControls.Resources GetStandardResources()
         {
             if (s_StandardResources.standard == null)
