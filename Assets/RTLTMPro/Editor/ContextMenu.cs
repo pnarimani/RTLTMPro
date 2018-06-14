@@ -106,6 +106,13 @@ namespace RTLTMPro
             var go = RTLDefaultControls.CreateInputField(GetStandardResources());
             PlaceUIElementRoot(go, menuCommand);
         }
+
+        [MenuItem("GameObject/UI/Dropdown - RTLTMP", false, 2036)]
+        public static void AddDropdown(MenuCommand menuCommand)
+        {
+            GameObject go = RTLDefaultControls.CreateDropdown(GetStandardResources());
+            PlaceUIElementRoot(go, menuCommand);
+        }
        
         private static RTLDefaultControls.Resources GetStandardResources()
         {
