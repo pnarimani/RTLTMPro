@@ -21,9 +21,12 @@ namespace RTLTMPro
         private const float kThickHeight = 30f;
         private const float kThinHeight = 20f;
         private static Vector2 s_ThickElementSize = new Vector2(kWidth, kThickHeight);
+
         private static Vector2 s_ThinElementSize = new Vector2(kWidth, kThinHeight);
+
         //private static Vector2 s_ImageElementSize = new Vector2(100f, 100f);
         private static Color s_DefaultSelectableColor = new Color(1f, 1f, 1f, 1f);
+
         //private static Color s_PanelColor = new Color(1f, 1f, 1f, 0.392f);
         private static Color s_TextColor = new Color(50f / 255f, 50f / 255f, 50f / 255f, 1f);
 
@@ -148,15 +151,18 @@ namespace RTLTMPro
             text.extraPadding = true;
             text.richText = true;
             text.autoSizeTextContainer = true;
+            text.enableAutoSizing = true;
             text.fontSizeMin = 10;
             text.fontSizeMax = 100;
+            text.margin = new Vector4(0, 0, 0, 4.5f);
             text.alignment = TextAlignmentOptions.Right;
             SetDefaultTextValues(text);
 
             RTLTextMeshPro placeholder = childPlaceholder.AddComponent<RTLTextMeshPro>();
-            placeholder.text = "Enter text...";
+            placeholder.text = "Enter Text...";
             placeholder.fontSize = 14;
             placeholder.autoSizeTextContainer = true;
+            placeholder.enableAutoSizing = true;
             placeholder.fontSizeMin = 10;
             placeholder.fontSizeMax = 100;
             placeholder.fontStyle = FontStyles.Italic;
@@ -244,8 +250,8 @@ namespace RTLTMPro
             templateImage.type = Image.Type.Sliced;
 
             ScrollRect templateScrollRect = template.AddComponent<ScrollRect>();
-            templateScrollRect.content = (RectTransform)content.transform;
-            templateScrollRect.viewport = (RectTransform)viewport.transform;
+            templateScrollRect.content = (RectTransform) content.transform;
+            templateScrollRect.viewport = (RectTransform) viewport.transform;
             templateScrollRect.horizontal = false;
             templateScrollRect.movementType = ScrollRect.MovementType.Clamped;
             templateScrollRect.verticalScrollbar = scrollbarScrollbar;
@@ -282,9 +288,9 @@ namespace RTLTMPro
 
             // Setting default Item list.
             itemLabelText.text = "Option A";
-            dropdown.options.Add(new TMP_Dropdown.OptionData {text = "Option A" });
-            dropdown.options.Add(new TMP_Dropdown.OptionData {text = "Option B" });
-            dropdown.options.Add(new TMP_Dropdown.OptionData {text = "Option C" });
+            dropdown.options.Add(new TMP_Dropdown.OptionData { text = "Option A" });
+            dropdown.options.Add(new TMP_Dropdown.OptionData { text = "Option B" });
+            dropdown.options.Add(new TMP_Dropdown.OptionData { text = "Option C" });
             dropdown.RefreshShownValue();
 
             // Set up RectTransforms.
