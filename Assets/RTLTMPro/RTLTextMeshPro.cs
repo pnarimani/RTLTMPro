@@ -1,4 +1,4 @@
-﻿#define RTL_OVERRIDE
+﻿//#define RTL_OVERRIDE
 
 using System.Linq;
 using TMPro;
