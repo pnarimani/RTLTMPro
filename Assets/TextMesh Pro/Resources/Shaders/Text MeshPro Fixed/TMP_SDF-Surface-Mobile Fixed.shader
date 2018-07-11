@@ -161,7 +161,7 @@ Tags {
 		fixed4	color		: COLOR;
 		float2	uv_MainTex;
 		float2	uv2_FaceTex;
-		float2  uv2_OutlineTex;
+	//	float2  uv2_OutlineTex;
 		float2	param;					// Weight, Scale
 		float3	viewDirEnv;		
 	};
@@ -189,12 +189,12 @@ Tags {
 		struct v2f {
 			V2F_SHADOW_CASTER;
 			float2	uv			: TEXCOORD1;
-			float2	uv2			: TEXCOORD3;
+		//	float2	uv2			: TEXCOORD3;
 			float	alphaClip	: TEXCOORD2;
 		};
 
 		uniform float4 _MainTex_ST;
-		uniform float4 _OutlineTex_ST;
+		//uniform float4 _OutlineTex_ST;
 		float _OutlineWidth;
 		float _FaceDilate;
 		float _ScaleRatioA;
@@ -204,8 +204,8 @@ Tags {
 			v2f o;
 			TRANSFER_SHADOW_CASTER(o)
 			o.uv = TRANSFORM_TEX(v.texcoord, _MainTex);
-			o.uv2 = TRANSFORM_TEX(v.texcoord, _OutlineTex);
-			o.alphaClip = o.alphaClip = (1.0 - _OutlineWidth * _ScaleRatioA - _FaceDilate * _ScaleRatioA) / 2;
+			//o.uv2 = TRANSFORM_TEX(v.texcoord, _OutlineTex);
+			//o.alphaClip = o.alphaClip = (1.0 - _OutlineWidth * _ScaleRatioA - _FaceDilate * _ScaleRatioA) / 2;
 			return o;
 		}
 
