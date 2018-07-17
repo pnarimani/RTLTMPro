@@ -22,6 +22,18 @@ fixed4 GetColor(half d, fixed4 faceColor, fixed4 outlineColor, half outline, hal
 	return faceColor;
 }
 
+fixed4 GetColorOutline(half d, fixed4 outlineColor, half outline, half softness)
+{
+	half faceAlpha = 1-saturate((d - outline * 0.5 + softness * 0.5) / (1.0 + softness));
+	half outlineAlpha = saturate((d + outline * 0.5)) * sqrt(min(1.0, outline));
+
+	outlineColor.rgb *= outlineColor.a;
+
+	outlineColor *= faceAlpha;
+
+	return outlineColor;
+}
+
 
 fixed4 GetColorBase(half d, fixed4 faceColor, half softness)
 {
