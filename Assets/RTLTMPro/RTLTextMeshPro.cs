@@ -109,6 +109,12 @@ namespace RTLTMPro
 
         public virtual void UpdateText()
         {
+            if(support == null)
+                support = new RTLSupport();
+
+            if (originalText == null)
+                originalText = "";
+
             if (ForceFix == false && support.IsRTLInput(originalText) == false)
             {
                 isRightToLeftText = false;
