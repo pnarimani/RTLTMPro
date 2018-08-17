@@ -87,3 +87,4 @@ When checked, RTL Text Mesh Pro will try to fix rich text tags.
 # Contribution
 All contributions are welcomed. Just make sure you follow the project's code style.  
 
+Contact: sorencoder@gmail.com
