@@ -203,9 +203,7 @@ namespace RTLTMPro
 
             if (ch == 0xFEF9)
                 return true;
-
-            // Input string that goes to FixGlyph method does not have any general letter.
-            // Code below is for IsRTLInput function
+            
             switch (ch)
             {
                 case (char) GeneralLetters.Hamza:
@@ -248,6 +246,7 @@ namespace RTLTMPro
                 case (char) GeneralLetters.PersianZe:
                 case (char) GeneralLetters.PersianGaf:
                 case (char) GeneralLetters.PersianGaf2:
+                case (char) GeneralLetters.ArabicTatweel:
                     return true;
             }
 
@@ -460,7 +459,8 @@ namespace RTLTMPro
                     }
                 }
 
-                if (IsRTLCharacter(letters[i]))
+                // We don't want to fix tatweel
+                if (letters[i] != (int) GeneralLetters.ArabicTatweel && IsRTLCharacter(letters[i]))
                 {
                     if (IsMiddleLetter(letters, i))
                         lettersFinal[i] = (char) (letters[i] + 3);
@@ -767,7 +767,7 @@ namespace RTLTMPro
         protected virtual bool IsLeadingLetter(IList<char> letters, int index)
         {
             bool previousLetterCheck = index == 0 ||
-                                       IsRTLCharacter(letters[index - 1]) == false ||
+                                       !IsRTLCharacter(letters[index - 1]) ||
                                        letters[index - 1] == (int) IsolatedLetters.Alef ||
                                        letters[index - 1] == (int) IsolatedLetters.Dal ||
                                        letters[index - 1] == (int) IsolatedLetters.Thal ||

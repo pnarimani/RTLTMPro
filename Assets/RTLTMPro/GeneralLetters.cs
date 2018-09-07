@@ -46,7 +46,7 @@ namespace RTLTMPro
         PersianChe = 0x0686,
         PersianZe = 0x0698,
         PersianGaf = 0x06AF,
-        PersianGaf2 = 0x06A9
-
+        PersianGaf2 = 0x06A9,
+        ArabicTatweel = 0x640
     }
 }
