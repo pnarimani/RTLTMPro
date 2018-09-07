@@ -423,10 +423,15 @@ namespace RTLTMPro
                     // MADDAH ABOVE
                     TashkeelLocation.Add(new TashkeelLocation((char) 0x0653, i));
                 }
+                else if (letters[i] == (char) 0x670)
+                {
+                    // Superscript alef
+                    TashkeelLocation.Add(new TashkeelLocation((char) 0x670, i));
+                }
             }
 
-            string[] split = str.Split((char) 0x064B, (char) 0x064C, (char) 0x064D, (char) 0x064E, (char) 0x064F, (char) 0x0650, (char) 0x0651, (char) 0x0652, (char) 0x0653, (char) 0xFC60,
-                (char) 0xFC61, (char) 0xFC62);
+            string[] split = str.Split((char) 0x064B, (char) 0x064C, (char) 0x064D, (char) 0x064E, (char) 0x064F, (char) 0x0650,
+                (char) 0x0651, (char) 0x0652, (char) 0x0653, (char) 0xFC60, (char) 0xFC61, (char) 0xFC62, (char) 0x670);
 
             return split.Aggregate("", (current, s) => current + s);
         }
