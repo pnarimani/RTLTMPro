@@ -1,6 +1,6 @@
 # RTL Text Mesh Pro
-This plugin adds Right-to-left language support to "Text Mesh Pro" Unity plugin.  
-This project used [ArabicSupprt](https://www.assetstore.unity3d.com/en/#!/content/2674). [ArabicSupprt for Unity now on Github.](https://github.com/Konash/arabic-support-unity)
+This plugin adds Right-to-left language support to "Text Mesh Pro" Unity plugin. 
+You need to have `TextMeshPro` plugin in your project. You can install TMPro via `Package Manager` or [`AssetStore`](https://assetstore.unity.com/packages/essentials/beta-projects/textmesh-pro-84126)
 
 # Features
 ### Realtime RTL Text
@@ -41,8 +41,15 @@ Arabic tashkeel are supported.
   
 ![Tashkeel Preview](Screenshots/Arabic%20Text.PNG)  
 
+### Zero-Width No-Joiner character support
+You can insert Zero-Width No-Joiner character with Ctrl+Shift+2 hotkey.  
+  
+![ZWNJ Preview](Screenshots/zwnj.PNG)  
+
+
+
 # How To Use
-* You need to have `TextMeshPro` plugin in your project. You can install TMPro via `Package Manager` or `AssetStore`
+* You need to have `TextMeshPro` plugin in your project. You can install TMPro via `Package Manager` or [`AssetStore`](https://assetstore.unity.com/packages/essentials/beta-projects/textmesh-pro-84126)
 * Go to [release](https://github.com/sorencoder/RTLTMPro/releases) page and download latest unitypackage file (or copy `RTLTMPro` folder from source to your project.)
 * Open one of the range files in `Assets/RTLTMPro/Ranges/` folder using your favorite text editor.
   * RTL Letters are in `LetterRanges.txt` file
