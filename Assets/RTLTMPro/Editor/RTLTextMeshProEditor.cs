@@ -53,23 +53,11 @@ namespace RTLTMPro
             }
 
             EditorGUILayout.BeginVertical(GUI.skin.box);
-            EditorGUILayout.BeginHorizontal();
-            EditorGUI.BeginChangeCheck();
-            farsiProp.boolValue = GUILayout.Toggle(farsiProp.boolValue, new GUIContent("Farsi"));
-            forceFixProp.boolValue = GUILayout.Toggle(forceFixProp.boolValue, new GUIContent("Force Fix"));
-            preserveNumbersProp.boolValue = GUILayout.Toggle(preserveNumbersProp.boolValue, new GUIContent("Preserve Numbers"));
-
-            if (tmpro.richText)
-                fixTagsProp.boolValue = GUILayout.Toggle(fixTagsProp.boolValue, new GUIContent("FixTags"));
-            EditorGUILayout.EndHorizontal();
-
-            EditorGUILayout.BeginHorizontal();
+            DrawOptions();
             if (GUILayout.Button("Re-Fix"))
                 changed = true;
-            EditorGUILayout.EndHorizontal();
             EditorGUILayout.EndVertical();
-
-
+            
             if (EditorGUI.EndChangeCheck())
             {
                 changed = true;
@@ -87,7 +75,7 @@ namespace RTLTMPro
                 EditorGUI.BeginChangeCheck();
                 originalTextProp.stringValue = GUILayout.TextArea(originalTextProp.stringValue, TMP_UIStyleManager.TextAreaBoxEditor, GUILayout.Height(125), GUILayout.ExpandWidth(true));
 
-                ListenForShortcut();
+                ListenForZeroWidthNoJoiner();
 
                 if (EditorGUI.EndChangeCheck())
                 {
@@ -113,18 +101,36 @@ namespace RTLTMPro
             base.OnInspectorGUI();
         }
 
-        private void ListenForShortcut()
+        protected virtual void DrawOptions()
+        {
+            EditorGUILayout.BeginHorizontal();
+            EditorGUI.BeginChangeCheck();
+            farsiProp.boolValue = GUILayout.Toggle(farsiProp.boolValue, new GUIContent("Farsi"));
+            forceFixProp.boolValue = GUILayout.Toggle(forceFixProp.boolValue, new GUIContent("Force Fix"));
+            preserveNumbersProp.boolValue = GUILayout.Toggle(preserveNumbersProp.boolValue, new GUIContent("Preserve Numbers"));
+
+            if (tmpro.richText)
+                fixTagsProp.boolValue = GUILayout.Toggle(fixTagsProp.boolValue, new GUIContent("FixTags"));
+
+            EditorGUILayout.EndHorizontal();
+        }
+
+        protected virtual void ListenForZeroWidthNoJoiner()
         {
             var editor = (TextEditor) GUIUtility.GetStateObject(typeof(TextEditor), GUIUtility.keyboardControl);
-            if ((Event.current.modifiers & EventModifiers.Control) != 0 &&
-                (Event.current.modifiers & EventModifiers.Shift) != 0 &&
-                Event.current.type == EventType.KeyUp &&
-                Event.current.keyCode == KeyCode.Alpha2)
-            {
-                originalTextProp.stringValue = originalTextProp.stringValue.Insert(editor.cursorIndex, ((char) GeneralLetters.ZeroWidthNoJoiner).ToString());
-                editor.cursorIndex++;
-                Event.current.Use();
-            }
+            
+            bool shortcutPressed = (Event.current.modifiers & EventModifiers.Control) != 0 &&
+                     (Event.current.modifiers & EventModifiers.Shift) != 0 &&
+                     Event.current.type == EventType.KeyUp &&
+                     Event.current.keyCode == KeyCode.Alpha2;
+            
+            if (!shortcutPressed) return;
+
+            originalTextProp.stringValue = originalTextProp.stringValue.Insert(editor.cursorIndex, ((char) GeneralLetters.ZeroWidthNoJoiner).ToString());
+            editor.selectIndex++;
+            editor.cursorIndex++;
+            Event.current.Use();
+            Repaint();
         }
     }
 }

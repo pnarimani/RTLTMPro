@@ -224,7 +224,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.000022888}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -1244.9, y: -889.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &645895903
@@ -246,11 +246,11 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: "\uFB94\uFEB0\uFBFE\uFEE8\uFEEA \uFBFC eziSotuA \uFEA9\uFEAD orPhseMtxeT
+  m_text: "\uFB94\uFEB0\uFBFE\uFEE8\uFEEA\u06CC eziSotuA \u062F\u0631 orPhseMtxeT
     \uFB90\uFEEA \uFEEB\uFEE4\uFE8E\uFEE7\uFEE8\uFEAA \uFB94\uFEB0\uFBFE\uFEE8\uFEEA
-    \uFBFC tiFtseB \uFEA9\uFEAD \uFE97\uFB91\uFEB4\uFE96 \uFEE3\uFECC\uFEE4\uFEEE\uFEDF\uFBFD
+    \u06CC tiFtseB \u062F\u0631 \uFE97\uFB91\uFEB4\uFE96 \uFEE3\uFECC\uFEE4\uFEEE\uFEDF\uFBFD
     \uFBFE\uFEEE\uFEE7\uFBFF\uFE98\uFBFD \uFEEB\uFEB4\uFE96 \uFE97\uFEEE\uFEB3\uFEC2
-    \uFE8D\uFBFE\uFEE6 \uFB58\uFEFC\uFB94\uFBFF\uFEE6 \uFB58\uFEB8\uFE98\uFBFF\uFE92\uFE8E\uFEE7\uFBFD
+    \u0627\uFBFE\uFEE6 \uFB58\uFEE0\uFE8E\uFB94\uFBFF\uFEE6 \uFB58\uFEB8\uFE98\uFBFF\uFE92\uFE8E\uFEE7\uFBFD
     \uFEE3\uFBFF\uFEB8\uFEEA"
   m_isRightToLeft: 1
   m_fontAsset: {fileID: 11400000, guid: 3fbde2e562e333d488bc46986fc6f4f1, type: 2}
@@ -279,7 +279,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 36.25
+  m_fontSize: 46.85
   m_fontSizeBase: 66.4
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -300,6 +300,7 @@ MonoBehaviour:
   m_firstOverflowCharacterIndex: -1
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
+  m_isTextTruncated: 0
   m_enableKerning: 1
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
@@ -321,10 +322,10 @@ MonoBehaviour:
     textComponent: {fileID: 645895903}
     characterCount: 112
     spriteCount: 0
-    spaceCount: 19
-    wordCount: 20
+    spaceCount: 18
+    wordCount: 19
     linkCount: 0
-    lineCount: 3
+    lineCount: 4
     pageCount: 1
     materialCount: 2
   m_havePropertiesChanged: 0
@@ -332,7 +333,7 @@ MonoBehaviour:
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
   m_isInputParsingRequired: 0
-  m_inputSource: 0
+  m_inputSource: 3
   m_hasFontAssetChanged: 0
   m_subTextObjects:
   - {fileID: 0}
@@ -347,14 +348,14 @@ MonoBehaviour:
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
   preserveNumbers: 1
   farsi: 1
-  preserveTashkeel: 0
-  originalText: "\u06AF\u0632\u064A\u0646\u0647 \u064A AutoSize \u062F\u0631 TextMeshPro
-    \u06A9\u0647 \u0647\u0645\u0627\u0646\u0646\u062F \u06AF\u0632\u064A\u0646\u0647
+  originalText: "\u06AF\u0632\u064A\u0646\u0647\u200C\u064A AutoSize \u062F\u0631
+    TextMeshPro \u06A9\u0647 \u0647\u0645\u0627\u0646\u0646\u062F \u06AF\u0632\u064A\u0646\u0647
     \u064A BestFit \u062F\u0631 \u062A\u06A9\u0633\u062A \u0645\u0639\u0645\u0648\u0644\u064A
     \u064A\u0648\u0646\u064A\u062A\u064A \u0647\u0633\u062A \u062A\u0648\u0633\u0637
     \u0627\u064A\u0646 \u067E\u0644\u0627\u06AF\u064A\u0646 \u067E\u0634\u062A\u064A\u0628\u0627\u0646\u064A
     \u0645\u064A\u0634\u0647"
   fixTags: 0
+  forceFix: 0
 --- !u!222 &645895904
 CanvasRenderer:
   m_ObjectHideFlags: 0

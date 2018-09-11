@@ -792,7 +792,19 @@ namespace RTLTMPro
                                                   letters[index - 1] == (int) GeneralLetters.Hamza ||
                                                   letters[index - 1] == (int) GeneralLetters.AlefMaksoor ||
                                                   letters[index - 1] == (int) GeneralLetters.ZeroWidthNoJoiner ||
-                                                  letters[index - 1] == (int) GeneralLetters.WawHamza;
+                                                  letters[index - 1] == (int) GeneralLetters.WawHamza ||
+
+                                                  letters[index - 1] == (int) IsolatedLetters.Alef ||
+                                                  letters[index - 1] == (int) IsolatedLetters.Dal ||
+                                                  letters[index - 1] == (int) IsolatedLetters.Thal ||
+                                                  letters[index - 1] == (int) IsolatedLetters.Ra2 ||
+                                                  letters[index - 1] == (int) IsolatedLetters.Zeen ||
+                                                  letters[index - 1] == (int) IsolatedLetters.PersianZe ||
+                                                  letters[index - 1] == (int) IsolatedLetters.Waw ||
+                                                  letters[index - 1] == (int) IsolatedLetters.AlefMad ||
+                                                  letters[index - 1] == (int) IsolatedLetters.AlefHamza ||
+                                                  letters[index - 1] == (int) IsolatedLetters.Hamza ||
+                                                  letters[index - 1] == (int) IsolatedLetters.AlefMaksoor;
 
             bool canThisLetterBeLeading = letters[index] != ' ' &&
                                           letters[index] != (int) GeneralLetters.Dal &&

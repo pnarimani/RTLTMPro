@@ -146,7 +146,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
+  m_BackGroundColor: {r: 0.13207549, g: 0.13207549, b: 0.13207549, a: 0}
   m_projectionMatrixMode: 1
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
@@ -294,8 +294,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 237.80005}
-  m_SizeDelta: {x: 540.6, y: 136.2}
+  m_AnchoredPosition: {x: 53.999985, y: 118.69997}
+  m_SizeDelta: {x: 1011, y: 254.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &605342365
 MonoBehaviour:
@@ -316,7 +316,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: "\uFEE3\uFBFD \uFEA7\uFEEE\u0627\uFEEB\uFEE2"
+  m_text: "\uFED3\uFE8E\uFEBB\uFEE0\uFEEA: \uFEE3\uFBFD \uFEA7\uFEEE\u0627\uFEEB\uFEE2"
   m_isRightToLeft: 1
   m_fontAsset: {fileID: 11400000, guid: 3fbde2e562e333d488bc46986fc6f4f1, type: 2}
   m_sharedMaterial: {fileID: 21623836076631360, guid: 3fbde2e562e333d488bc46986fc6f4f1,
@@ -344,8 +344,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 60
-  m_fontSizeBase: 60
+  m_fontSize: 104.52
+  m_fontSizeBase: 104.52
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 21.2
@@ -385,14 +385,14 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 605342365}
-    characterCount: 8
+    characterCount: 15
     spriteCount: 0
-    spaceCount: 1
-    wordCount: 2
+    spaceCount: 2
+    wordCount: 3
     linkCount: 0
     lineCount: 1
     pageCount: 1
-    materialCount: 1
+    materialCount: 2
   m_havePropertiesChanged: 0
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
@@ -413,7 +413,7 @@ MonoBehaviour:
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
   preserveNumbers: 1
   farsi: 1
-  originalText: "\u0645\u064A \u062E\u0648\u0627\u0647\u0645"
+  originalText: "\u0641\u0627\u0635\u0644\u0647: \u0645\u064A \u062E\u0648\u0627\u0647\u0645"
   fixTags: 0
   forceFix: 0
 --- !u!222 &605342366
@@ -457,8 +457,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 374}
-  m_SizeDelta: {x: 540.6, y: 136.2}
+  m_AnchoredPosition: {x: 53.999985, y: 373.49997}
+  m_SizeDelta: {x: 1011, y: 254.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &645895903
 MonoBehaviour:
@@ -479,7 +479,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: "\uFEE3\uFBFD\uFEA7\uFEEE\u0627\uFEEB\uFEE2"
+  m_text: "\uFEE7\uFBFF\uFEE2\uFED3\uFE8E\uFEBB\uFEE0\uFEEA: \uFEE3\uFBFD\uFEA7\uFEEE\u0627\uFEEB\uFEE2"
   m_isRightToLeft: 1
   m_fontAsset: {fileID: 11400000, guid: 3fbde2e562e333d488bc46986fc6f4f1, type: 2}
   m_sharedMaterial: {fileID: 21623836076631360, guid: 3fbde2e562e333d488bc46986fc6f4f1,
@@ -507,8 +507,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 60
-  m_fontSizeBase: 60
+  m_fontSize: 104.52
+  m_fontSizeBase: 104.52
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 21.2
@@ -548,14 +548,14 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 645895903}
-    characterCount: 7
+    characterCount: 17
     spriteCount: 0
-    spaceCount: 0
-    wordCount: 1
+    spaceCount: 1
+    wordCount: 2
     linkCount: 0
     lineCount: 1
     pageCount: 1
-    materialCount: 1
+    materialCount: 2
   m_havePropertiesChanged: 0
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
@@ -574,9 +574,9 @@ MonoBehaviour:
   - {fileID: 0}
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
-  preserveNumbers: 0
+  preserveNumbers: 1
   farsi: 1
-  originalText: "\u0645\u064A\u200C\u062E\u0648\u0627\u0647\u0645"
+  originalText: "\u0646\u064A\u0645\u200C\u0641\u0627\u0635\u0644\u0647: \u0645\u064A\u200C\u062E\u0648\u0627\u0647\u0645"
   fixTags: 0
   forceFix: 0
 --- !u!222 &645895904
@@ -892,8 +892,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.000061035, y: -34.6}
-  m_SizeDelta: {x: 540.6, y: 136.2}
+  m_AnchoredPosition: {x: 53.999985, y: -390.70004}
+  m_SizeDelta: {x: 1011, y: 254.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1332193557
 MonoBehaviour:
@@ -914,7 +914,8 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: "\uFEE7\uFBFF\uFE8E\u0632\uFEE3\uFEE8\uFEAA\u06CC \uFEEB\uFE8E"
+  m_text: "\uFED3\uFE8E\uFEBB\uFEE0\uFEEA: \uFEE7\uFBFF\uFE8E\u0632\uFEE3\uFEE8\uFEAA\u06CC
+    \uFEEB\uFE8E"
   m_isRightToLeft: 1
   m_fontAsset: {fileID: 11400000, guid: 3fbde2e562e333d488bc46986fc6f4f1, type: 2}
   m_sharedMaterial: {fileID: 21623836076631360, guid: 3fbde2e562e333d488bc46986fc6f4f1,
@@ -942,8 +943,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 60
-  m_fontSizeBase: 60
+  m_fontSize: 104.52
+  m_fontSizeBase: 104.52
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 21.2
@@ -983,20 +984,20 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 1332193557}
-    characterCount: 11
+    characterCount: 18
     spriteCount: 0
-    spaceCount: 1
-    wordCount: 2
+    spaceCount: 2
+    wordCount: 3
     linkCount: 0
     lineCount: 1
     pageCount: 1
-    materialCount: 1
+    materialCount: 2
   m_havePropertiesChanged: 0
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
   m_isInputParsingRequired: 0
-  m_inputSource: 3
+  m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
   - {fileID: 0}
@@ -1011,7 +1012,8 @@ MonoBehaviour:
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
   preserveNumbers: 1
   farsi: 1
-  originalText: "\u0646\u064A\u0627\u0632\u0645\u0646\u062F\u064A \u0647\u0627"
+  originalText: "\u0641\u0627\u0635\u0644\u0647: \u0646\u064A\u0627\u0632\u0645\u0646\u062F\u064A
+    \u0647\u0627"
   fixTags: 0
   forceFix: 0
 --- !u!222 &1332193558
@@ -1362,8 +1364,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.000028149, y: 101.6}
-  m_SizeDelta: {x: 540.6, y: 136.2}
+  m_AnchoredPosition: {x: 54, y: -136}
+  m_SizeDelta: {x: 1011, y: 254.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2030634299
 MonoBehaviour:
@@ -1384,7 +1386,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: "\uFEE7\uFBFF\uFE8E\u0632\uFEE3\uFEE8\uFEAA\u06CC\uFEEB\uFE8E"
+  m_text: "\uFEE7\uFBFF\uFEE2\uFED3\uFE8E\uFEBB\uFEE0\uFEEA: \uFEE7\uFBFF\uFE8E\u0632\uFEE3\uFEE8\uFEAA\u06CC\uFEEB\uFE8E"
   m_isRightToLeft: 1
   m_fontAsset: {fileID: 11400000, guid: 3fbde2e562e333d488bc46986fc6f4f1, type: 2}
   m_sharedMaterial: {fileID: 21623836076631360, guid: 3fbde2e562e333d488bc46986fc6f4f1,
@@ -1412,8 +1414,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 60
-  m_fontSizeBase: 60
+  m_fontSize: 104.52
+  m_fontSizeBase: 104.52
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 21.2
@@ -1453,14 +1455,14 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 2030634299}
-    characterCount: 10
+    characterCount: 20
     spriteCount: 0
-    spaceCount: 0
-    wordCount: 1
+    spaceCount: 1
+    wordCount: 2
     linkCount: 0
     lineCount: 1
     pageCount: 1
-    materialCount: 1
+    materialCount: 2
   m_havePropertiesChanged: 0
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
@@ -1481,7 +1483,7 @@ MonoBehaviour:
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
   preserveNumbers: 1
   farsi: 1
-  originalText: "\u0646\u064A\u0627\u0632\u0645\u0646\u062F\u064A\u200C\u0647\u0627"
+  originalText: "\u0646\u064A\u0645\u200C\u0641\u0627\u0635\u0644\u0647: \u0646\u064A\u0627\u0632\u0645\u0646\u062F\u064A\u200C\u0647\u0627"
   fixTags: 0
   forceFix: 0
 --- !u!222 &2030634300

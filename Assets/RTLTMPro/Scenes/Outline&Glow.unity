@@ -146,7 +146,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0.028657887, g: 0.1202385, b: 0.26415092, a: 0}
   m_projectionMatrixMode: 1
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
@@ -306,7 +306,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: "\uFEE3\uFE98\uFEE6 \uFED3\uFE8E\uFEAD\uFEB3\uFBFD "
+  m_text: "\uFEE3\uFE98\uFEE6 \uFED3\uFE8E\u0631\uFEB3\uFBFD "
   m_isRightToLeft: 1
   m_fontAsset: {fileID: 11400000, guid: 3fbde2e562e333d488bc46986fc6f4f1, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: c4d3ac12902d6f24a8c9ebf76f9ea768, type: 2}
@@ -354,6 +354,7 @@ MonoBehaviour:
   m_firstOverflowCharacterIndex: -1
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
+  m_isTextTruncated: 0
   m_enableKerning: 1
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
@@ -386,7 +387,7 @@ MonoBehaviour:
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
   m_isInputParsingRequired: 0
-  m_inputSource: 0
+  m_inputSource: 3
   m_hasFontAssetChanged: 0
   m_subTextObjects:
   - {fileID: 0}
@@ -560,7 +561,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: "\uFEE3\uFE98\uFEE6 \uFED3\uFE8E\uFEAD\uFEB3\uFBFD "
+  m_text: "\uFEE3\uFE98\uFEE6 \uFED3\uFE8E\u0631\uFEB3\uFBFD "
   m_isRightToLeft: 1
   m_fontAsset: {fileID: 11400000, guid: 3fbde2e562e333d488bc46986fc6f4f1, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: c512ea5c56d8f8746af62abb78fcd712, type: 2}
@@ -608,6 +609,7 @@ MonoBehaviour:
   m_firstOverflowCharacterIndex: -1
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
+  m_isTextTruncated: 0
   m_enableKerning: 1
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
@@ -640,7 +642,7 @@ MonoBehaviour:
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
   m_isInputParsingRequired: 0
-  m_inputSource: 0
+  m_inputSource: 3
   m_hasFontAssetChanged: 0
   m_subTextObjects:
   - {fileID: 0}

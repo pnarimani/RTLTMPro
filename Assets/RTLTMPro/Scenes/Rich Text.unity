@@ -246,8 +246,8 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: "\uFB90\uFEE0\uFEE4\uFEEA \uFEEB\uFE8E \uFEA3\uFE98\uFBFD \uFEE3\uFBFF\uFE98\uFEEE\uFE8D\uFEE7\uFEE8\uFEAA
-    <voffset=1em>\uFE91\uFE8E\uFEFB</voffset> \uFBFE\uFE8E <voffset=-1em>\uFB58\uFE8E\uFBFE\uFBFF\uFEE6</voffset>
+  m_text: "\uFB90\uFEE0\uFEE4\uFEEA\uFEEB\uFE8E \uFEA3\uFE98\uFBFD \uFEE3\uFBFF\uFE98\uFEEE\u0627\uFEE7\uFEE8\uFEAA
+    <voffset=1em>\uFE91\uFE8E\uFEDF\uFE8E</voffset> \uFBFE\uFE8E <voffset=-1em>\uFB58\uFE8E\uFBFE\uFBFF\uFEE6</voffset>
     \uFE91\uFE8E\uFEB7\uFEE8\uFEAA"
   m_isRightToLeft: 1
   m_fontAsset: {fileID: 11400000, guid: 3fbde2e562e333d488bc46986fc6f4f1, type: 2}
@@ -297,6 +297,7 @@ MonoBehaviour:
   m_firstOverflowCharacterIndex: 28
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
+  m_isTextTruncated: 0
   m_enableKerning: 1
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
@@ -318,8 +319,8 @@ MonoBehaviour:
     textComponent: {fileID: 483174608}
     characterCount: 39
     spriteCount: 0
-    spaceCount: 7
-    wordCount: 8
+    spaceCount: 6
+    wordCount: 7
     linkCount: 0
     lineCount: 1
     pageCount: 1
@@ -329,7 +330,7 @@ MonoBehaviour:
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
   m_isInputParsingRequired: 0
-  m_inputSource: 0
+  m_inputSource: 3
   m_hasFontAssetChanged: 0
   m_subTextObjects:
   - {fileID: 0}
@@ -344,7 +345,7 @@ MonoBehaviour:
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
   preserveNumbers: 1
   farsi: 1
-  originalText: "\u06A9\u0644\u0645\u0647 \u0647\u0627 \u062D\u062A\u064A \u0645\u064A\u062A\u0648\u0627\u0646\u0646\u062F
+  originalText: "\u06A9\u0644\u0645\u0647\u200C\u0647\u0627 \u062D\u062A\u064A \u0645\u064A\u062A\u0648\u0627\u0646\u0646\u062F
     <voffset=1em>\u0628\u0627\u0644\u0627</voffset> \u064A\u0627 <voffset=-1em>\u067E\u0627\u064A\u064A\u0646</voffset>
     \u0628\u0627\u0634\u0646\u062F"
   fixTags: 1
@@ -482,7 +483,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: "\uFEE3\uFE98\uFEE6 <color=yellow>\uFEAF\uFEAD\uFEA9</color> \uFEB3\uFE8E\uFEA9\uFEE9"
+  m_text: "\uFEE3\uFE98\uFEE6 <color=yellow>\u0632\u0631\u062F</color> \uFEB3\uFE8E\u062F\u0647"
   m_isRightToLeft: 1
   m_fontAsset: {fileID: 11400000, guid: 3fbde2e562e333d488bc46986fc6f4f1, type: 2}
   m_sharedMaterial: {fileID: 21623836076631360, guid: 3fbde2e562e333d488bc46986fc6f4f1,
@@ -531,6 +532,7 @@ MonoBehaviour:
   m_firstOverflowCharacterIndex: -1
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
+  m_isTextTruncated: 0
   m_enableKerning: 1
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
@@ -1152,8 +1154,8 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: "\uFB90\uFEE0\uFEE4\uFEEA \uFEEB\uFE8E \uFEE3\uFBFF\uFE98\uFEEE\uFE8D\uFEE7\uFEE8\uFEAA
-    \uFEA9\uFEAD \uFEED\uFEB3\uFEC2 \uFE9F\uFEE4\uFEE0\uFEEA <size=100>\uFE91\uFEB0\uFEAD\uFB92</size>
+  m_text: "\uFB90\uFEE0\uFEE4\uFEEA\uFEEB\uFE8E \uFEE3\uFBFF\uFE98\uFEEE\u0627\uFEE7\uFEE8\uFEAA
+    \u062F\u0631 \u0648\uFEB3\uFEC2 \uFE9F\uFEE4\uFEE0\uFEEA <size=100>\uFE91\uFEB0\u0631\u06AF</size>
     \uFE91\uFE8E\uFEB7\uFEE8\uFEAA"
   m_isRightToLeft: 1
   m_fontAsset: {fileID: 11400000, guid: 3fbde2e562e333d488bc46986fc6f4f1, type: 2}
@@ -1203,6 +1205,7 @@ MonoBehaviour:
   m_firstOverflowCharacterIndex: -1
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
+  m_isTextTruncated: 0
   m_enableKerning: 1
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
@@ -1222,10 +1225,10 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 1817191382}
-    characterCount: 39
+    characterCount: 38
     spriteCount: 0
-    spaceCount: 7
-    wordCount: 8
+    spaceCount: 6
+    wordCount: 7
     linkCount: 0
     lineCount: 1
     pageCount: 1
@@ -1250,7 +1253,7 @@ MonoBehaviour:
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
   preserveNumbers: 1
   farsi: 1
-  originalText: "\u06A9\u0644\u0645\u0647 \u0647\u0627 \u0645\u064A\u062A\u0648\u0627\u0646\u0646\u062F
+  originalText: "\u06A9\u0644\u0645\u0647\u200C\u0647\u0627 \u0645\u064A\u062A\u0648\u0627\u0646\u0646\u062F
     \u062F\u0631 \u0648\u0633\u0637 \u062C\u0645\u0644\u0647 <size=100>\u0628\u0632\u0631\u06AF</size>
     \u0628\u0627\u0634\u0646\u062F"
   fixTags: 1

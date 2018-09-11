@@ -16,9 +16,9 @@ MonoBehaviour:
   m_enableExtraPadding: 0
   m_enableTintAllSprites: 0
   m_enableParseEscapeCharacters: 1
-  m_missingGlyphCharacter: 0
+  m_missingGlyphCharacter: 400
   m_warningsDisabled: 0
-  m_defaultFontAsset: {fileID: 11400000, guid: 3fbde2e562e333d488bc46986fc6f4f1, type: 2}
+  m_defaultFontAsset: {fileID: 0}
   m_defaultFontAssetPath: Fonts & Materials/
   m_defaultFontSize: 36
   m_defaultAutoSizeMinRatio: 0.5
