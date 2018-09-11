@@ -3,7 +3,7 @@ namespace RTLTMPro
     /// <summary>
     /// Letters contextual forms - Isolated
     /// </summary>
-    internal enum GeneralLetters
+    public enum GeneralLetters
     {
         Hamza = 0x0621,
         Alef = 0x0627,
@@ -47,6 +47,7 @@ namespace RTLTMPro
         PersianZe = 0x0698,
         PersianGaf = 0x06AF,
         PersianGaf2 = 0x06A9,
-        ArabicTatweel = 0x640
+        ArabicTatweel = 0x640,
+        ZeroWidthNoJoiner = 0x200C
     }
 }

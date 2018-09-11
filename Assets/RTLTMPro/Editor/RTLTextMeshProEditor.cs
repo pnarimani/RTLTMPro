@@ -7,7 +7,7 @@ namespace RTLTMPro
     [CustomEditor(typeof(RTLTextMeshPro)), CanEditMultipleObjects]
     public class RTLTextMeshProEditor : TMP_UiEditorPanel
     {
-        private static readonly string[] UIStateLabel = { "\t- <i>Click to expand</i> -", "\t- <i>Click to collapse</i> -" };
+        private static readonly string[] UIStateLabel = {"\t- <i>Click to expand</i> -", "\t- <i>Click to collapse</i> -"};
         private SerializedProperty originalTextProp;
         private SerializedProperty havePropertiesChangedProp;
         private SerializedProperty inputSourceProp;
@@ -39,7 +39,7 @@ namespace RTLTMPro
         public override void OnInspectorGUI()
         {
             serializedObject.Update();
-            tmpro = (RTLTextMeshPro)target;
+            tmpro = (RTLTextMeshPro) target;
 
             // Copy Default GUI Toggle Style
             if (fixNumberStyle == null)
@@ -47,7 +47,7 @@ namespace RTLTMPro
                 fixNumberStyle = new GUIStyle(GUI.skin.label)
                 {
                     fontSize = 12,
-                    normal = { textColor = TMP_UIStyleManager.Section_Label.normal.textColor },
+                    normal = {textColor = TMP_UIStyleManager.Section_Label.normal.textColor},
                     richText = true
                 };
             }
@@ -85,7 +85,9 @@ namespace RTLTMPro
             if (foldout)
             {
                 EditorGUI.BeginChangeCheck();
-                originalTextProp.stringValue = EditorGUILayout.TextArea(originalTextProp.stringValue, TMP_UIStyleManager.TextAreaBoxEditor, GUILayout.Height(125), GUILayout.ExpandWidth(true));
+                originalTextProp.stringValue = GUILayout.TextArea(originalTextProp.stringValue, TMP_UIStyleManager.TextAreaBoxEditor, GUILayout.Height(125), GUILayout.ExpandWidth(true));
+
+                ListenForShortcut();
 
                 if (EditorGUI.EndChangeCheck())
                 {
@@ -100,7 +102,7 @@ namespace RTLTMPro
             if (changed)
             {
                 tmpro.UpdateText();
-                
+
                 havePropertiesChangedProp.boolValue = true;
                 changed = false;
                 EditorUtility.SetDirty(target);
@@ -109,6 +111,20 @@ namespace RTLTMPro
             serializedObject.ApplyModifiedProperties();
 
             base.OnInspectorGUI();
+        }
+
+        private void ListenForShortcut()
+        {
+            var editor = (TextEditor) GUIUtility.GetStateObject(typeof(TextEditor), GUIUtility.keyboardControl);
+            if ((Event.current.modifiers & EventModifiers.Control) != 0 &&
+                (Event.current.modifiers & EventModifiers.Shift) != 0 &&
+                Event.current.type == EventType.KeyUp &&
+                Event.current.keyCode == KeyCode.Alpha2)
+            {
+                originalTextProp.stringValue = originalTextProp.stringValue.Insert(editor.cursorIndex, ((char) GeneralLetters.ZeroWidthNoJoiner).ToString());
+                editor.cursorIndex++;
+                Event.current.Use();
+            }
         }
     }
 }
