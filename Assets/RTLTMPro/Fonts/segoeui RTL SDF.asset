@@ -18,7 +18,7 @@ MonoBehaviour:
   m_fontInfo:
     Name: Segoe UI
     PointSize: 42
-    Scale: 0
+    Scale: 1
     CharacterCount: 165
     LineHeight: 55.875
     Baseline: 0
@@ -33,7 +33,7 @@ MonoBehaviour:
     UnderlineThickness: 2.4404297
     strikethrough: 12.636364
     strikethroughThickness: 2.4404297
-    TabWidth: 0
+    TabWidth: 105
     Padding: 5
     AtlasWidth: 512
     AtlasHeight: 512
