@@ -4,8 +4,8 @@ using UnityEngine;
 
 namespace RTLTMPro
 {
-    [CustomEditor(typeof(RTLTextMeshPro)), CanEditMultipleObjects]
-    public class RTLTextMeshProEditor : TMP_UiEditorPanel
+    [CustomEditor(typeof(RTLTextMeshPro3D)), CanEditMultipleObjects]
+    public class RTLTextMeshPro3DEditor : TMP_UiEditorPanel
     {
         private SerializedProperty originalTextProp;
         private SerializedProperty havePropertiesChangedProp;
@@ -18,7 +18,7 @@ namespace RTLTMPro
 
         private bool changed;
         private bool foldout;
-        private RTLTextMeshPro tmpro;
+        private RTLTextMeshPro3D tmpro;
 
         private new void OnEnable()
         {
@@ -37,7 +37,7 @@ namespace RTLTMPro
         public override void OnInspectorGUI()
         {
             serializedObject.Update();
-            tmpro = (RTLTextMeshPro) target;
+            tmpro = (RTLTextMeshPro3D) target;
             
             EditorGUILayout.Space();
             EditorGUI.BeginChangeCheck();

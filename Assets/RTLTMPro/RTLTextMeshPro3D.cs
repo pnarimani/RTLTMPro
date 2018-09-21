@@ -7,7 +7,7 @@ using UnityEngine;
 namespace RTLTMPro
 {
     [ExecuteInEditMode]
-    public class RTLTextMeshPro : TextMeshProUGUI
+    public class RTLTextMeshPro3D : TextMeshPro
     {
         // ReSharper disable once InconsistentNaming
 #if RTL_OVERRIDE
