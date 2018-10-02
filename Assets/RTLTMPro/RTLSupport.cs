@@ -751,19 +751,19 @@ namespace RTLTMPro
         {
             switch (letters[i + 1])
             {
-                case (char) IsolatedLetters.AlefMaksoor:
+                case (char) GeneralLetters.AlefMaksoor:
                     letters[i] = (char) 0xFEF7;
                     lettersFinal[i + 1] = (char) 0xFFFF;
                     return true;
-                case (char) IsolatedLetters.Alef:
+                case (char) GeneralLetters.Alef:
                     letters[i] = (char) 0xFEF9;
                     lettersFinal[i + 1] = (char) 0xFFFF;
                     return true;
-                case (char) IsolatedLetters.AlefHamza:
+                case (char) GeneralLetters.AlefHamza:
                     letters[i] = (char) 0xFEF5;
                     lettersFinal[i + 1] = (char) 0xFFFF;
                     return true;
-                case (char) IsolatedLetters.AlefMad:
+                case (char) GeneralLetters.AlefMad:
                     letters[i] = (char) 0xFEF3;
                     lettersFinal[i + 1] = (char) 0xFFFF;
                     return true;
