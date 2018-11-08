@@ -30,7 +30,7 @@ namespace RTLTMPro
             FixTextTags = true;
             FinalLetters = new List<char>();
             TashkeelLocation = new List<TashkeelLocation>();
-            PairedTagFixer = new Regex(@"(?<closing></(?<tagName>\p{Ll}+)>)(?<content>(.|\n)+?)(?<opening><\k<tagName>=?(\p{Ll}|\p{N}|-|\+|#)*>)");
+            PairedTagFixer = new Regex(@"(?<closing></(?<tagName>\p{Ll}+)>)(?<content>(.|\n)+?)(?<opening><\k<tagName>=?(\p{L}|\p{N}|-|\+|#)*>)");
             LoneTagFixer = new Regex(@"(?<!</\p{Ll}+>.*)(<\p{Ll}+=?(\p{Ll}|\p{N})+/?>)");
         }
 

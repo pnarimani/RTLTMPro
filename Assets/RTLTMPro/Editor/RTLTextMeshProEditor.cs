@@ -75,6 +75,8 @@ namespace RTLTMPro
 
             if(changed)
                 OnChanged();
+
+            serializedObject.ApplyModifiedProperties();
         }
 
         protected void OnChanged()
