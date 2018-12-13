@@ -482,6 +482,7 @@ namespace RTLTMPro
                     }
                 }
 
+
                 // If this letter as Lam and special Lam-Alef connection was made, We want to skip the Alef
                 // (Lam-Alef occupies 1 space)
                 if (skipNext)
@@ -549,8 +550,8 @@ namespace RTLTMPro
             for (int i = shapeFixedLetters.Count - 1; i >= 0; i--)
             {
                 bool isInMiddle = i > 0 && i < shapeFixedLetters.Count - 1;
-                bool isAtEnd = i == shapeFixedLetters.Count - 1;
-                bool isAtBegining = i == 0;
+                bool isAtBegining = i == shapeFixedLetters.Count - 1;
+                bool isAtEnd = i == 0;
 
                 if (char.IsPunctuation(shapeFixedLetters[i]) || char.IsSymbol(shapeFixedLetters[i]))
                 {
@@ -561,7 +562,7 @@ namespace RTLTMPro
                             // We need to check if it is actually the begining of a tag.
                             bool valid = false;
                             // If > is at the end of the text (At begining of the array), it can't be a tag
-                            if (isAtBegining == false)
+                            if (isAtEnd == false)
                             {
                                 for (int j = i - 1; j >= 0; j--)
                                 {
@@ -592,6 +593,99 @@ namespace RTLTMPro
                         }
                     }
 
+                    if (shapeFixedLetters[i] == ')')
+                    {
+                        if (isInMiddle)
+                        {
+                            bool isAfterRTLCharacter = IsRTLCharacter(shapeFixedLetters[i + 1]);
+                            bool isBeforeRTLCharacter = IsRTLCharacter(shapeFixedLetters[i - 1]);
+
+                            if (isAfterRTLCharacter || isBeforeRTLCharacter)
+                                shapeFixedLetters[i] = '(';
+                        }
+                        else if (isAtEnd)
+                        {
+                            bool isAfterRTLCharacter = IsRTLCharacter(shapeFixedLetters[i + 1]);
+                            if (isAfterRTLCharacter)
+                                shapeFixedLetters[i] = '(';
+                        }
+                        else if (isAtBegining)
+                        {
+                            bool isBeforeRTLCharacter = IsRTLCharacter(shapeFixedLetters[i - 1]);
+                            if (isBeforeRTLCharacter)
+                                shapeFixedLetters[i] = '(';
+                        }
+                    }
+                    else if (shapeFixedLetters[i] == '(')
+                    {
+                        if (isInMiddle)
+                        {
+                            bool isAfterRTLCharacter = IsRTLCharacter(shapeFixedLetters[i + 1]);
+                            bool isBeforeRTLCharacter = IsRTLCharacter(shapeFixedLetters[i - 1]);
+
+                            if (isAfterRTLCharacter || isBeforeRTLCharacter)
+                                shapeFixedLetters[i] = ')';
+                        }
+                        else if (isAtEnd)
+                        {
+                            bool isAfterRTLCharacter = IsRTLCharacter(shapeFixedLetters[i + 1]);
+                            if (isAfterRTLCharacter)
+                                shapeFixedLetters[i] = ')';
+                        }
+                        else if (isAtBegining)
+                        {
+                            bool isBeforeRTLCharacter = IsRTLCharacter(shapeFixedLetters[i - 1]);
+                            if (isBeforeRTLCharacter)
+                                shapeFixedLetters[i] = ')';
+                        }
+                    }
+                    else if (shapeFixedLetters[i] == '«')
+                    {
+                        if (isInMiddle)
+                        {
+                            bool isAfterRTLCharacter = IsRTLCharacter(shapeFixedLetters[i + 1]);
+                            bool isBeforeRTLCharacter = IsRTLCharacter(shapeFixedLetters[i - 1]);
+
+                            if (isAfterRTLCharacter || isBeforeRTLCharacter)
+                                shapeFixedLetters[i] = '»';
+                        }
+                        else if (isAtEnd)
+                        {
+                            bool isAfterRTLCharacter = IsRTLCharacter(shapeFixedLetters[i + 1]);
+                            if (isAfterRTLCharacter)
+                                shapeFixedLetters[i] = '»';
+                        }
+                        else if (isAtBegining)
+                        {
+                            bool isBeforeRTLCharacter = IsRTLCharacter(shapeFixedLetters[i - 1]);
+                            if (isBeforeRTLCharacter)
+                                shapeFixedLetters[i] = '»';
+                        }
+                    }
+                    else if (shapeFixedLetters[i] == '»')
+                    {
+                        if (isInMiddle)
+                        {
+                            bool isAfterRTLCharacter = IsRTLCharacter(shapeFixedLetters[i + 1]);
+                            bool isBeforeRTLCharacter = IsRTLCharacter(shapeFixedLetters[i - 1]);
+
+                            if (isAfterRTLCharacter || isBeforeRTLCharacter)
+                                shapeFixedLetters[i] = '«';
+                        }
+                        else if (isAtEnd)
+                        {
+                            bool isAfterRTLCharacter = IsRTLCharacter(shapeFixedLetters[i + 1]);
+                            if (isAfterRTLCharacter)
+                                shapeFixedLetters[i] = '«';
+                        }
+                        else if (isAtBegining)
+                        {
+                            bool isBeforeRTLCharacter = IsRTLCharacter(shapeFixedLetters[i - 1]);
+                            if (isBeforeRTLCharacter)
+                                shapeFixedLetters[i] = '«';
+                        }
+                    }
+
                     if (isInMiddle)
                     {
                         // NOTE: Array is reversed. i + 1 is behind and i - 1 is ahead
@@ -613,11 +707,11 @@ namespace RTLTMPro
                             ltrText.Add(shapeFixedLetters[i]);
                         }
                     }
-                    else if (isAtBegining)
+                    else if (isAtEnd)
                     {
                         FinalLetters.Add(shapeFixedLetters[i]);
                     }
-                    else if (isAtEnd)
+                    else if (isAtBegining)
                     {
                         ltrText.Add(shapeFixedLetters[i]);
                     }
@@ -628,7 +722,7 @@ namespace RTLTMPro
                         {
                             bool valid = false;
 
-                            if (isAtEnd == false)
+                            if (isAtBegining == false)
                             {
                                 for (int j = i + 1; j < shapeFixedLetters.Count; j++)
                                 {
@@ -793,7 +887,6 @@ namespace RTLTMPro
                                                   letters[index - 1] == (int) GeneralLetters.AlefMaksoor ||
                                                   letters[index - 1] == (int) GeneralLetters.ZeroWidthNoJoiner ||
                                                   letters[index - 1] == (int) GeneralLetters.WawHamza ||
-
                                                   letters[index - 1] == (int) IsolatedLetters.Alef ||
                                                   letters[index - 1] == (int) IsolatedLetters.Dal ||
                                                   letters[index - 1] == (int) IsolatedLetters.Thal ||
@@ -865,10 +958,10 @@ namespace RTLTMPro
                                                IsRTLCharacter(letters[index - 1]);
 
 
-            bool canThisLetterBeFinishing = letters[index] != ' ' && 
-                                            letters[index] != (int) GeneralLetters.ZeroWidthNoJoiner && 
+            bool canThisLetterBeFinishing = letters[index] != ' ' &&
+                                            letters[index] != (int) GeneralLetters.ZeroWidthNoJoiner &&
                                             letters[index] != (int) GeneralLetters.Hamza;
-            
+
             return isPreviousLetterConnectable && canThisLetterBeFinishing;
         }
 
