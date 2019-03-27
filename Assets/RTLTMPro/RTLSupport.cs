@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text.RegularExpressions;
 using TMPro;
@@ -41,6 +42,7 @@ namespace RTLTMPro
         /// <returns>Fixed text</returns>
         public virtual string FixRTL(string input)
         {
+         
             FinalLetters.Clear();
             TashkeelLocation.Clear();
 
