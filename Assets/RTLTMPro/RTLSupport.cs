@@ -63,6 +63,7 @@ namespace RTLTMPro
             return input;
         }
 
+        
         /// <summary>
         ///     Checks if the character is supported RTL character.
         /// </summary>
@@ -263,8 +264,7 @@ namespace RTLTMPro
         /// <returns><see langword="true" /> if input is RTL. otherwise <see langword="false" /></returns>
         public virtual bool IsRTLInput(string input)
         {
-            char[] chars = input.ToCharArray();
-            return IsRTLInput(chars);
+            return IsRTLInput((IEnumerable<char>)input);
         }
 
         /// <summary>
@@ -469,17 +469,17 @@ namespace RTLTMPro
                 {
                     if (IsMiddleLetter(letters, i))
                     {
-                        letters[i] = (char) GlyphTable.Convert(letters[i]);
+                        letters[i] = GlyphTable.Convert(letters[i]);
                         lettersFinal[i] = (char) (letters[i] + 3);
                     }
                     else if (IsFinishingLetter(letters, i))
                     {
-                        letters[i] = (char) GlyphTable.Convert(letters[i]);
+                        letters[i] = GlyphTable.Convert(letters[i]);
                         lettersFinal[i] = (char) (letters[i] + 1);
                     }
                     else if (IsLeadingLetter(letters, i))
                     {
-                        letters[i] = (char) GlyphTable.Convert(letters[i]);
+                        letters[i] = GlyphTable.Convert(letters[i]);
                         lettersFinal[i] = (char) (letters[i] + 2);
                     }
                 }
