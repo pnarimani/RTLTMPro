@@ -1,6 +1,6 @@
 namespace RTLTMPro
 {
-    internal enum TashkeelCharacters
+    public enum TashkeelCharacters
     {
         Fathan = 0x064B,
         Dammatan = 0x064C,
