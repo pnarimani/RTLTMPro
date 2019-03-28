@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 using TMPro;
 
@@ -22,14 +23,14 @@ namespace RTLTMPro
         protected readonly ICollection<TashkeelLocation> TashkeelLocation;
         protected readonly Regex PairedTagFixer;
         protected readonly Regex LoneTagFixer;
-        protected readonly List<char> FinalLetters;
+        protected readonly StringBuilder FinalLetters;
 
         public RTLSupport()
         {
             PreserveNumbers = false;
             Farsi = true;
             FixTextTags = true;
-            FinalLetters = new List<char>();
+            FinalLetters = new StringBuilder();
             TashkeelLocation = new List<TashkeelLocation>();
             PairedTagFixer = new Regex(@"(?<closing></(?<tagName>\p{Ll}+)>)(?<content>(.|\n)+?)(?<opening><\k<tagName>=?(\p{L}|\p{N}|-|\+|#)*>)");
             LoneTagFixer = new Regex(@"(?<!</\p{Ll}+>.*)(<\p{Ll}+=?(\p{Ll}|\p{N})+/?>)");
@@ -42,8 +43,8 @@ namespace RTLTMPro
         /// <returns>Fixed text</returns>
         public virtual string FixRTL(string input)
         {
-         
-            FinalLetters.Clear();
+
+            FinalLetters.Length = 0;
             TashkeelLocation.Clear();
 
             // Prepared text does not have tashkeel. Also all letters are converted into isolated from. 
@@ -54,9 +55,8 @@ namespace RTLTMPro
             char[] shapeFixedLetters = FixGlyphs(preparedLetters);
 
             // Fix flow of the text and put the result in FinalLetters field
-            FixLigature(shapeFixedLetters);
-            input = new string(FinalLetters.ToArray());
-
+            FixLigature(shapeFixedLetters);  
+            input = FinalLetters.ToString();
             if (FixTextTags)
                 input = FixTags(input);
 
@@ -589,7 +589,7 @@ namespace RTLTMPro
                             if (ltrText.Count > 0 && valid)
                             {
                                 for (int j = 0; j < ltrText.Count; j++)
-                                    FinalLetters.Add(ltrText[ltrText.Count - 1 - j]);
+                                    FinalLetters.Append(ltrText[ltrText.Count - 1 - j]);
                                 ltrText.Clear();
                             }
                         }
@@ -702,7 +702,7 @@ namespace RTLTMPro
                             isBeforeWhiteSpace && isAfterRTLCharacter ||
                             isBeforeRTLCharacter && isAfterWhiteSpace)
                         {
-                            FinalLetters.Add(shapeFixedLetters[i]);
+                            FinalLetters.Append(shapeFixedLetters[i]);
                         }
                         else
                         {
@@ -711,7 +711,7 @@ namespace RTLTMPro
                     }
                     else if (isAtEnd)
                     {
-                        FinalLetters.Add(shapeFixedLetters[i]);
+                        FinalLetters.Append(shapeFixedLetters[i]);
                     }
                     else if (isAtBegining)
                     {
@@ -749,7 +749,7 @@ namespace RTLTMPro
                             if (ltrText.Count > 0 && valid)
                             {
                                 for (int j = 0; j < ltrText.Count; j++)
-                                    FinalLetters.Add(ltrText[ltrText.Count - 1 - j]);
+                                    FinalLetters.Append(ltrText[ltrText.Count - 1 - j]);
                                 ltrText.Clear();
                             }
                         }
@@ -795,18 +795,18 @@ namespace RTLTMPro
                 if (ltrText.Count > 0)
                 {
                     for (int j = 0; j < ltrText.Count; j++)
-                        FinalLetters.Add(ltrText[ltrText.Count - 1 - j]);
+                        FinalLetters.Append(ltrText[ltrText.Count - 1 - j]);
                     ltrText.Clear();
                 }
 
                 if (shapeFixedLetters[i] != 0xFFFF && shapeFixedLetters[i] != (int) GeneralLetters.ZeroWidthNoJoiner)
-                    FinalLetters.Add(shapeFixedLetters[i]);
+                    FinalLetters.Append(shapeFixedLetters[i]);
             }
 
             if (ltrText.Count > 0)
             {
                 for (int j = 0; j < ltrText.Count; j++)
-                    FinalLetters.Add(ltrText[ltrText.Count - 1 - j]);
+                    FinalLetters.Append(ltrText[ltrText.Count - 1 - j]);
                 ltrText.Clear();
             }
         }
