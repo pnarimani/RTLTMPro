@@ -385,47 +385,41 @@ namespace RTLTMPro
             {
                 switch (letters[i])
                 {
-                    case (char) 0x064B:
-                        // Tanween Fatha
-                        TashkeelLocation.Add(new TashkeelLocation((char) 0x064B, i));
+                    case (char)TashkeelCharacters.Fathan:
+                        TashkeelLocation.Add(new TashkeelLocation((char) TashkeelCharacters.Fathan, i));
                         break;
-                    case (char) 0x064C:
-                        // Tanween Damma
-                        TashkeelLocation.Add(new TashkeelLocation((char) 0x064C, i));
+                    case (char)TashkeelCharacters.Dammatan:
+                        TashkeelLocation.Add(new TashkeelLocation((char)TashkeelCharacters.Dammatan, i));
                         break;
-                    case (char) 0x064D:
-                        // Tanween Kasra
-                        TashkeelLocation.Add(new TashkeelLocation((char) 0x064D, i));
+                    case (char)TashkeelCharacters.Kasratan:
+                        TashkeelLocation.Add(new TashkeelLocation((char)TashkeelCharacters.Kasratan, i));
                         break;
-                    case (char) 0x064E:
-                        TashkeelLocation.Add(new TashkeelLocation((char) 0x064E, i));
+                    case (char)TashkeelCharacters.Fatha:
+                        TashkeelLocation.Add(new TashkeelLocation((char)TashkeelCharacters.Fatha, i));
                         break;
-                    case (char) 0x064F:
-                        TashkeelLocation.Add(new TashkeelLocation((char) 0x064F, i));
+                    case (char)TashkeelCharacters.Damma:
+                        TashkeelLocation.Add(new TashkeelLocation((char)TashkeelCharacters.Damma, i));
                         break;
-                    case (char) 0x0650:
-                        TashkeelLocation.Add(new TashkeelLocation((char) 0x0650, i));
+                    case (char)TashkeelCharacters.Kasra:
+                        TashkeelLocation.Add(new TashkeelLocation((char)TashkeelCharacters.Kasra, i));
                         break;
-                    case (char) 0x0651:
-                        TashkeelLocation.Add(new TashkeelLocation((char) 0x0651, i));
+                    case (char)TashkeelCharacters.Shadda:
+                        TashkeelLocation.Add(new TashkeelLocation((char)TashkeelCharacters.Shadda, i));
                         break;
-                    case (char) 0x0652:
-                        // SUKUN
-                        TashkeelLocation.Add(new TashkeelLocation((char) 0x0652, i));
+                    case (char)TashkeelCharacters.Sukun:
+                        TashkeelLocation.Add(new TashkeelLocation((char)TashkeelCharacters.Sukun, i));
                         break;
-                    case (char) 0x0653:
-                        // MADDAH ABOVE
-                        TashkeelLocation.Add(new TashkeelLocation((char) 0x0653, i));
+                    case (char)TashkeelCharacters.MaddahAbove:
+                        TashkeelLocation.Add(new TashkeelLocation((char)TashkeelCharacters.MaddahAbove, i));
                         break;
-                    case (char) 0x670:
-                        // Superscript alef
-                        TashkeelLocation.Add(new TashkeelLocation((char) 0x670, i));
+                    case (char)TashkeelCharacters.SuperscriptAlef:
+                        TashkeelLocation.Add(new TashkeelLocation((char)TashkeelCharacters.SuperscriptAlef, i));
                         break;
                 }
             }
 
-            string[] split = str.Split((char) 0x064B, (char) 0x064C, (char) 0x064D, (char) 0x064E, (char) 0x064F, (char) 0x0650,
-                (char) 0x0651, (char) 0x0652, (char) 0x0653, (char) 0xFC60, (char) 0xFC61, (char) 0xFC62, (char) 0x670);
+            string[] split = str.Split((char) TashkeelCharacters.Fathan, (char) TashkeelCharacters.Dammatan, (char) TashkeelCharacters.Kasratan, (char) TashkeelCharacters.Fatha, (char) TashkeelCharacters.Damma, (char) TashkeelCharacters.Kasra,
+                (char) TashkeelCharacters.Shadda, (char) TashkeelCharacters.Sukun, (char) TashkeelCharacters.MaddahAbove, (char) TashkeelCharacters.ShaddaWithFathaIsolatedForm, (char) TashkeelCharacters.ShaddaWithDammaIsolatedForm, (char) TashkeelCharacters.ShaddaWithKasraIsolatedForm, (char) TashkeelCharacters.SuperscriptAlef);
 
             return split.Aggregate("", (current, s) => current + s);
         }
