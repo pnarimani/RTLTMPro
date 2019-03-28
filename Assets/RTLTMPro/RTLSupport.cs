@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 using TMPro;
 
@@ -19,17 +20,17 @@ namespace RTLTMPro
         public bool Farsi { get; set; }
         public bool FixTextTags { get; set; }
 
-        protected readonly ICollection<TashkeelLocation> TashkeelLocation;
+        protected readonly List<TashkeelLocation> TashkeelLocation;
         protected readonly Regex PairedTagFixer;
         protected readonly Regex LoneTagFixer;
-        protected readonly List<char> FinalLetters;
+        protected readonly StringBuilder FinalLetters;
 
         public RTLSupport()
         {
             PreserveNumbers = false;
             Farsi = true;
             FixTextTags = true;
-            FinalLetters = new List<char>();
+            FinalLetters = new StringBuilder();
             TashkeelLocation = new List<TashkeelLocation>();
             PairedTagFixer = new Regex(@"(?<closing></(?<tagName>\p{Ll}+)>)(?<content>(.|\n)+?)(?<opening><\k<tagName>=?(\p{L}|\p{N}|-|\+|#)*>)");
             LoneTagFixer = new Regex(@"(?<!</\p{Ll}+>.*)(<\p{Ll}+=?(\p{Ll}|\p{N})+/?>)");
@@ -42,8 +43,8 @@ namespace RTLTMPro
         /// <returns>Fixed text</returns>
         public virtual string FixRTL(string input)
         {
-         
-            FinalLetters.Clear();
+
+            FinalLetters.Length = 0;
             TashkeelLocation.Clear();
 
             // Prepared text does not have tashkeel. Also all letters are converted into isolated from. 
@@ -54,15 +55,15 @@ namespace RTLTMPro
             char[] shapeFixedLetters = FixGlyphs(preparedLetters);
 
             // Fix flow of the text and put the result in FinalLetters field
-            FixLigature(shapeFixedLetters);
-            input = new string(FinalLetters.ToArray());
-
+            FixLigature(shapeFixedLetters);  
+            input = FinalLetters.ToString();
             if (FixTextTags)
                 input = FixTags(input);
 
             return input;
         }
 
+        
         /// <summary>
         ///     Checks if the character is supported RTL character.
         /// </summary>
@@ -263,8 +264,7 @@ namespace RTLTMPro
         /// <returns><see langword="true" /> if input is RTL. otherwise <see langword="false" /></returns>
         public virtual bool IsRTLInput(string input)
         {
-            char[] chars = input.ToCharArray();
-            return IsRTLInput(chars);
+            return IsRTLInput((IEnumerable<char>)input);
         }
 
         /// <summary>
@@ -383,56 +383,43 @@ namespace RTLTMPro
 
             for (int i = 0; i < letters.Length; i++)
             {
-                if (letters[i] == (char) 0x064B)
+                switch (letters[i])
                 {
-                    // Tanween Fatha
-                    TashkeelLocation.Add(new TashkeelLocation((char) 0x064B, i));
-                }
-                else if (letters[i] == (char) 0x064C)
-                {
-                    // Tanween Damma
-                    TashkeelLocation.Add(new TashkeelLocation((char) 0x064C, i));
-                }
-                else if (letters[i] == (char) 0x064D)
-                {
-                    // Tanween Kasra
-                    TashkeelLocation.Add(new TashkeelLocation((char) 0x064D, i));
-                }
-                else if (letters[i] == (char) 0x064E)
-                {
-                    TashkeelLocation.Add(new TashkeelLocation((char) 0x064E, i));
-                }
-                else if (letters[i] == (char) 0x064F)
-                {
-                    TashkeelLocation.Add(new TashkeelLocation((char) 0x064F, i));
-                }
-                else if (letters[i] == (char) 0x0650)
-                {
-                    TashkeelLocation.Add(new TashkeelLocation((char) 0x0650, i));
-                }
-                else if (letters[i] == (char) 0x0651)
-                {
-                    TashkeelLocation.Add(new TashkeelLocation((char) 0x0651, i));
-                }
-                else if (letters[i] == (char) 0x0652)
-                {
-                    // SUKUN
-                    TashkeelLocation.Add(new TashkeelLocation((char) 0x0652, i));
-                }
-                else if (letters[i] == (char) 0x0653)
-                {
-                    // MADDAH ABOVE
-                    TashkeelLocation.Add(new TashkeelLocation((char) 0x0653, i));
-                }
-                else if (letters[i] == (char) 0x670)
-                {
-                    // Superscript alef
-                    TashkeelLocation.Add(new TashkeelLocation((char) 0x670, i));
+                    case (char)TashkeelCharacters.Fathan:
+                        TashkeelLocation.Add(new TashkeelLocation((char) TashkeelCharacters.Fathan, i));
+                        break;
+                    case (char)TashkeelCharacters.Dammatan:
+                        TashkeelLocation.Add(new TashkeelLocation((char)TashkeelCharacters.Dammatan, i));
+                        break;
+                    case (char)TashkeelCharacters.Kasratan:
+                        TashkeelLocation.Add(new TashkeelLocation((char)TashkeelCharacters.Kasratan, i));
+                        break;
+                    case (char)TashkeelCharacters.Fatha:
+                        TashkeelLocation.Add(new TashkeelLocation((char)TashkeelCharacters.Fatha, i));
+                        break;
+                    case (char)TashkeelCharacters.Damma:
+                        TashkeelLocation.Add(new TashkeelLocation((char)TashkeelCharacters.Damma, i));
+                        break;
+                    case (char)TashkeelCharacters.Kasra:
+                        TashkeelLocation.Add(new TashkeelLocation((char)TashkeelCharacters.Kasra, i));
+                        break;
+                    case (char)TashkeelCharacters.Shadda:
+                        TashkeelLocation.Add(new TashkeelLocation((char)TashkeelCharacters.Shadda, i));
+                        break;
+                    case (char)TashkeelCharacters.Sukun:
+                        TashkeelLocation.Add(new TashkeelLocation((char)TashkeelCharacters.Sukun, i));
+                        break;
+                    case (char)TashkeelCharacters.MaddahAbove:
+                        TashkeelLocation.Add(new TashkeelLocation((char)TashkeelCharacters.MaddahAbove, i));
+                        break;
+                    case (char)TashkeelCharacters.SuperscriptAlef:
+                        TashkeelLocation.Add(new TashkeelLocation((char)TashkeelCharacters.SuperscriptAlef, i));
+                        break;
                 }
             }
 
-            string[] split = str.Split((char) 0x064B, (char) 0x064C, (char) 0x064D, (char) 0x064E, (char) 0x064F, (char) 0x0650,
-                (char) 0x0651, (char) 0x0652, (char) 0x0653, (char) 0xFC60, (char) 0xFC61, (char) 0xFC62, (char) 0x670);
+            string[] split = str.Split((char) TashkeelCharacters.Fathan, (char) TashkeelCharacters.Dammatan, (char) TashkeelCharacters.Kasratan, (char) TashkeelCharacters.Fatha, (char) TashkeelCharacters.Damma, (char) TashkeelCharacters.Kasra,
+                (char) TashkeelCharacters.Shadda, (char) TashkeelCharacters.Sukun, (char) TashkeelCharacters.MaddahAbove, (char) TashkeelCharacters.ShaddaWithFathaIsolatedForm, (char) TashkeelCharacters.ShaddaWithDammaIsolatedForm, (char) TashkeelCharacters.ShaddaWithKasraIsolatedForm, (char) TashkeelCharacters.SuperscriptAlef);
 
             return split.Aggregate("", (current, s) => current + s);
         }
@@ -469,17 +456,17 @@ namespace RTLTMPro
                 {
                     if (IsMiddleLetter(letters, i))
                     {
-                        letters[i] = (char) GlyphTable.Convert(letters[i]);
+                        letters[i] = GlyphTable.Convert(letters[i]);
                         lettersFinal[i] = (char) (letters[i] + 3);
                     }
                     else if (IsFinishingLetter(letters, i))
                     {
-                        letters[i] = (char) GlyphTable.Convert(letters[i]);
+                        letters[i] = GlyphTable.Convert(letters[i]);
                         lettersFinal[i] = (char) (letters[i] + 1);
                     }
                     else if (IsLeadingLetter(letters, i))
                     {
-                        letters[i] = (char) GlyphTable.Convert(letters[i]);
+                        letters[i] = GlyphTable.Convert(letters[i]);
                         lettersFinal[i] = (char) (letters[i] + 2);
                     }
                 }
@@ -589,7 +576,7 @@ namespace RTLTMPro
                             if (ltrText.Count > 0 && valid)
                             {
                                 for (int j = 0; j < ltrText.Count; j++)
-                                    FinalLetters.Add(ltrText[ltrText.Count - 1 - j]);
+                                    FinalLetters.Append(ltrText[ltrText.Count - 1 - j]);
                                 ltrText.Clear();
                             }
                         }
@@ -702,7 +689,7 @@ namespace RTLTMPro
                             isBeforeWhiteSpace && isAfterRTLCharacter ||
                             isBeforeRTLCharacter && isAfterWhiteSpace)
                         {
-                            FinalLetters.Add(shapeFixedLetters[i]);
+                            FinalLetters.Append(shapeFixedLetters[i]);
                         }
                         else
                         {
@@ -711,7 +698,7 @@ namespace RTLTMPro
                     }
                     else if (isAtEnd)
                     {
-                        FinalLetters.Add(shapeFixedLetters[i]);
+                        FinalLetters.Append(shapeFixedLetters[i]);
                     }
                     else if (isAtBegining)
                     {
@@ -749,7 +736,7 @@ namespace RTLTMPro
                             if (ltrText.Count > 0 && valid)
                             {
                                 for (int j = 0; j < ltrText.Count; j++)
-                                    FinalLetters.Add(ltrText[ltrText.Count - 1 - j]);
+                                    FinalLetters.Append(ltrText[ltrText.Count - 1 - j]);
                                 ltrText.Clear();
                             }
                         }
@@ -795,18 +782,18 @@ namespace RTLTMPro
                 if (ltrText.Count > 0)
                 {
                     for (int j = 0; j < ltrText.Count; j++)
-                        FinalLetters.Add(ltrText[ltrText.Count - 1 - j]);
+                        FinalLetters.Append(ltrText[ltrText.Count - 1 - j]);
                     ltrText.Clear();
                 }
 
                 if (shapeFixedLetters[i] != 0xFFFF && shapeFixedLetters[i] != (int) GeneralLetters.ZeroWidthNoJoiner)
-                    FinalLetters.Add(shapeFixedLetters[i]);
+                    FinalLetters.Append(shapeFixedLetters[i]);
             }
 
             if (ltrText.Count > 0)
             {
                 for (int j = 0; j < ltrText.Count; j++)
-                    FinalLetters.Add(ltrText[ltrText.Count - 1 - j]);
+                    FinalLetters.Append(ltrText[ltrText.Count - 1 - j]);
                 ltrText.Clear();
             }
         }
@@ -823,13 +810,12 @@ namespace RTLTMPro
             {
                 lettersWithTashkeel[letterWithTashkeelTracker] = t;
                 letterWithTashkeelTracker++;
-                foreach (TashkeelLocation hLocation in TashkeelLocation)
+                foreach (var hLocation in TashkeelLocation)
                 {
-                    if (hLocation.Position == letterWithTashkeelTracker)
-                    {
-                        lettersWithTashkeel[letterWithTashkeelTracker] = hLocation.Tashkeel;
-                        letterWithTashkeelTracker++;
-                    }
+                    if (hLocation.Position != letterWithTashkeelTracker) 
+                        continue;
+                    lettersWithTashkeel[letterWithTashkeelTracker] = hLocation.Tashkeel;
+                    letterWithTashkeelTracker++;
                 }
             }
 

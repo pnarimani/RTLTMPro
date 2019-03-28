@@ -8,7 +8,7 @@ namespace RTLTMPro
     /// </summary>
     public static class GlyphTable
     {
-        private static readonly Dictionary<int,int> MapList;
+        private static readonly Dictionary<char,char> MapList;
 
         /// <summary>
         ///     Setting up the conversion table
@@ -18,14 +18,14 @@ namespace RTLTMPro
             //using GetNames instead of GetValues to be able to match enums
             var isolatedValues = Enum.GetNames(typeof(IsolatedLetters));
             
-            MapList = new Dictionary<int,int>(isolatedValues.Length);
+            MapList = new Dictionary<char,char>(isolatedValues.Length);
             foreach (var value in isolatedValues)
-                MapList.Add((int) Enum.Parse(typeof(GeneralLetters),value), (int) Enum.Parse(typeof(IsolatedLetters),value));
+                MapList.Add((char)(int) Enum.Parse(typeof(GeneralLetters),value), (char) (int)Enum.Parse(typeof(IsolatedLetters),value));
         }
 
-        public static int Convert(int toBeConverted)
+        public static char Convert(char toBeConverted)
         {
-            int convertedValue;
+            char convertedValue;
             return MapList.TryGetValue(toBeConverted, out convertedValue) ? convertedValue : toBeConverted;
         }
     }
