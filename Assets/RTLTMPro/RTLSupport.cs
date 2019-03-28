@@ -20,7 +20,7 @@ namespace RTLTMPro
         public bool Farsi { get; set; }
         public bool FixTextTags { get; set; }
 
-        protected readonly ICollection<TashkeelLocation> TashkeelLocation;
+        protected readonly List<TashkeelLocation> TashkeelLocation;
         protected readonly Regex PairedTagFixer;
         protected readonly Regex LoneTagFixer;
         protected readonly StringBuilder FinalLetters;
@@ -383,51 +383,44 @@ namespace RTLTMPro
 
             for (int i = 0; i < letters.Length; i++)
             {
-                if (letters[i] == (char) 0x064B)
+                switch (letters[i])
                 {
-                    // Tanween Fatha
-                    TashkeelLocation.Add(new TashkeelLocation((char) 0x064B, i));
-                }
-                else if (letters[i] == (char) 0x064C)
-                {
-                    // Tanween Damma
-                    TashkeelLocation.Add(new TashkeelLocation((char) 0x064C, i));
-                }
-                else if (letters[i] == (char) 0x064D)
-                {
-                    // Tanween Kasra
-                    TashkeelLocation.Add(new TashkeelLocation((char) 0x064D, i));
-                }
-                else if (letters[i] == (char) 0x064E)
-                {
-                    TashkeelLocation.Add(new TashkeelLocation((char) 0x064E, i));
-                }
-                else if (letters[i] == (char) 0x064F)
-                {
-                    TashkeelLocation.Add(new TashkeelLocation((char) 0x064F, i));
-                }
-                else if (letters[i] == (char) 0x0650)
-                {
-                    TashkeelLocation.Add(new TashkeelLocation((char) 0x0650, i));
-                }
-                else if (letters[i] == (char) 0x0651)
-                {
-                    TashkeelLocation.Add(new TashkeelLocation((char) 0x0651, i));
-                }
-                else if (letters[i] == (char) 0x0652)
-                {
-                    // SUKUN
-                    TashkeelLocation.Add(new TashkeelLocation((char) 0x0652, i));
-                }
-                else if (letters[i] == (char) 0x0653)
-                {
-                    // MADDAH ABOVE
-                    TashkeelLocation.Add(new TashkeelLocation((char) 0x0653, i));
-                }
-                else if (letters[i] == (char) 0x670)
-                {
-                    // Superscript alef
-                    TashkeelLocation.Add(new TashkeelLocation((char) 0x670, i));
+                    case (char) 0x064B:
+                        // Tanween Fatha
+                        TashkeelLocation.Add(new TashkeelLocation((char) 0x064B, i));
+                        break;
+                    case (char) 0x064C:
+                        // Tanween Damma
+                        TashkeelLocation.Add(new TashkeelLocation((char) 0x064C, i));
+                        break;
+                    case (char) 0x064D:
+                        // Tanween Kasra
+                        TashkeelLocation.Add(new TashkeelLocation((char) 0x064D, i));
+                        break;
+                    case (char) 0x064E:
+                        TashkeelLocation.Add(new TashkeelLocation((char) 0x064E, i));
+                        break;
+                    case (char) 0x064F:
+                        TashkeelLocation.Add(new TashkeelLocation((char) 0x064F, i));
+                        break;
+                    case (char) 0x0650:
+                        TashkeelLocation.Add(new TashkeelLocation((char) 0x0650, i));
+                        break;
+                    case (char) 0x0651:
+                        TashkeelLocation.Add(new TashkeelLocation((char) 0x0651, i));
+                        break;
+                    case (char) 0x0652:
+                        // SUKUN
+                        TashkeelLocation.Add(new TashkeelLocation((char) 0x0652, i));
+                        break;
+                    case (char) 0x0653:
+                        // MADDAH ABOVE
+                        TashkeelLocation.Add(new TashkeelLocation((char) 0x0653, i));
+                        break;
+                    case (char) 0x670:
+                        // Superscript alef
+                        TashkeelLocation.Add(new TashkeelLocation((char) 0x670, i));
+                        break;
                 }
             }
 
@@ -823,13 +816,12 @@ namespace RTLTMPro
             {
                 lettersWithTashkeel[letterWithTashkeelTracker] = t;
                 letterWithTashkeelTracker++;
-                foreach (TashkeelLocation hLocation in TashkeelLocation)
+                foreach (var hLocation in TashkeelLocation)
                 {
-                    if (hLocation.Position == letterWithTashkeelTracker)
-                    {
-                        lettersWithTashkeel[letterWithTashkeelTracker] = hLocation.Tashkeel;
-                        letterWithTashkeelTracker++;
-                    }
+                    if (hLocation.Position != letterWithTashkeelTracker) 
+                        continue;
+                    lettersWithTashkeel[letterWithTashkeelTracker] = hLocation.Tashkeel;
+                    letterWithTashkeelTracker++;
                 }
             }
 
