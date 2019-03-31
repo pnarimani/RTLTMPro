@@ -1,7 +1,7 @@
 namespace RTLTMPro
 {
     // Note that if you add to these characters, you also need to define
-    // characters inside Range file and TextMesh Pro font asset unicode range.
+    // characters inside TashkilRanges.txt file and TextMesh Pro font asset unicode range.
     public enum TashkeelCharacters
     {
         Fathan = 0x064B,
