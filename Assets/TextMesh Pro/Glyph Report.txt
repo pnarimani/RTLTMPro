@@ -1,0 +1,7 @@
+Font: IRANSansDN  Pt. Size: 98
+Characters packed: 163/165
+
+Missing Characters
+----------------------------------------
+ID: 64396	Hex: FB8C	Char [ﮌ]
+ID: 64397	Hex: FB8D	Char [ﮍ]

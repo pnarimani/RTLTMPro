@@ -8,7 +8,6 @@ namespace RTLTMPro
     public class RTLTextMeshProEditor : TMP_UiEditorPanel
     {
         private SerializedProperty originalTextProp;
-        private SerializedProperty havePropertiesChangedProp;
         private SerializedProperty inputSourceProp;
         private SerializedProperty isInputPasingRequiredProp;
         private SerializedProperty preserveNumbersProp;
@@ -16,7 +15,6 @@ namespace RTLTMPro
         private SerializedProperty fixTagsProp;
         private SerializedProperty forceFixProp;
 
-        private bool changed;
         private bool foldout;
         private RTLTextMeshPro tmpro;
 
@@ -29,7 +27,6 @@ namespace RTLTMPro
             fixTagsProp = serializedObject.FindProperty("fixTags");
             forceFixProp = serializedObject.FindProperty("forceFix");
             originalTextProp = serializedObject.FindProperty("originalText");
-            havePropertiesChangedProp = serializedObject.FindProperty("m_havePropertiesChanged");
             inputSourceProp = serializedObject.FindProperty("m_inputSource");
             isInputPasingRequiredProp = serializedObject.FindProperty("m_isInputParsingRequired");
         }
@@ -46,13 +43,6 @@ namespace RTLTMPro
             ListenForZeroWidthNoJoiner();
 
             if (EditorGUI.EndChangeCheck())
-            {
-                inputSourceProp.enumValueIndex = 0;
-                isInputPasingRequiredProp.boolValue = true;
-                changed = true;
-            }
-
-            if (changed)
                 OnChanged();
 
             serializedObject.ApplyModifiedProperties();
@@ -65,15 +55,13 @@ namespace RTLTMPro
                 DrawOptions();
 
                 if (GUILayout.Button("Re-Fix"))
-                    changed = true;
+                    m_HavePropertiesChanged = true;
 
                 if (EditorGUI.EndChangeCheck())
-                {
-                    changed = true;
-                }
+                    m_HavePropertiesChanged = true;
             }
 
-            if(changed)
+            if (m_HavePropertiesChanged)
                 OnChanged();
 
             serializedObject.ApplyModifiedProperties();
@@ -82,8 +70,9 @@ namespace RTLTMPro
         protected void OnChanged()
         {
             tmpro.UpdateText();
-            havePropertiesChangedProp.boolValue = true;
-            changed = false;
+            m_HavePropertiesChanged = false;
+            m_TextComponent.havePropertiesChanged = true;
+            m_TextComponent.ComputeMarginSize();
             EditorUtility.SetDirty(target);
         }
 
