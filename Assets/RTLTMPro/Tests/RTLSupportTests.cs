@@ -16,12 +16,7 @@ namespace Tests
             const string input = "هَذَا النَّص العربي";
             const string expected = "ﻲﺑﺮﻌﻟا ﺺﱠﻨﻟا اَﺬَﻫ";
 
-            var support = new RTLSupport
-            {
-                Farsi = false, PreserveNumbers = true, FixTextTags = false
-            };
-
-            string result = support.FixRTL(input);
+            string result = RTLSupport.FixRTL(input, false, false, false);
 
             Assert.AreEqual(expected, result);
         }
@@ -31,13 +26,8 @@ namespace Tests
         {
             const string input = "متن فارسی";
             const string expected = "ﯽﺳرﺎﻓ ﻦﺘﻣ";
-            
-            var support = new RTLSupport
-            {
-                Farsi = true, PreserveNumbers = true, FixTextTags = false
-            };
 
-            string result = support.FixRTL(input);
+            string result = RTLSupport.FixRTL(input, false, false, true);
 
             Assert.AreEqual(expected, result);
         }
@@ -46,14 +36,9 @@ namespace Tests
         public void TashkeelIsMaintainedInBeginingOfText()
         {
             const string input = "ِصبا";
-            const string expected = "ِﺎﺒﺻ";
-            
-            var support = new RTLSupport
-            {
-                Farsi = true, PreserveNumbers = true, FixTextTags = false
-            };
+            const string expected = "ِﺎﺒﺻ";;
 
-            string result = support.FixRTL(input);
+            string result = RTLSupport.FixRTL(input, false, false, false);
 
             Assert.AreEqual(expected, result);
         }
@@ -63,13 +48,8 @@ namespace Tests
         {
             const string input = "مَرد";
             const string expected = "دﺮَﻣ";
-            
-            var support = new RTLSupport
-            {
-                Farsi = true, PreserveNumbers = true, FixTextTags = false
-            };
 
-            string result = support.FixRTL(input);
+            string result = RTLSupport.FixRTL(input, false, false, false);
 
             Assert.AreEqual(expected, result);
         }
@@ -79,13 +59,8 @@ namespace Tests
         {
             const string input = "صبحِ";
             const string expected = "ِﺢﺒﺻ";
-            
-            var support = new RTLSupport
-            {
-                Farsi = true, PreserveNumbers = true, FixTextTags = false
-            };
 
-            string result = support.FixRTL(input);
+            string result = RTLSupport.FixRTL(input, false, false, false);
 
             Assert.AreEqual(expected, result);
         }

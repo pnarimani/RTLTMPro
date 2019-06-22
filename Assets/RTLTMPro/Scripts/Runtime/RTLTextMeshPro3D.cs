@@ -96,36 +96,20 @@ namespace RTLTMPro
         [SerializeField]
         protected bool forceFix;
 
-        protected RTLSupport support;
-
-        protected override void Awake()
-        {
-            base.Awake();
-            support = new RTLSupport();
-            UpdateSupport();
-        }
-
         protected virtual void Update()
         {
             if (havePropertiesChanged)
             {
-                if (support == null)
-                    support = new RTLSupport();
-
-                UpdateSupport();
                 UpdateText();
             }
         }
 
         public virtual void UpdateText()
         {
-            if (support == null)
-                support = new RTLSupport();
-
             if (originalText == null)
                 originalText = "";
 
-            if (ForceFix == false && support.IsRTLInput(originalText) == false)
+            if (ForceFix == false && RTLSupport.IsRTLInput(originalText) == false)
             {
                 isRightToLeftText = false;
                 base.text = originalText;
@@ -139,25 +123,12 @@ namespace RTLTMPro
             havePropertiesChanged = true;
         }
 
-        protected virtual void UpdateSupport()
-        {
-            if (support == null)
-                support = new RTLSupport();
-
-            support.Farsi = farsi;
-            support.PreserveNumbers = preserveNumbers;
-            support.FixTextTags = fixTags;
-        }
-
         public virtual string GetFixedText(string input)
         {
             if (string.IsNullOrEmpty(input))
                 return input;
 
-            if (support == null)
-                support = new RTLSupport();
-
-            input = support.FixRTL(input);
+            input = RTLSupport.FixRTL(input, fixTags, preserveNumbers, farsi);
             input = input.Reverse().ToArray().ArrayToString();
 
             return input;
