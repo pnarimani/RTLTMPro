@@ -10,7 +10,7 @@ namespace RTLTMPro
         AlefHamza = 0x0623,
         WawHamza = 0x0624,
         AlefMaksoor = 0x0625,
-        AlefMaksora = 0x0649,
+        AlefMaksura = 0x649,
         HamzaNabera = 0x0626,
         Ba = 0x0628,
         Ta = 0x062A,

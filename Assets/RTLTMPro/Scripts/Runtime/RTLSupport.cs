@@ -24,24 +24,24 @@ namespace RTLTMPro
         protected readonly Regex PairedTagFixer;
         protected readonly Regex LoneTagFixer;
         protected readonly StringBuilder FinalLetters;
-        
+
         protected readonly string ShaddaDammatan = new string(
-            new[] { (char) TashkeelCharacters.Shadda, (char) TashkeelCharacters.Dammatan });
-        
+            new[] {(char) TashkeelCharacters.Shadda, (char) TashkeelCharacters.Dammatan});
+
         protected readonly string ShaddaKasratan = new string(
-            new[] { (char) TashkeelCharacters.Shadda, (char) TashkeelCharacters.Kasratan });
-        
+            new[] {(char) TashkeelCharacters.Shadda, (char) TashkeelCharacters.Kasratan});
+
         protected readonly string ShaddaSuperscriptAlef = new string(
-            new[] { (char) TashkeelCharacters.Shadda, (char) TashkeelCharacters.SuperscriptAlef });
-        
+            new[] {(char) TashkeelCharacters.Shadda, (char) TashkeelCharacters.SuperscriptAlef});
+
         protected readonly string ShaddaFatha = new string(
-            new[] { (char) TashkeelCharacters.Shadda, (char) TashkeelCharacters.Fatha });
+            new[] {(char) TashkeelCharacters.Shadda, (char) TashkeelCharacters.Fatha});
 
         protected readonly string ShaddaDamma = new string(
-            new[] { (char) TashkeelCharacters.Shadda, (char) TashkeelCharacters.Damma });
+            new[] {(char) TashkeelCharacters.Shadda, (char) TashkeelCharacters.Damma});
 
         protected readonly string ShaddaKasra = new string(
-            new[] { (char) TashkeelCharacters.Shadda, (char) TashkeelCharacters.Kasra });
+            new[] {(char) TashkeelCharacters.Shadda, (char) TashkeelCharacters.Kasra});
 
         public RTLSupport()
         {
@@ -110,8 +110,8 @@ namespace RTLTMPro
                 ch <= (char) IsolatedLetters.AlefMaksoor + 3)
                 return true;
 
-            if (ch >= (char) IsolatedLetters.AlefMaksora &&
-                ch <= (char) IsolatedLetters.AlefMaksora + 3)
+            if (ch >= (char) IsolatedLetters.AlefMaksura &&
+                ch <= (char) IsolatedLetters.AlefMaksura + 3)
                 return true;
 
             if (ch >= (char) IsolatedLetters.HamzaNabera &&
@@ -246,6 +246,7 @@ namespace RTLTMPro
                 case (char) GeneralLetters.AlefHamza:
                 case (char) GeneralLetters.WawHamza:
                 case (char) GeneralLetters.AlefMaksoor:
+                case (char) GeneralLetters.AlefMaksura:
                 case (char) GeneralLetters.HamzaNabera:
                 case (char) GeneralLetters.Ba:
                 case (char) GeneralLetters.Ta:
@@ -892,15 +893,15 @@ namespace RTLTMPro
             lettersWithTashkeel.Replace(
                 ShaddaKasra,
                 ((char) TashkeelCharacters.ShaddaWithKasraIsolatedForm).ToString());
-            
+
             lettersWithTashkeel.Replace(
                 ShaddaDammatan,
                 ((char) TashkeelCharacters.ShaddaWithDammatanIsolatedForm).ToString());
-            
+
             lettersWithTashkeel.Replace(
                 ShaddaKasratan,
                 ((char) TashkeelCharacters.ShaddaWithKasratanIsolatedForm).ToString());
-            
+
             lettersWithTashkeel.Replace(
                 ShaddaSuperscriptAlef,
                 ((char) TashkeelCharacters.ShaddaWithSuperscriptAlefIsolatedForm).ToString());
@@ -1030,43 +1031,32 @@ namespace RTLTMPro
                                                letters[index - 1] != (int) GeneralLetters.Thal &&
                                                letters[index - 1] != (int) GeneralLetters.Ra2 &&
                                                letters[index - 1] != (int) GeneralLetters.Zeen &&
-                                               letters[index - 1] !=
-                                               (int) GeneralLetters.PersianZe &&
+                                               letters[index - 1] != (int) GeneralLetters.PersianZe &&
                                                letters[index - 1] != (int) GeneralLetters.Waw &&
                                                letters[index - 1] != (int) GeneralLetters.Alef &&
                                                letters[index - 1] != (int) GeneralLetters.AlefMad &&
-                                               letters[index - 1] !=
-                                               (int) GeneralLetters.AlefHamza &&
-                                               letters[index - 1] !=
-                                               (int) GeneralLetters.AlefMaksoor &&
-                                               letters[index - 1] !=
-                                               (int) GeneralLetters.WawHamza &&
+                                               letters[index - 1] != (int) GeneralLetters.AlefHamza &&
+                                               letters[index - 1] != (int) GeneralLetters.AlefMaksoor &&
+                                               letters[index - 1] != (int) GeneralLetters.WawHamza &&
                                                letters[index - 1] != (int) GeneralLetters.Hamza &&
-                                               letters[index - 1] !=
-                                               (int) GeneralLetters.ZeroWidthNoJoiner &&
+                                               letters[index - 1] != (int) GeneralLetters.ZeroWidthNoJoiner &&
                                                letters[index - 1] != (int) IsolatedLetters.Dal &&
                                                letters[index - 1] != (int) IsolatedLetters.Thal &&
                                                letters[index - 1] != (int) IsolatedLetters.Ra2 &&
                                                letters[index - 1] != (int) IsolatedLetters.Zeen &&
-                                               letters[index - 1] !=
-                                               (int) IsolatedLetters.PersianZe &&
+                                               letters[index - 1] != (int) IsolatedLetters.PersianZe &&
                                                letters[index - 1] != (int) IsolatedLetters.Waw &&
                                                letters[index - 1] != (int) IsolatedLetters.Alef &&
-                                               letters[index - 1] !=
-                                               (int) IsolatedLetters.AlefMad &&
-                                               letters[index - 1] !=
-                                               (int) IsolatedLetters.AlefHamza &&
-                                               letters[index - 1] !=
-                                               (int) IsolatedLetters.AlefMaksoor &&
-                                               letters[index - 1] !=
-                                               (int) IsolatedLetters.WawHamza &&
+                                               letters[index - 1] != (int) IsolatedLetters.AlefMad &&
+                                               letters[index - 1] != (int) IsolatedLetters.AlefHamza &&
+                                               letters[index - 1] != (int) IsolatedLetters.AlefMaksoor &&
+                                               letters[index - 1] != (int) IsolatedLetters.WawHamza &&
                                                letters[index - 1] != (int) IsolatedLetters.Hamza &&
                                                IsRTLCharacter(letters[index - 1]);
 
 
             bool canThisLetterBeFinishing = letters[index] != ' ' &&
-                                            letters[index] !=
-                                            (int) GeneralLetters.ZeroWidthNoJoiner &&
+                                            letters[index] != (int) GeneralLetters.ZeroWidthNoJoiner &&
                                             letters[index] != (int) GeneralLetters.Hamza;
 
             return isPreviousLetterConnectable && canThisLetterBeFinishing;
