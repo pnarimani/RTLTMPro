@@ -210,6 +210,10 @@ namespace RTLTMPro
                 ch <= (char) IsolatedLetters.PersianPe + 3)
                 return true;
 
+            if (ch >= (char) IsolatedLetters.PersianYa &&
+                ch <= (char) IsolatedLetters.PersianYa + 3)
+                return true;
+
             if (ch >= (char) IsolatedLetters.PersianChe &&
                 ch <= (char) IsolatedLetters.PersianChe + 3)
                 return true;
@@ -731,6 +735,7 @@ namespace RTLTMPro
                         bool isBeforeRTLCharacter = IsRTLCharacter(shapeFixedLetters[i - 1]);
                         bool isBeforeWhiteSpace = char.IsWhiteSpace(shapeFixedLetters[i - 1]);
                         bool isAfterWhiteSpace = char.IsWhiteSpace(shapeFixedLetters[i + 1]);
+                        bool isUnderline = shapeFixedLetters[i] == '_';
                         bool isSpecialPunctuation = shapeFixedLetters[i] == '.' ||
                                                     shapeFixedLetters[i] == '،' ||
                                                     shapeFixedLetters[i] == '؛';
@@ -738,8 +743,16 @@ namespace RTLTMPro
                         if (isBeforeRTLCharacter && isAfterRTLCharacter ||
                             isAfterWhiteSpace && isSpecialPunctuation ||
                             isBeforeWhiteSpace && isAfterRTLCharacter ||
-                            isBeforeRTLCharacter && isAfterWhiteSpace)
+                            isBeforeRTLCharacter && isAfterWhiteSpace ||
+                            ((isBeforeRTLCharacter || isAfterRTLCharacter ) && isUnderline))
                         {
+                            if (ltrText.Count > 0)
+                            {
+                                for (int j = 0; j < ltrText.Count; j++)
+                                    FinalLetters.Append(ltrText[ltrText.Count - 1 - j]);
+                                ltrText.Clear();
+                            }
+
                             FinalLetters.Append(shapeFixedLetters[i]);
                         }
                         else
