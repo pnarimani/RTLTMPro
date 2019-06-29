@@ -28,7 +28,12 @@ namespace RTLTMPro
             }
         }
 
-        public virtual bool PreserveNumbers
+        public string OriginalText
+        {
+            get { return originalText; }
+        }
+
+        public bool PreserveNumbers
         {
             get { return preserveNumbers; }
             set
@@ -96,7 +101,7 @@ namespace RTLTMPro
         [SerializeField]
         protected bool forceFix;
 
-        protected virtual void Update()
+        protected void Update()
         {
             if (havePropertiesChanged)
             {
@@ -104,7 +109,7 @@ namespace RTLTMPro
             }
         }
 
-        public virtual void UpdateText()
+        public void UpdateText()
         {
             if (originalText == null)
                 originalText = "";
@@ -123,7 +128,7 @@ namespace RTLTMPro
             havePropertiesChanged = true;
         }
 
-        public virtual string GetFixedText(string input)
+        private string GetFixedText(string input)
         {
             if (string.IsNullOrEmpty(input))
                 return input;

@@ -27,6 +27,11 @@ namespace RTLTMPro
                 UpdateText();
             }
         }
+        
+        public string OriginalText
+        {
+            get { return originalText; }
+        }
 
         public virtual bool PreserveNumbers
         {
