@@ -8,8 +8,6 @@ namespace RTLTMPro
     public class RTLTextMeshProEditor : TMP_UiEditorPanel
     {
         private SerializedProperty originalTextProp;
-        private SerializedProperty inputSourceProp;
-        private SerializedProperty isInputPasingRequiredProp;
         private SerializedProperty preserveNumbersProp;
         private SerializedProperty farsiProp;
         private SerializedProperty fixTagsProp;
@@ -27,8 +25,6 @@ namespace RTLTMPro
             fixTagsProp = serializedObject.FindProperty("fixTags");
             forceFixProp = serializedObject.FindProperty("forceFix");
             originalTextProp = serializedObject.FindProperty("originalText");
-            inputSourceProp = serializedObject.FindProperty("m_inputSource");
-            isInputPasingRequiredProp = serializedObject.FindProperty("m_isInputParsingRequired");
         }
 
         public override void OnInspectorGUI()

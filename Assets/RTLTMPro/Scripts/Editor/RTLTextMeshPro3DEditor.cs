@@ -5,11 +5,9 @@ using UnityEngine;
 namespace RTLTMPro
 {
     [CustomEditor(typeof(RTLTextMeshPro3D)), CanEditMultipleObjects]
-    public class RTLTextMeshPro3DEditor : TMP_UiEditorPanel
+    public class RTLTextMeshPro3DEditor : TMP_EditorPanel
     {
         private SerializedProperty originalTextProp;
-        private SerializedProperty inputSourceProp;
-        private SerializedProperty isInputPasingRequiredProp;
         private SerializedProperty preserveNumbersProp;
         private SerializedProperty farsiProp;
         private SerializedProperty fixTagsProp;
@@ -27,8 +25,6 @@ namespace RTLTMPro
             fixTagsProp = serializedObject.FindProperty("fixTags");
             forceFixProp = serializedObject.FindProperty("forceFix");
             originalTextProp = serializedObject.FindProperty("originalText");
-            inputSourceProp = serializedObject.FindProperty("m_inputSource");
-            isInputPasingRequiredProp = serializedObject.FindProperty("m_isInputParsingRequired");
         }
 
         public override void OnInspectorGUI()
