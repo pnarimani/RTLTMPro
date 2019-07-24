@@ -25,8 +25,7 @@ namespace RTLTMPro
 
         public static char Convert(char toBeConverted)
         {
-            char convertedValue;
-            return MapList.TryGetValue(toBeConverted, out convertedValue) ? convertedValue : toBeConverted;
+            return MapList.TryGetValue(toBeConverted, out var convertedValue) ? convertedValue : toBeConverted;
         }
     }
 }
