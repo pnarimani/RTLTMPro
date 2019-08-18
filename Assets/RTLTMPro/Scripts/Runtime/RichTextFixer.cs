@@ -108,19 +108,21 @@ namespace RTLTMPro
                 hashCode = 0;
                 for (int j = i + 1; j < str.Length; j++)
                 {
+                    char jChar = str.Get(j);
+                    
                     if (calculateHashCode)
                     {
-                        if (char.IsLetter(str.Get(j)))
+                        if (char.IsLetter(jChar))
                         {
                             unchecked
                             {
                                 if (hashCode == 0)
                                 {
-                                    hashCode = str.Get(j).GetHashCode();
+                                    hashCode = jChar.GetHashCode();
                                 }
                                 else
                                 {
-                                    hashCode = (hashCode * 397) ^ str.Get(j).GetHashCode();
+                                    hashCode = (hashCode * 397) ^ jChar.GetHashCode();
                                 }
                             }
                         }
@@ -131,7 +133,19 @@ namespace RTLTMPro
                         }
                     }
 
-                    if (str.Get(j) == '>')
+                    // Rich text tag cannot contain RTL chars
+                    if (TextUtils.IsRTLCharacter(jChar))
+                    {
+                        break;
+                    }
+
+                    // Rich text tag cannot contain spaces.
+                    if (jChar == ' ')
+                    {
+                        break;
+                    }
+
+                    if (jChar == '>')
                     {
                         // Check if the tag is closing, opening or self contained
 
@@ -156,6 +170,8 @@ namespace RTLTMPro
                         return;
                     }
                 }
+
+                i++;
             }
 
             tagStart = 0;

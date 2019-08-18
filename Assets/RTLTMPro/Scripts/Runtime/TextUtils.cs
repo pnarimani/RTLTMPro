@@ -1,3 +1,5 @@
+using System;
+
 namespace RTLTMPro
 {
     public static class TextUtils
@@ -8,7 +10,7 @@ namespace RTLTMPro
         
         public static bool IsPunctuation(char ch)
         {
-            return false;
+            throw new NotImplementedException();
         }
 
         public static bool IsNumber(char ch, bool preserverNumbers, bool farsi)

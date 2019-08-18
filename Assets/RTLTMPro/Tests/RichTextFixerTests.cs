@@ -21,6 +21,21 @@ namespace RTLTMPro.Tests
         }
         
         [Test]
+        public void FindTag_DoesntFindsTagWithSpaceInside()
+        {
+            // Arrange
+            var text = new FastStringBuilder("text <ope ning> text");
+            
+            // Act
+            RichTextFixer.FindTag(text, 0, out var start, out var end, out int type, out _);
+            
+            // Assert
+            Assert.AreEqual(0, type);
+            Assert.AreEqual(0, start);
+            Assert.AreEqual(0, end);
+        }
+        
+        [Test]
         public void FindTag_FindsOpeningTagWithValue()
         {
             // Arrange

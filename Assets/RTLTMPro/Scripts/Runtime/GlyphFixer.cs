@@ -21,9 +21,10 @@ namespace RTLTMPro
             for (int i = 0; i < input.Length; i++)
             {
                 bool skipNext = false;
+                char iChar = input.Get(i);
 
                 // For special Lam Letter connections.
-                if (input.Get(i) == (char) GeneralLetters.Lam)
+                if (iChar == (char) GeneralLetters.Lam)
                 {
                     if (i < input.Length - 1)
                     {
@@ -32,28 +33,27 @@ namespace RTLTMPro
                 }
 
                 // We don't want to fix tatweel or zwnj character
-                if (input.Get(i) == (int) GeneralLetters.ArabicTatweel ||
-                    input.Get(i) == (int) GeneralLetters.ZeroWidthNoJoiner)
+                if (iChar == (int) GeneralLetters.ArabicTatweel ||
+                    iChar == (int) GeneralLetters.ZeroWidthNoJoiner)
                 {
                     continue;
                 }
 
-                if (TextUtils.IsRTLCharacter(input.Get(i)))
+                if (TextUtils.IsRTLCharacter(iChar))
                 {
+                    char converted = GlyphTable.Convert(iChar);
+                    
                     if (IsMiddleLetter(input, i))
                     {
-                        input.Set(i, GlyphTable.Convert(input.Get(i)));
-                        output.Set(i, (char) (input.Get(i) + 3));
+                        output.Set(i, (char) (converted + 3));
                     }
                     else if (IsFinishingLetter(input, i))
                     {
-                        input.Set(i, GlyphTable.Convert(input.Get(i)));
-                        output.Set(i, (char) (input.Get(i) + 1));
+                        output.Set(i, (char) (converted + 1));
                     }
                     else if (IsLeadingLetter(input, i))
                     {
-                        input.Set(i, GlyphTable.Convert(input.Get(i)));
-                        output.Set(i, (char) (input.Get(i) + 2));
+                        output.Set(i, (char) (converted + 2));
                     }
                 }
 
@@ -105,19 +105,19 @@ namespace RTLTMPro
             switch (input.Get(i + 1))
             {
                 case (char) GeneralLetters.AlefMaksoor:
-                    input.Set(i, (char) 0xFEF7);
+                    output.Set(i, (char) 0xFEF7);
                     isFixed = true;
                     break;
                 case (char) GeneralLetters.Alef:
-                    input.Set(i, (char) 0xFEF9);
+                    output.Set(i, (char) 0xFEF9);
                     isFixed = true;
                     break;
                 case (char) GeneralLetters.AlefHamza:
-                    input.Set(i, (char) 0xFEF5);
+                    output.Set(i, (char) 0xFEF5);
                     isFixed = true;
                     break;
                 case (char) GeneralLetters.AlefMad:
-                    input.Set(i, (char) 0xFEF3);
+                    output.Set(i, (char) 0xFEF3);
                     isFixed = true;
                     break;
                 default:
@@ -164,7 +164,7 @@ namespace RTLTMPro
             char previousIndexLetter = default;
             if (index != 0)
                 previousIndexLetter = letters.Get(index - 1);
-            
+
             char nextIndexLetter = default;
             if (index < letters.Length - 1)
                 nextIndexLetter = letters.Get(index + 1);
@@ -244,7 +244,7 @@ namespace RTLTMPro
         private static bool IsFinishingLetter(FastStringBuilder letters, int index)
         {
             char currentIndexLetter = letters.Get(index);
-            
+
             char previousIndexLetter = default;
             if (index != 0)
                 previousIndexLetter = letters.Get(index - 1);
@@ -297,7 +297,7 @@ namespace RTLTMPro
             char previousIndexLetter = default;
             if (index != 0)
                 previousIndexLetter = letters.Get(index - 1);
-            
+
             char nextIndexLetter = default;
             if (index < letters.Length - 1)
                 nextIndexLetter = letters.Get(index + 1);
