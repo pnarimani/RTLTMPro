@@ -1,6 +1,5 @@
 using System;
 using System.Runtime.CompilerServices;
-using System.Text;
 
 namespace RTLTMPro
 {
@@ -31,17 +30,23 @@ namespace RTLTMPro
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public char Get(int index) => array[index];
+        public char Get(int index)
+        {
+            return array[index];
+        }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void Set(int index, char ch) => array[index] = ch;
+        public void Set(int index, char ch)
+        {
+            array[index] = ch;
+        }
 
         public void SetValue(string text)
         {
             Length = text.Length;
             EnsureCapacity(Length, false);
 
-            for (var i = 0; i < text.Length; i++) array[i] = text[i];
+            for (int i = 0; i < text.Length; i++) array[i] = text[i];
         }
 
         public void SetValue(FastStringBuilder other)
@@ -53,7 +58,8 @@ namespace RTLTMPro
 
         public void Append(char ch)
         {
-            if (capacity < Length) EnsureCapacity(Length, true);
+            if (capacity < Length)
+                EnsureCapacity(Length, true);
 
             array[Length] = ch;
             Length++;
@@ -88,7 +94,7 @@ namespace RTLTMPro
             Length++;
             EnsureCapacity(Length, true);
 
-            for (var i = Length - 2; i >= pos; i--)
+            for (int i = Length - 2; i >= pos; i--)
                 array[i + 1] = array[i];
 
             array[pos] = ch;
@@ -96,14 +102,16 @@ namespace RTLTMPro
 
         public void RemoveAll(char character)
         {
-            for (var i = Length - 1; i >= 0; i--)
+            for (int i = Length - 1; i >= 0; i--)
+            {
                 if (array[i] == character)
                     Remove(i, 1);
+            }
         }
 
         public void Remove(int start, int length)
         {
-            for (var i = start; i < Length - length; i++)
+            for (int i = start; i < Length - length; i++)
             {
                 array[i] = array[i + length];
             }
@@ -113,13 +121,13 @@ namespace RTLTMPro
 
         public void Reverse(int startIndex, int length)
         {
-            for (var i = 0; i < length / 2; i++)
+            for (int i = 0; i < length / 2; i++)
             {
-                var firstIndex = startIndex + i;
-                var secondIndex = startIndex + length - i - 1;
+                int firstIndex = startIndex + i;
+                int secondIndex = startIndex + length - i - 1;
 
-                var first = array[firstIndex];
-                var second = array[secondIndex];
+                char first = array[firstIndex];
+                char second = array[secondIndex];
 
                 array[firstIndex] = second;
                 array[secondIndex] = first;
@@ -134,7 +142,8 @@ namespace RTLTMPro
         public void Substring(FastStringBuilder output, int start, int length)
         {
             output.Length = 0;
-            for (var i = 0; i < length; i++) output.Append(array[start + i]);
+            for (int i = 0; i < length; i++) 
+                output.Append(array[start + i]);
         }
 
         public override string ToString()
@@ -177,7 +186,7 @@ namespace RTLTMPro
                 else if (oldStr.Length < newStr.Length)
                 {
                     // We need to expand capacity
-                    var diff = newStr.Length - oldStr.Length;
+                    int diff = newStr.Length - oldStr.Length;
                     Length += diff;
                     EnsureCapacity(Length, true);
 
@@ -196,7 +205,7 @@ namespace RTLTMPro
                 else
                 {
                     // We need to shrink
-                    var diff = oldStr.Length - newStr.Length;
+                    int diff = oldStr.Length - newStr.Length;
 
                     // Move everything backwards by diff
                     for (int k = i + diff; k < Length - diff; k++)
@@ -231,10 +240,10 @@ namespace RTLTMPro
 
             while (capacity < cap)
                 capacity *= 2;
-            
+
             if (keepValues)
             {
-                var newArray = new char[capacity];
+                char[] newArray = new char[capacity];
                 Copy(array, newArray);
                 array = newArray;
             }
@@ -244,9 +253,10 @@ namespace RTLTMPro
             }
         }
 
-        private void Copy(char[] src, char[] dst)
+        private static void Copy(char[] src, char[] dst)
         {
-            for (var i = 0; i < src.Length; i++) dst[i] = src[i];
+            for (int i = 0; i < src.Length; i++) 
+                dst[i] = src[i];
         }
     }
 }

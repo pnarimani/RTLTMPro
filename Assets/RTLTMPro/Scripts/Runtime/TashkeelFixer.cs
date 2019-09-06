@@ -112,12 +112,12 @@ namespace RTLTMPro
             foreach (TashkeelLocation location in TashkeelLocations)
             {
                 letters.Insert(location.Position + letterWithTashkeelTracker, location.Tashkeel);
-                letterWithTashkeelTracker++;
+                //letterWithTashkeelTracker++;
             }
 
             /*
-             * Fix of https://github.com/sorencoder/RTLTMPro/issues/13
-             * The workaround is to replace Shadda + Aother Tashkeel with combined form 
+             * Fix of https://github.com/mnarimani/RTLTMPro/issues/13
+             * The workaround is to replace Shadda + Another Tashkeel with combined form 
              */
             letters.Replace(ShaddaFatha, ShaddaWithFathaIsolatedForm);
 
