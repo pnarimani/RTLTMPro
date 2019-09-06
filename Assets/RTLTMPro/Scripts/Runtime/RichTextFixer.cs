@@ -138,13 +138,7 @@ namespace RTLTMPro
                     {
                         break;
                     }
-
-                    // Rich text tag cannot contain spaces.
-                    if (jChar == ' ')
-                    {
-                        break;
-                    }
-
+                    
                     if (jChar == '>')
                     {
                         // Check if the tag is closing, opening or self contained
