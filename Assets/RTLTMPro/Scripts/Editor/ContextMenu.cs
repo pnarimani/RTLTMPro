@@ -104,7 +104,7 @@ namespace RTLTMPro
         }
 
         [MenuItem("GameObject/3D Object/Text - RTLTMP", false, 31)]
-        private static void ss(MenuCommand command)
+        private static void CreateTextMeshProObjectPerform(MenuCommand command)
         {
             GameObject go = ObjectFactory.CreateGameObject("Text - RTLTMP");
 
