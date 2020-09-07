@@ -1,8 +1,10 @@
 ﻿using TMPro;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using UnityEditor.Presets;
+using UnityEngine.EventSystems;
+using UnityEditor.SceneManagement;
 
 namespace RTLTMPro
 {
@@ -101,6 +103,40 @@ namespace RTLTMPro
             Selection.activeGameObject = go;
         }
 
+        [MenuItem("GameObject/3D Object/Text - RTLTMP", false, 31)]
+        private static void CreateTextMeshProObjectPerform(MenuCommand command)
+        {
+            GameObject go = ObjectFactory.CreateGameObject("Text - RTLTMP");
+
+            // Add support for new prefab mode
+            StageUtility.PlaceGameObjectInCurrentStage(go);
+
+            var textComponent = ObjectFactory.AddComponent<RTLTextMeshPro3D>(go);
+
+            if (TMP_Settings.autoSizeTextContainer)
+            {
+                Vector2 size = textComponent.GetPreferredValues(TMP_Math.FLOAT_MAX, TMP_Math.FLOAT_MAX);
+                textComponent.rectTransform.sizeDelta = size;
+            }
+            else
+            {
+                textComponent.rectTransform.sizeDelta = TMP_Settings.defaultTextMeshProTextContainerSize;
+            }
+
+            textComponent.text = "Sample text";
+            textComponent.alignment = TextAlignmentOptions.TopLeft;
+
+            Undo.RegisterCreatedObjectUndo(go, "Create " + go.name);
+
+            GameObject contextObject = command.context as GameObject;
+            if (contextObject != null)
+            {
+                GameObjectUtility.SetParentAndAlign(go, contextObject);
+                Undo.SetTransformParent(go.transform, contextObject.transform, "Parent " + go.name);
+            }
+
+            Selection.activeGameObject = go;
+        }
 
         [MenuItem("GameObject/UI/Input Field - RTLTMP", false, 2037)]
         private static void AddTextMeshProInputField(MenuCommand menuCommand)
@@ -147,7 +183,7 @@ namespace RTLTMPro
             textMeshPro.fontSizeMax = 100;
             textMeshPro.alignment = TextAlignmentOptions.Center;
             textMeshPro.color = new Color(0.1254902F, 0.1254902F, 0.1254902F);
-            textMeshPro.margin = new Vector4(0,3.5f,0,4.5f);
+            textMeshPro.margin = new Vector4(0, 3.5f, 0, 4.5f);
 
             Undo.RegisterCreatedObjectUndo(buttonGo, "Created Button");
             Selection.activeGameObject = buttonGo;
