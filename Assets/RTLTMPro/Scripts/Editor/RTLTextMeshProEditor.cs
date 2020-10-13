@@ -13,7 +13,7 @@ using TMP_UiEditorPanel = TMPro.EditorUtilities.TMP_EditorPanelUI;
 namespace RTLTMPro
 {
     [CustomEditor(typeof(RTLTextMeshPro)), CanEditMultipleObjects]
-    public class RTLTextMeshProEditor : TMP_UiEditorPanel
+    public class RTLTextMeshProEditor : TMP_EditorPanelUI
     {
         private SerializedProperty originalTextProp;
         private SerializedProperty preserveNumbersProp;
