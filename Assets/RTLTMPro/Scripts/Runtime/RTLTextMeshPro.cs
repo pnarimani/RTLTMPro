@@ -1,6 +1,4 @@
-﻿#define RTL_OVERRIDE
-
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 
 namespace RTLTMPro
@@ -9,7 +7,7 @@ namespace RTLTMPro
     public class RTLTextMeshPro : TextMeshProUGUI
     {
         // ReSharper disable once InconsistentNaming
-#if RTL_OVERRIDE
+#if TMP_VERSION_2_1_0_OR_NEWER
         public override string text
 #else
         public new string text
