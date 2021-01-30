@@ -1,6 +1,4 @@
-﻿using System.Text;
-
-// ReSharper disable IdentifierTypo
+﻿// ReSharper disable IdentifierTypo
 // ReSharper disable CommentTypo
 
 namespace RTLTMPro
@@ -46,12 +44,9 @@ namespace RTLTMPro
 
             // Fix flow of the text and put the result in FinalLetters field
             LigatureFixer.Fix(glyphFixerOutput, output, farsi, fixTextTags, preserveNumbers);
-
-            if (fixTextTags)
-            {
+            if (fixTextTags) {
                 RichTextFixer.Fix(output);
             }
-
             inputBuilder.Clear();
         }
  

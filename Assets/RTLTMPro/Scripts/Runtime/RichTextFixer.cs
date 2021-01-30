@@ -58,15 +58,15 @@ namespace RTLTMPro
                         {
                             // NOTE: order of execution is important here
 
-                            int openingTagLength = tagEnd - tagStart;
-                            int closingTagLength = closingTag.End - closingTag.Start;
+                            int openingTagLength = tagEnd - tagStart + 1;
+                            int closingTagLength = closingTag.End - closingTag.Start + 1;
 
                             text.Reverse(tagStart, openingTagLength);
                             text.Reverse(closingTag.Start, closingTagLength);
                         }
                         else
                         {
-                            text.Reverse(tagStart, tagEnd - tagStart);
+                            text.Reverse(tagStart, tagEnd - tagStart + 1);
                         }
 
                         break;
@@ -79,7 +79,7 @@ namespace RTLTMPro
                     }
                     case 3: // Self contained tag
                     {
-                        text.Reverse(tagStart, tagEnd - tagStart);
+                        text.Reverse(tagStart, tagEnd - tagStart + 1);
                         break;
                     }
                 }
@@ -134,7 +134,7 @@ namespace RTLTMPro
                     }
 
                     // Rich text tag cannot contain RTL chars
-                    if (TextUtils.IsRTLCharacter(jChar))
+                    if (TextUtils.IsRTLCharacter(jChar) || jChar == ' ')
                     {
                         break;
                     }
@@ -144,7 +144,7 @@ namespace RTLTMPro
                         // Check if the tag is closing, opening or self contained
 
                         tagStart = i;
-                        tagEnd = j + 1;
+                        tagEnd = j;
 
                         if (str.Get(j - 1) == '/')
                         {
