@@ -59,7 +59,7 @@ namespace RTLTMPro.Tests
             
             // Act
             RichTextFixer.FindTag(text1, 0, out _, out _, out _, out var hashCode1);
-            RichTextFixer.FindTag(text1, 0, out _, out _, out _, out var hashCode2);
+            RichTextFixer.FindTag(text2, 0, out _, out _, out _, out var hashCode2);
             
             // Assert
             Assert.AreEqual(hashCode1, hashCode2);

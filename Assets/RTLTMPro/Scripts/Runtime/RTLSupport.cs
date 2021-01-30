@@ -39,7 +39,7 @@ namespace RTLTMPro
             TashkeelFixer.RemoveTashkeel(inputBuilder);
 
             // The shape of the letters in shapeFixedLetters is fixed according to their position in word. But the flow of the text is not fixed.
-            GlyphFixer.Fix(inputBuilder, glyphFixerOutput, preserveNumbers, farsi);
+            GlyphFixer.Fix(inputBuilder, glyphFixerOutput, preserveNumbers, farsi, fixTextTags);
 
             //Restore tashkeel to their places.
             TashkeelFixer.RestoreTashkeel(glyphFixerOutput);

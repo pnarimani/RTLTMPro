@@ -62,7 +62,7 @@ namespace RTLTMPro.Tests
             var text = GetEnglishNumbers();
             var output = new FastStringBuilder(10);
 
-            GlyphFixer.Fix(text, output, false, true);
+            GlyphFixer.Fix(text, output, false, true, false);
 
             Debug.Log("Output: " + output);
 
@@ -75,7 +75,7 @@ namespace RTLTMPro.Tests
             var text = GetEnglishNumbers();
             var output = new FastStringBuilder(10);
 
-            GlyphFixer.Fix(text, output, false, false);
+            GlyphFixer.Fix(text, output, false, false, false);
 
             Debug.Log("Output: " + output);
 
@@ -88,7 +88,7 @@ namespace RTLTMPro.Tests
             var text = GetEnglishNumbers();
             var output = new FastStringBuilder(10);
 
-            GlyphFixer.Fix(text, output, true, false);
+            GlyphFixer.Fix(text, output, true, false, false);
 
             Assert.AreEqual(text.ToString(), output.ToString());
         }
