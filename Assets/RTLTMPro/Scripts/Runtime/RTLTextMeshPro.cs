@@ -111,8 +111,7 @@ namespace RTLTMPro
             {
                 isRightToLeftText = false;
                 base.text = originalText;
-            }
-            else
+            } else
             {
                 isRightToLeftText = true;
                 base.text = GetFixedText(originalText);

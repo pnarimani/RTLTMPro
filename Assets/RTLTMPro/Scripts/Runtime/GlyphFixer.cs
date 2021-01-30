@@ -1,8 +1,11 @@
 using System.Collections.Generic;
 
-namespace RTLTMPro {
-    public static class GlyphFixer {
-        public static Dictionary<char, char> EnglishToFarsiNumberMap = new Dictionary<char, char>() {
+namespace RTLTMPro
+{
+    public static class GlyphFixer
+    {
+        public static Dictionary<char, char> EnglishToFarsiNumberMap = new Dictionary<char, char>()
+        {
             [(char)EnglishNumbers.Zero] = (char)FarsiNumbers.Zero,
             [(char)EnglishNumbers.One] = (char)FarsiNumbers.One,
             [(char)EnglishNumbers.Two] = (char)FarsiNumbers.Two,
@@ -15,7 +18,8 @@ namespace RTLTMPro {
             [(char)EnglishNumbers.Nine] = (char)FarsiNumbers.Nine,
         };
 
-        public static Dictionary<char, char> EnglishToHinduNumberMap = new Dictionary<char, char>() {
+        public static Dictionary<char, char> EnglishToHinduNumberMap = new Dictionary<char, char>()
+        {
             [(char)EnglishNumbers.Zero] = (char)FarsiNumbers.Zero,
             [(char)EnglishNumbers.One] = (char)FarsiNumbers.One,
             [(char)EnglishNumbers.Two] = (char)FarsiNumbers.Two,
@@ -37,18 +41,22 @@ namespace RTLTMPro {
         /// <param name="preserveNumbers"></param>
         /// <param name="farsi"></param>
         /// <returns></returns>
-        public static void Fix(FastStringBuilder input, FastStringBuilder output, bool preserveNumbers, bool farsi, bool fixTextTags) {
+        public static void Fix(FastStringBuilder input, FastStringBuilder output, bool preserveNumbers, bool farsi, bool fixTextTags)
+        {
             FixYah(input, farsi);
 
             output.SetValue(input);
 
-            for (int i = 0; i < input.Length; i++) {
+            for (int i = 0; i < input.Length; i++)
+            {
                 bool skipNext = false;
                 char iChar = input.Get(i);
 
                 // For special Lam Letter connections.
-                if (iChar == (char)GeneralLetters.Lam) {
-                    if (i < input.Length - 1) {
+                if (iChar == (char)GeneralLetters.Lam)
+                {
+                    if (i < input.Length - 1)
+                    {
                         skipNext = HandleSpecialLam(input, output, i);
                         if (skipNext)
                             iChar = output.Get(i);
@@ -57,33 +65,42 @@ namespace RTLTMPro {
 
                 // We don't want to fix tatweel or zwnj character
                 if (iChar == (int)GeneralLetters.ArabicTatweel ||
-                    iChar == (int)GeneralLetters.ZeroWidthNoJoiner) {
+                    iChar == (int)GeneralLetters.ZeroWidthNoJoiner)
+                {
                     continue;
                 }
 
-                if (TextUtils.IsRTLCharacter(iChar)) {
+                if (TextUtils.IsRTLCharacter(iChar))
+                {
                     char converted = GlyphTable.Convert(iChar);
 
-                    if (IsMiddleLetter(input, i)) {
+                    if (IsMiddleLetter(input, i))
+                    {
                         output.Set(i, (char)(converted + 3));
-                    } else if (IsFinishingLetter(input, i)) {
+                    } else if (IsFinishingLetter(input, i))
+                    {
                         output.Set(i, (char)(converted + 1));
-                    } else if (IsLeadingLetter(input, i)) {
+                    } else if (IsLeadingLetter(input, i))
+                    {
                         output.Set(i, (char)(converted + 2));
                     }
                 }
 
                 // If this letter as Lam and special Lam-Alef connection was made, We want to skip the Alef
                 // (Lam-Alef occupies 1 space)
-                if (skipNext) {
+                if (skipNext)
+                {
                     i++;
                 }
             }
 
-            if (!preserveNumbers) {
-                if (fixTextTags) {
+            if (!preserveNumbers)
+            {
+                if (fixTextTags)
+                {
                     FixNumbersOutsideOfTags(output, farsi);
-                } else {
+                } else
+                {
                     FixNumbers(output, farsi);
                 }
             }
@@ -95,11 +112,15 @@ namespace RTLTMPro {
         /// <param name="text">Input to prepare</param>
         /// <param name="farsi"></param>
         /// <returns>Prepared input in char array</returns>
-        public static void FixYah(FastStringBuilder text, bool farsi) {
-            for (int i = 0; i < text.Length; i++) {
-                if (farsi && text.Get(i) == (int)GeneralLetters.Ya) {
+        public static void FixYah(FastStringBuilder text, bool farsi)
+        {
+            for (int i = 0; i < text.Length; i++)
+            {
+                if (farsi && text.Get(i) == (int)GeneralLetters.Ya)
+                {
                     text.Set(i, (char)GeneralLetters.PersianYa);
-                } else if (farsi == false && text.Get(i) == (int)GeneralLetters.PersianYa) {
+                } else if (farsi == false && text.Get(i) == (int)GeneralLetters.PersianYa)
+                {
                     text.Set(i, (char)GeneralLetters.Ya);
                 }
             }
@@ -112,9 +133,11 @@ namespace RTLTMPro {
         /// <param name="output"></param>
         /// <param name="i">Index of Lam letter</param>
         /// <returns><see langword="true" /> if special connection has been made.</returns>
-        private static bool HandleSpecialLam(FastStringBuilder input, FastStringBuilder output, int i) {
+        private static bool HandleSpecialLam(FastStringBuilder input, FastStringBuilder output, int i)
+        {
             bool isFixed;
-            switch (input.Get(i + 1)) {
+            switch (input.Get(i + 1))
+            {
                 case (char)GeneralLetters.AlefMaksoor:
                     output.Set(i, (char)0xFEF7);
                     isFixed = true;
@@ -136,7 +159,8 @@ namespace RTLTMPro {
                     break;
             }
 
-            if (isFixed) {
+            if (isFixed)
+            {
                 output.Set(i + 1, (char)0xFFFF);
             }
 
@@ -149,7 +173,8 @@ namespace RTLTMPro {
         /// <param name="text"></param>
         /// <param name="farsi"></param>
         /// <returns>Converted number</returns>
-        public static void FixNumbers(FastStringBuilder text, bool farsi) {
+        public static void FixNumbers(FastStringBuilder text, bool farsi)
+        {
             text.Replace((char)EnglishNumbers.Zero, farsi ? (char)FarsiNumbers.Zero : (char)HinduNumbers.Zero);
             text.Replace((char)EnglishNumbers.One, farsi ? (char)FarsiNumbers.One : (char)HinduNumbers.One);
             text.Replace((char)EnglishNumbers.Two, farsi ? (char)FarsiNumbers.Two : (char)HinduNumbers.Two);
@@ -168,18 +193,24 @@ namespace RTLTMPro {
         /// <param name="text"></param>
         /// <param name="farsi"></param>
         /// <returns>Text with converted numbers</returns>
-        public static void FixNumbersOutsideOfTags(FastStringBuilder text, bool farsi) {
+        public static void FixNumbersOutsideOfTags(FastStringBuilder text, bool farsi)
+        {
             var englishDigits = new HashSet<char>(EnglishToFarsiNumberMap.Keys);
-            for (int i = 0; i < text.Length; i++) {
+            for (int i = 0; i < text.Length; i++)
+            {
                 var iChar = text.Get(i);
                 // skip valid tags
-                if (iChar == '<') {
+                if (iChar == '<')
+                {
                     bool sawValidTag = false;
-                    for (int j = i + 1; j < text.Length; j++) {
+                    for (int j = i + 1; j < text.Length; j++)
+                    {
                         char jChar = text.Get(j);
-                        if (jChar == ' ' || TextUtils.IsRTLCharacter(jChar)) {
+                        if (jChar == ' ' || TextUtils.IsRTLCharacter(jChar))
+                        {
                             break;
-                        } else if (jChar == '>') {
+                        } else if (jChar == '>')
+                        {
                             i = j;
                             sawValidTag = true;
                             break;
@@ -189,7 +220,8 @@ namespace RTLTMPro {
                     if (sawValidTag) continue;
                 }
 
-                if (englishDigits.Contains(iChar)) {
+                if (englishDigits.Contains(iChar))
+                {
                     text.Set(i, farsi ? EnglishToFarsiNumberMap[iChar] : EnglishToHinduNumberMap[iChar]);
                 }
             }
@@ -199,7 +231,8 @@ namespace RTLTMPro {
         ///     Is the letter at provided index a leading letter?
         /// </summary>
         /// <returns><see langword="true" /> if the letter is a leading letter</returns>
-        private static bool IsLeadingLetter(FastStringBuilder letters, int index) {
+        private static bool IsLeadingLetter(FastStringBuilder letters, int index)
+        {
             var currentIndexLetter = letters.Get(index);
 
             char previousIndexLetter = default;
@@ -282,7 +315,8 @@ namespace RTLTMPro {
         ///     Is the letter at provided index a finishing letter?
         /// </summary>
         /// <returns><see langword="true" /> if the letter is a finishing letter</returns>
-        private static bool IsFinishingLetter(FastStringBuilder letters, int index) {
+        private static bool IsFinishingLetter(FastStringBuilder letters, int index)
+        {
             char currentIndexLetter = letters.Get(index);
 
             char previousIndexLetter = default;
@@ -330,7 +364,8 @@ namespace RTLTMPro {
         ///     Is the letter at provided index a middle letter?
         /// </summary>
         /// <returns><see langword="true" /> if the letter is a middle letter</returns>
-        private static bool IsMiddleLetter(FastStringBuilder letters, int index) {
+        private static bool IsMiddleLetter(FastStringBuilder letters, int index)
+        {
             var currentIndexLetter = letters.Get(index);
 
             char previousIndexLetter = default;

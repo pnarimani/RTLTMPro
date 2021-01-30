@@ -6,10 +6,10 @@ namespace RTLTMPro
     public static class RTLSupport
     {
         public const int DefaultBufferSize = 2048;
-        
+
         private static FastStringBuilder inputBuilder;
         private static FastStringBuilder glyphFixerOutput;
-        
+
         static RTLSupport()
         {
             inputBuilder = new FastStringBuilder(DefaultBufferSize);
@@ -29,7 +29,7 @@ namespace RTLTMPro
             string input,
             FastStringBuilder output,
             bool farsi = true,
-            bool fixTextTags = true, 
+            bool fixTextTags = true,
             bool preserveNumbers = false)
         {
             inputBuilder.SetValue(input);
@@ -44,11 +44,12 @@ namespace RTLTMPro
 
             // Fix flow of the text and put the result in FinalLetters field
             LigatureFixer.Fix(glyphFixerOutput, output, farsi, fixTextTags, preserveNumbers);
-            if (fixTextTags) {
+            if (fixTextTags)
+            {
                 RichTextFixer.Fix(output);
             }
             inputBuilder.Clear();
         }
- 
+
     }
 }

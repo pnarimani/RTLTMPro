@@ -1,18 +1,23 @@
 using System.Collections.Generic;
 
-namespace RTLTMPro {
-    public static class LigatureFixer {
+namespace RTLTMPro
+{
+    public static class LigatureFixer
+    {
         private static readonly List<char> LtrTextHolder = new List<char>(512);
         private static readonly List<char> TagTextHolder = new List<char>(512);
-        private static readonly Dictionary<char, char> MirroredCharsMap = new Dictionary<char, char>() {
+        private static readonly Dictionary<char, char> MirroredCharsMap = new Dictionary<char, char>()
+        {
             ['('] = ')',
             [')'] = '(',
             ['»'] = '«',
             ['«'] = '»',
         };
         private static readonly HashSet<char> MirroredCharsSet = new HashSet<char>(MirroredCharsMap.Keys);
-        private static void FlushBufferToOutput(List<char> buffer, FastStringBuilder output) {
-            for (int j = 0; j < buffer.Count; j++) {
+        private static void FlushBufferToOutput(List<char> buffer, FastStringBuilder output)
+        {
+            for (int j = 0; j < buffer.Count; j++)
+            {
                 output.Append(buffer[buffer.Count - 1 - j]);
             }
 
@@ -22,12 +27,14 @@ namespace RTLTMPro {
         /// <summary>
         ///     Fixes the flow of the text.
         /// </summary>
-        public static void Fix(FastStringBuilder input, FastStringBuilder output, bool farsi, bool fixTextTags, bool preserveNumbers) {
+        public static void Fix(FastStringBuilder input, FastStringBuilder output, bool farsi, bool fixTextTags, bool preserveNumbers)
+        {
             // Some texts like tags, English words and numbers need to be displayed in their original order.
             // This list keeps the characters that their order should be reserved and streams reserved texts into final letters.
             LtrTextHolder.Clear();
             TagTextHolder.Clear();
-            for (int i = input.Length - 1; i >= 0; i--) {
+            for (int i = input.Length - 1; i >= 0; i--)
+            {
                 bool isInMiddle = i > 0 && i < input.Length - 1;
                 bool isAtBeginning = i == 0;
                 bool isAtEnd = i == input.Length - 1;
@@ -42,58 +49,70 @@ namespace RTLTMPro {
                 if (!isAtBeginning)
                     previousCharacter = input.Get(i - 1);
 
-                if (fixTextTags) {
-                    if (characterAtThisIndex == '>') {
+                if (fixTextTags)
+                {
+                    if (characterAtThisIndex == '>')
+                    {
                         // We need to check if it is actually the beginning of a tag.
                         bool isValidTag = false;
                         int nextI = i;
                         TagTextHolder.Add(characterAtThisIndex);
 
-                        for (int j = i - 1; j >= 0; j--) {
+                        for (int j = i - 1; j >= 0; j--)
+                        {
                             var jChar = input.Get(j);
                             // Tags do not have space inside
-                            if (jChar == ' ') {
+                            if (jChar == ' ')
+                            {
                                 break;
                             }
 
                             // Tags do not have RTL characters inside
-                            if (TextUtils.IsRTLCharacter(jChar)) {
+                            if (TextUtils.IsRTLCharacter(jChar))
+                            {
                                 break;
                             }
 
                             TagTextHolder.Add(jChar);
 
-                            if (jChar == '<') {
+                            if (jChar == '<')
+                            {
                                 isValidTag = true;
                                 nextI = j;
                                 break;
                             }
                         }
 
-                        if (isValidTag) {
+                        if (isValidTag)
+                        {
                             FlushBufferToOutput(LtrTextHolder, output);
                             FlushBufferToOutput(TagTextHolder, output);
                             i = nextI;
                             continue;
-                        } else {
+                        } else
+                        {
                             TagTextHolder.Clear();
                         }
                     }
                 }
 
-                if (char.IsPunctuation(characterAtThisIndex) || char.IsSymbol(characterAtThisIndex)) {
+                if (char.IsPunctuation(characterAtThisIndex) || char.IsSymbol(characterAtThisIndex))
+                {
 
-                    if (MirroredCharsSet.Contains(characterAtThisIndex)) {
+                    if (MirroredCharsSet.Contains(characterAtThisIndex))
+                    {
                         // IsRTLCharacter returns false for null
                         bool isAfterRTLCharacter = TextUtils.IsRTLCharacter(previousCharacter);
                         bool isBeforeRTLCharacter = TextUtils.IsRTLCharacter(nextCharacter);
 
-                        if (isAfterRTLCharacter || isBeforeRTLCharacter) {
+                        if (isAfterRTLCharacter || isBeforeRTLCharacter)
+                        {
                             characterAtThisIndex = MirroredCharsMap[characterAtThisIndex];
                         }
                     }
 
-                    if (isInMiddle) {
+                    if (isInMiddle)
+                    {
                         bool isAfterRTLCharacter = TextUtils.IsRTLCharacter(previousCharacter);
                         bool isBeforeRTLCharacter = TextUtils.IsRTLCharacter(nextCharacter);
                         bool isBeforeWhiteSpace = char.IsWhiteSpace(nextCharacter);
@@ -107,22 +126,27 @@ namespace RTLTMPro {
                             isAfterWhiteSpace && isSpecialPunctuation ||
                             isBeforeWhiteSpace && isAfterRTLCharacter ||
                             isBeforeRTLCharacter && isAfterWhiteSpace ||
-                            (isBeforeRTLCharacter || isAfterRTLCharacter) && isUnderline) {
+                            (isBeforeRTLCharacter || isAfterRTLCharacter) && isUnderline)
+                        {
                             FlushBufferToOutput(LtrTextHolder, output);
                             output.Append(characterAtThisIndex);
-                        } else {
+                        } else
+                        {
                             LtrTextHolder.Add(characterAtThisIndex);
                         }
-                    } else if (isAtEnd) {
+                    } else if (isAtEnd)
+                    {
                         LtrTextHolder.Add(characterAtThisIndex);
-                    } else if (isAtBeginning) {
+                    } else if (isAtBeginning)
+                    {
                         output.Append(characterAtThisIndex);
                     }
 
                     continue;
                 }
 
-                if (isInMiddle) {
+                if (isInMiddle)
+                {
                     bool isAfterEnglishChar = TextUtils.IsEnglishLetter(previousCharacter);
                     bool isBeforeEnglishChar = TextUtils.IsEnglishLetter(nextCharacter);
                     bool isAfterNumber = TextUtils.IsNumber(previousCharacter, preserveNumbers, farsi);
@@ -134,21 +158,24 @@ namespace RTLTMPro {
                     // If the space is between numbers,symbols or English words, keep the order
                     if (characterAtThisIndex == ' ' &&
                         (isBeforeEnglishChar || isBeforeNumber || isBeforeSymbol) &&
-                        (isAfterEnglishChar || isAfterNumber || isAfterSymbol)) {
+                        (isAfterEnglishChar || isAfterNumber || isAfterSymbol))
+                    {
                         LtrTextHolder.Add(characterAtThisIndex);
                         continue;
                     }
                 }
 
                 if (TextUtils.IsEnglishLetter(characterAtThisIndex) ||
-                    TextUtils.IsNumber(characterAtThisIndex, preserveNumbers, farsi)) {
+                    TextUtils.IsNumber(characterAtThisIndex, preserveNumbers, farsi))
+                {
                     LtrTextHolder.Add(characterAtThisIndex);
                     continue;
                 }
 
                 if (characterAtThisIndex >= (char)0xD800 &&
                     characterAtThisIndex <= (char)0xDBFF ||
-                    characterAtThisIndex >= (char)0xDC00 && characterAtThisIndex <= (char)0xDFFF) {
+                    characterAtThisIndex >= (char)0xDC00 && characterAtThisIndex <= (char)0xDFFF)
+                {
                     LtrTextHolder.Add(characterAtThisIndex);
                     continue;
                 }
@@ -156,7 +183,8 @@ namespace RTLTMPro {
                 FlushBufferToOutput(LtrTextHolder, output);
 
                 if (characterAtThisIndex != 0xFFFF &&
-                    characterAtThisIndex != (int)GeneralLetters.ZeroWidthNoJoiner) {
+                    characterAtThisIndex != (int)GeneralLetters.ZeroWidthNoJoiner)
+                {
                     output.Append(characterAtThisIndex);
                 }
             }
