@@ -1,7 +1,38 @@
+using System.Collections.Generic;
+
 namespace RTLTMPro
 {
     public static class GlyphFixer
     {
+        public static Dictionary<char, char> EnglishToFarsiNumberMap = new Dictionary<char, char>()
+        {
+            [(char)EnglishNumbers.Zero] = (char)FarsiNumbers.Zero,
+            [(char)EnglishNumbers.One] = (char)FarsiNumbers.One,
+            [(char)EnglishNumbers.Two] = (char)FarsiNumbers.Two,
+            [(char)EnglishNumbers.Three] = (char)FarsiNumbers.Three,
+            [(char)EnglishNumbers.Four] = (char)FarsiNumbers.Four,
+            [(char)EnglishNumbers.Five] = (char)FarsiNumbers.Five,
+            [(char)EnglishNumbers.Six] = (char)FarsiNumbers.Six,
+            [(char)EnglishNumbers.Seven] = (char)FarsiNumbers.Seven,
+            [(char)EnglishNumbers.Eight] = (char)FarsiNumbers.Eight,
+            [(char)EnglishNumbers.Nine] = (char)FarsiNumbers.Nine,
+        };
+
+        public static Dictionary<char, char> EnglishToHinduNumberMap = new Dictionary<char, char>()
+        {
+            [(char)EnglishNumbers.Zero] = (char)FarsiNumbers.Zero,
+            [(char)EnglishNumbers.One] = (char)FarsiNumbers.One,
+            [(char)EnglishNumbers.Two] = (char)FarsiNumbers.Two,
+            [(char)EnglishNumbers.Three] = (char)FarsiNumbers.Three,
+            [(char)EnglishNumbers.Four] = (char)FarsiNumbers.Four,
+            [(char)EnglishNumbers.Five] = (char)FarsiNumbers.Five,
+            [(char)EnglishNumbers.Six] = (char)FarsiNumbers.Six,
+            [(char)EnglishNumbers.Seven] = (char)FarsiNumbers.Seven,
+            [(char)EnglishNumbers.Eight] = (char)FarsiNumbers.Eight,
+            [(char)EnglishNumbers.Nine] = (char)FarsiNumbers.Nine,
+        };
+
+
         /// <summary>
         ///     Fixes the shape of letters based on their position.
         /// </summary>
@@ -10,7 +41,7 @@ namespace RTLTMPro
         /// <param name="preserveNumbers"></param>
         /// <param name="farsi"></param>
         /// <returns></returns>
-        public static void Fix(FastStringBuilder input, FastStringBuilder output, bool preserveNumbers, bool farsi)
+        public static void Fix(FastStringBuilder input, FastStringBuilder output, bool preserveNumbers, bool farsi, bool fixTextTags)
         {
             FixYah(input, farsi);
 
@@ -46,12 +77,10 @@ namespace RTLTMPro
                     if (IsMiddleLetter(input, i))
                     {
                         output.Set(i, (char)(converted + 3));
-                    }
-                    else if (IsFinishingLetter(input, i))
+                    } else if (IsFinishingLetter(input, i))
                     {
                         output.Set(i, (char)(converted + 1));
-                    }
-                    else if (IsLeadingLetter(input, i))
+                    } else if (IsLeadingLetter(input, i))
                     {
                         output.Set(i, (char)(converted + 2));
                     }
@@ -67,7 +96,13 @@ namespace RTLTMPro
 
             if (!preserveNumbers)
             {
-                FixNumbers(output, farsi);
+                if (fixTextTags)
+                {
+                    FixNumbersOutsideOfTags(output, farsi);
+                } else
+                {
+                    FixNumbers(output, farsi);
+                }
             }
         }
 
@@ -84,8 +119,7 @@ namespace RTLTMPro
                 if (farsi && text.Get(i) == (int)GeneralLetters.Ya)
                 {
                     text.Set(i, (char)GeneralLetters.PersianYa);
-                }
-                else if (farsi == false && text.Get(i) == (int)GeneralLetters.PersianYa)
+                } else if (farsi == false && text.Get(i) == (int)GeneralLetters.PersianYa)
                 {
                     text.Set(i, (char)GeneralLetters.Ya);
                 }
@@ -151,6 +185,46 @@ namespace RTLTMPro
             text.Replace((char)EnglishNumbers.Seven, farsi ? (char)FarsiNumbers.Seven : (char)HinduNumbers.Seven);
             text.Replace((char)EnglishNumbers.Eight, farsi ? (char)FarsiNumbers.Eight : (char)HinduNumbers.Eight);
             text.Replace((char)EnglishNumbers.Nine, farsi ? (char)FarsiNumbers.Nine : (char)HinduNumbers.Nine);
+        }
+
+        /// <summary>
+        ///     Converts English numbers that are outside tags to Persian or Arabic numbers.
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="farsi"></param>
+        /// <returns>Text with converted numbers</returns>
+        public static void FixNumbersOutsideOfTags(FastStringBuilder text, bool farsi)
+        {
+            var englishDigits = new HashSet<char>(EnglishToFarsiNumberMap.Keys);
+            for (int i = 0; i < text.Length; i++)
+            {
+                var iChar = text.Get(i);
+                // skip valid tags
+                if (iChar == '<')
+                {
+                    bool sawValidTag = false;
+                    for (int j = i + 1; j < text.Length; j++)
+                    {
+                        char jChar = text.Get(j);
+                        if (jChar == ' ' || TextUtils.IsRTLCharacter(jChar))
+                        {
+                            break;
+                        } else if (jChar == '>')
+                        {
+                            i = j;
+                            sawValidTag = true;
+                            break;
+                        }
+                    }
+
+                    if (sawValidTag) continue;
+                }
+
+                if (englishDigits.Contains(iChar))
+                {
+                    text.Set(i, farsi ? EnglishToFarsiNumberMap[iChar] : EnglishToHinduNumberMap[iChar]);
+                }
+            }
         }
 
         /// <summary>

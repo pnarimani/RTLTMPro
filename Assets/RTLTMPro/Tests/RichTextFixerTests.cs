@@ -17,7 +17,7 @@ namespace RTLTMPro.Tests
             // Assert
             Assert.AreEqual(1, type);
             Assert.AreEqual(5, start);
-            Assert.AreEqual(14, end);
+            Assert.AreEqual(13, end);
         }
         
         [Test]
@@ -47,7 +47,7 @@ namespace RTLTMPro.Tests
             // Assert
             Assert.AreEqual(1, type);
             Assert.AreEqual(5, start);
-            Assert.AreEqual(18, end);
+            Assert.AreEqual(17, end);
         }
         
         [Test]
@@ -59,7 +59,7 @@ namespace RTLTMPro.Tests
             
             // Act
             RichTextFixer.FindTag(text1, 0, out _, out _, out _, out var hashCode1);
-            RichTextFixer.FindTag(text1, 0, out _, out _, out _, out var hashCode2);
+            RichTextFixer.FindTag(text2, 0, out _, out _, out _, out var hashCode2);
             
             // Assert
             Assert.AreEqual(hashCode1, hashCode2);
@@ -77,7 +77,7 @@ namespace RTLTMPro.Tests
             // Assert
             Assert.AreEqual(3, type);
             Assert.AreEqual(5, start);
-            Assert.AreEqual(15, end);
+            Assert.AreEqual(14, end);
         }
         
         [Test]
@@ -92,7 +92,7 @@ namespace RTLTMPro.Tests
             // Assert
             Assert.AreEqual(3, type);
             Assert.AreEqual(5, start);
-            Assert.AreEqual(19, end);
+            Assert.AreEqual(18, end);
         }
 
         [Test]
@@ -122,7 +122,7 @@ namespace RTLTMPro.Tests
             // Assert
             Assert.AreEqual(2, type);
             Assert.AreEqual(5, start);
-            Assert.AreEqual(15, end);
+            Assert.AreEqual(14, end);
         }
 
         [Test]

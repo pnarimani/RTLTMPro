@@ -2,13 +2,11 @@
 using UnityEditor;
 using UnityEngine;
 
-
-#if !TMP_Version_2_1_1
-using TMP_UiEditorPanel = TMPro.EditorUtilities.TMP_UiEditorPanel;
-#else
+#if TMP_VERSION_2_1_0_OR_NEWER
 using TMP_UiEditorPanel = TMPro.EditorUtilities.TMP_EditorPanelUI;
+#else
+using TMP_UiEditorPanel = TMPro.EditorUtilities.TMP_UiEditorPanel;
 #endif
-
 
 namespace RTLTMPro
 {

@@ -1,7 +1,4 @@
-﻿//#define RTL_OVERRIDE
-
-using System.Text;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 
 namespace RTLTMPro
@@ -10,7 +7,7 @@ namespace RTLTMPro
     public class RTLTextMeshPro : TextMeshProUGUI
     {
         // ReSharper disable once InconsistentNaming
-#if RTL_OVERRIDE
+#if TMP_VERSION_2_1_0_OR_NEWER
         public override string text
 #else
         public new string text
@@ -72,7 +69,7 @@ namespace RTLTMPro
             }
         }
 
-        protected bool ForceFix
+        public bool ForceFix
         {
             get { return forceFix; }
             set
@@ -114,8 +111,7 @@ namespace RTLTMPro
             {
                 isRightToLeftText = false;
                 base.text = originalText;
-            }
-            else
+            } else
             {
                 isRightToLeftText = true;
                 base.text = GetFixedText(originalText);
