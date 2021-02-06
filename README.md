@@ -86,8 +86,8 @@ Checking this checkbox forces RTL TextMeshPro to fix the text even when it start
 When checked, RTL Text Mesh Pro will try to fix rich text tags.  
 
 # Known Issues
-* InputField, Dropdown (and anything that was designed to work with TextMeshProUGUI script) will not work unless you do these steps below.  
-  **Why it doesn't work?** We need to override the `text` property of `TextMeshProUGUI`. But the `text` property is not defined `virtual`. You need to manually make the property virtual.  
+* **Fixed in latest version. For older versions follow the steps below**
+  We need to override the `text` property of `TextMeshProUGUI`. But the `text` property is not defined `virtual`. You need to manually make the property virtual.  
   * Open `TMP_Text.cs` from TextMeshPro source code
   * add virtual keyword to text property.  
   ![Text](Screenshots/TextProperty.PNG)
