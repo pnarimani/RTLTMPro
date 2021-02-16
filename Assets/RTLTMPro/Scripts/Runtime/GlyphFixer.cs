@@ -20,16 +20,16 @@ namespace RTLTMPro
 
         public static Dictionary<char, char> EnglishToHinduNumberMap = new Dictionary<char, char>()
         {
-            [(char)EnglishNumbers.Zero] = (char)FarsiNumbers.Zero,
-            [(char)EnglishNumbers.One] = (char)FarsiNumbers.One,
-            [(char)EnglishNumbers.Two] = (char)FarsiNumbers.Two,
-            [(char)EnglishNumbers.Three] = (char)FarsiNumbers.Three,
-            [(char)EnglishNumbers.Four] = (char)FarsiNumbers.Four,
-            [(char)EnglishNumbers.Five] = (char)FarsiNumbers.Five,
-            [(char)EnglishNumbers.Six] = (char)FarsiNumbers.Six,
-            [(char)EnglishNumbers.Seven] = (char)FarsiNumbers.Seven,
-            [(char)EnglishNumbers.Eight] = (char)FarsiNumbers.Eight,
-            [(char)EnglishNumbers.Nine] = (char)FarsiNumbers.Nine,
+            [(char)EnglishNumbers.Zero] = (char)HinduNumbers.Zero,
+            [(char)EnglishNumbers.One] = (char)HinduNumbers.One,
+            [(char)EnglishNumbers.Two] = (char)HinduNumbers.Two,
+            [(char)EnglishNumbers.Three] = (char)HinduNumbers.Three,
+            [(char)EnglishNumbers.Four] = (char)HinduNumbers.Four,
+            [(char)EnglishNumbers.Five] = (char)HinduNumbers.Five,
+            [(char)EnglishNumbers.Six] = (char)HinduNumbers.Six,
+            [(char)EnglishNumbers.Seven] = (char)HinduNumbers.Seven,
+            [(char)EnglishNumbers.Eight] = (char)HinduNumbers.Eight,
+            [(char)EnglishNumbers.Nine] = (char)HinduNumbers.Nine,
         };
 
 
