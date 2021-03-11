@@ -58,11 +58,11 @@ namespace RTLTMPro
 
         public void Append(char ch)
         {
+            Length++;
             if (capacity < Length)
                 EnsureCapacity(Length, true);
 
-            array[Length] = ch;
-            Length++;
+            array[Length - 1] = ch;
         }
 
         public void Insert(int pos, FastStringBuilder str, int offset, int count)
@@ -142,7 +142,7 @@ namespace RTLTMPro
         public void Substring(FastStringBuilder output, int start, int length)
         {
             output.Length = 0;
-            for (int i = 0; i < length; i++) 
+            for (int i = 0; i < length; i++)
                 output.Append(array[start + i]);
         }
 
@@ -255,7 +255,7 @@ namespace RTLTMPro
 
         private static void Copy(char[] src, char[] dst)
         {
-            for (int i = 0; i < src.Length; i++) 
+            for (int i = 0; i < src.Length; i++)
                 dst[i] = src[i];
         }
     }

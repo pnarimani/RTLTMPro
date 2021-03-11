@@ -215,5 +215,15 @@ namespace RTLTMPro.Tests
 
             Assert.DoesNotThrow(() => a.Insert(0, b, 0, 1));
         }
+
+        [TestCase("test", '1', "test1")]
+        [TestCase("0123456789ABCDE", 'F', "0123456789ABCDEF")]
+        [TestCase("0123456789ABCDEF", '0', "0123456789ABCDEF0")]
+        public void Append_WhenCapacityThresholdIsHit(string initial, char append, string expected)
+        {
+            var a = new FastStringBuilder(initial);
+            a.Append(append);
+            Assert.AreEqual(expected, a.ToString());
+        }
     }
 }
