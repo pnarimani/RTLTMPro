@@ -1,23 +1,30 @@
-using System.Collections.Generic;
-
 namespace RTLTMPro
 {
     public static class RichTextFixer
     {
-        private readonly struct Tag
+        public enum TagType
         {
-            public readonly int Start;
-            public readonly int End;
-
-            public Tag(int start, int end)
-            {
-                Start = start;
-                End = end;
-            }
+            None,
+            Opening,
+            Closing,
+            SelfContained,
         }
 
-        private static readonly List<Tag> ClosedTags = new List<Tag>(64);
-        private static readonly List<int> ClosedTagsHash = new List<int>(64);
+        public struct Tag
+        {
+            public int Start;
+            public int End;
+            public int HashCode;
+            public TagType Type;
+
+            public Tag(int start, int end, TagType type, int hashCode)
+            {
+                Type = type;
+                Start = start;
+                End = end;
+                HashCode = hashCode;
+            }
+        }
 
         /// <summary>
         ///     Fixes rich text tags in input string and returns the result.
@@ -26,74 +33,24 @@ namespace RTLTMPro
         {
             for (int i = 0; i < text.Length; i++)
             {
-                FindTag(text, i, out int tagStart, out int tagEnd, out int tagType, out int hashCode);
+                FindTag(text, i, out Tag tag);
 
                 // If we couldn't find a tag, end the process
-                if (tagType == 0)
+                if (tag.Type == TagType.None)
                 {
                     break;
                 }
 
-                switch (tagType)
-                {
-                    case 1: // Opening tag
-                        {
-                            Tag closingTag = default;
+                text.Reverse(tag.Start, tag.End - tag.Start + 1);
 
-                            // Search and find the closing tag for this
-                            bool foundClosingTag = false;
-                            for (int j = ClosedTagsHash.Count - 1; j >= 0; j--)
-                            {
-                                if (ClosedTagsHash[j] == hashCode)
-                                {
-                                    closingTag = ClosedTags[j];
-                                    foundClosingTag = true;
-                                    ClosedTags.RemoveAt(j);
-                                    ClosedTagsHash.RemoveAt(j);
-                                    break;
-                                }
-                            }
-
-                            if (foundClosingTag)
-                            {
-                                // NOTE: order of execution is important here
-
-                                int openingTagLength = tagEnd - tagStart + 1;
-                                int closingTagLength = closingTag.End - closingTag.Start + 1;
-
-                                text.Reverse(tagStart, openingTagLength);
-                                text.Reverse(closingTag.Start, closingTagLength);
-                            } else
-                            {
-                                text.Reverse(tagStart, tagEnd - tagStart + 1);
-                            }
-
-                            break;
-                        }
-                    case 2: // Closing tag
-                        {
-                            ClosedTags.Add(new Tag(tagStart, tagEnd));
-                            ClosedTagsHash.Add(hashCode);
-                            break;
-                        }
-                    case 3: // Self contained tag
-                        {
-                            text.Reverse(tagStart, tagEnd - tagStart + 1);
-                            break;
-                        }
-                }
-
-                i = tagEnd;
+                i = tag.End;
             }
         }
 
         public static void FindTag(
             FastStringBuilder str,
             int start,
-            out int tagStart,
-            out int tagEnd,
-            out int tagType,
-            out int hashCode)
+            out Tag tag)
         {
             for (int i = start; i < str.Length;)
             {
@@ -104,7 +61,7 @@ namespace RTLTMPro
                 }
 
                 bool calculateHashCode = true;
-                hashCode = 0;
+                tag.HashCode = 0;
                 for (int j = i + 1; j < str.Length; j++)
                 {
                     char jChar = str.Get(j);
@@ -115,23 +72,25 @@ namespace RTLTMPro
                         {
                             unchecked
                             {
-                                if (hashCode == 0)
+                                if (tag.HashCode == 0)
                                 {
-                                    hashCode = jChar.GetHashCode();
-                                } else
+                                    tag.HashCode = jChar.GetHashCode();
+                                }
+                                else
                                 {
-                                    hashCode = (hashCode * 397) ^ jChar.GetHashCode();
+                                    tag.HashCode = (tag.HashCode * 397) ^ jChar.GetHashCode();
                                 }
                             }
-                        } else if (hashCode != 0)
+                        }
+                        else if (tag.HashCode != 0)
                         {
                             // We have computed the hash code. Now we reached a non letter character. We need to stop
                             calculateHashCode = false;
                         }
                     }
 
-                    // Rich text tag cannot contain RTL chars
-                    if (TextUtils.IsRTLCharacter(jChar) || jChar == ' ')
+                    // Rich text tag cannot contain < or start with space
+                    if ((j == i + 1 && jChar == ' ') || jChar == '<')
                     {
                         break;
                     }
@@ -140,24 +99,24 @@ namespace RTLTMPro
                     {
                         // Check if the tag is closing, opening or self contained
 
-                        tagStart = i;
-                        tagEnd = j;
+                        tag.Start = i;
+                        tag.End = j;
 
                         if (str.Get(j - 1) == '/')
                         {
                             // This is self contained.
-                            tagType = 3;
-                            return;
+                            tag.Type = TagType.SelfContained;
                         }
-
-                        if (str.Get(i + 1) == '/')
+                        else if (str.Get(i + 1) == '/')
                         {
                             // This is closing
-                            tagType = 2;
-                            return;
+                            tag.Type = TagType.Closing;
+                        }
+                        else
+                        {
+                            tag.Type = TagType.Opening;
                         }
 
-                        tagType = 1;
                         return;
                     }
                 }
@@ -165,10 +124,10 @@ namespace RTLTMPro
                 i++;
             }
 
-            tagStart = 0;
-            tagEnd = 0;
-            tagType = 0;
-            hashCode = 0;
+            tag.Start = 0;
+            tag.End = 0;
+            tag.Type = TagType.None;
+            tag.HashCode = 0;
         }
     }
 }

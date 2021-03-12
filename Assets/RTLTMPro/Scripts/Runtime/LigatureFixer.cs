@@ -61,22 +61,17 @@ namespace RTLTMPro
                         for (int j = i - 1; j >= 0; j--)
                         {
                             var jChar = input.Get(j);
-                            // Tags do not have space inside
-                            if (jChar == ' ')
-                            {
-                                break;
-                            }
-
-                            // Tags do not have RTL characters inside
-                            if (TextUtils.IsRTLCharacter(jChar))
-                            {
-                                break;
-                            }
-
+                            
                             TagTextHolder.Add(jChar);
 
                             if (jChar == '<')
                             {
+                                var jPlus1Char = input.Get(j + 1);
+                                // Tags do not start with space
+                                if (jPlus1Char == ' ')
+                                {
+                                    break;
+                                }
                                 isValidTag = true;
                                 nextI = j;
                                 break;

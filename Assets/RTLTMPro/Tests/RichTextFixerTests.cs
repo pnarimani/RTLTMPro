@@ -12,27 +12,27 @@ namespace RTLTMPro.Tests
             var text = new FastStringBuilder("text <opening> text");
             
             // Act
-            RichTextFixer.FindTag(text, 0, out var start, out var end, out int type, out _);
+            RichTextFixer.FindTag(text, 0, out var tag);
             
             // Assert
-            Assert.AreEqual(1, type);
-            Assert.AreEqual(5, start);
-            Assert.AreEqual(13, end);
+            Assert.AreEqual(RichTextFixer.TagType.Opening, tag.Type);
+            Assert.AreEqual(5, tag.Start);
+            Assert.AreEqual(13, tag.End);
         }
         
         [Test]
-        public void FindTag_DoesntFindsTagWithSpaceInside()
+        public void FindTag_FindsOpeningTagWithSpaceInside()
         {
             // Arrange
             var text = new FastStringBuilder("text <ope ning> text");
             
             // Act
-            RichTextFixer.FindTag(text, 0, out var start, out var end, out int type, out _);
+            RichTextFixer.FindTag(text, 0, out var tag);
             
             // Assert
-            Assert.AreEqual(0, type);
-            Assert.AreEqual(0, start);
-            Assert.AreEqual(0, end);
+            Assert.AreEqual(RichTextFixer.TagType.Opening, tag.Type);
+            Assert.AreEqual(5, tag.Start);
+            Assert.AreEqual(14, tag.End);
         }
         
         [Test]
@@ -42,12 +42,12 @@ namespace RTLTMPro.Tests
             var text = new FastStringBuilder("text <opening=12m> text");
             
             // Act
-            RichTextFixer.FindTag(text, 0, out var start, out var end, out var type, out _);
+            RichTextFixer.FindTag(text, 0, out var tag);
             
             // Assert
-            Assert.AreEqual(1, type);
-            Assert.AreEqual(5, start);
-            Assert.AreEqual(17, end);
+            Assert.AreEqual(RichTextFixer.TagType.Opening, tag.Type);
+            Assert.AreEqual(5, tag.Start);
+            Assert.AreEqual(17, tag.End);
         }
         
         [Test]
@@ -58,11 +58,11 @@ namespace RTLTMPro.Tests
             var text2 = new FastStringBuilder("text <opening=18s> text");
             
             // Act
-            RichTextFixer.FindTag(text1, 0, out _, out _, out _, out var hashCode1);
-            RichTextFixer.FindTag(text2, 0, out _, out _, out _, out var hashCode2);
+            RichTextFixer.FindTag(text1, 0, out var tag1);
+            RichTextFixer.FindTag(text2, 0, out var tag2);
             
             // Assert
-            Assert.AreEqual(hashCode1, hashCode2);
+            Assert.AreEqual(tag1.HashCode, tag2.HashCode);
         }
 
         [Test]
@@ -72,12 +72,12 @@ namespace RTLTMPro.Tests
             var text = new FastStringBuilder("text <opening/> text");
             
             // Act
-            RichTextFixer.FindTag(text, 0, out var start, out var end, out int type, out _);
+            RichTextFixer.FindTag(text, 0, out var tag);
             
             // Assert
-            Assert.AreEqual(3, type);
-            Assert.AreEqual(5, start);
-            Assert.AreEqual(14, end);
+            Assert.AreEqual(RichTextFixer.TagType.SelfContained, tag.Type);
+            Assert.AreEqual(5, tag.Start);
+            Assert.AreEqual(14, tag.End);
         }
         
         [Test]
@@ -87,12 +87,12 @@ namespace RTLTMPro.Tests
             var text = new FastStringBuilder("text <opening=15m/> text");
             
             // Act
-            RichTextFixer.FindTag(text, 0, out var start, out var end, out int type, out _);
+            RichTextFixer.FindTag(text, 0, out var tag);
             
             // Assert
-            Assert.AreEqual(3, type);
-            Assert.AreEqual(5, start);
-            Assert.AreEqual(18, end);
+            Assert.AreEqual(RichTextFixer.TagType.SelfContained, tag.Type);
+            Assert.AreEqual(5, tag.Start);
+            Assert.AreEqual(18, tag.End);
         }
 
         [Test]
@@ -101,13 +101,13 @@ namespace RTLTMPro.Tests
             // Arrange
             var text1 = new FastStringBuilder("text <opening=15m/> text");
             var text2 = new FastStringBuilder("text <opening=20d/> text");
-            
+
             // Act
-            RichTextFixer.FindTag(text1, 0, out _, out _, out _, out int hash1);
-            RichTextFixer.FindTag(text2, 0, out _, out _, out _, out int hash2);
-            
+            RichTextFixer.FindTag(text1, 0, out var tag1);
+            RichTextFixer.FindTag(text2, 0, out var tag2);
+
             // Assert
-            Assert.AreEqual(hash1 ,hash2);
+            Assert.AreEqual(tag1.HashCode, tag2.HashCode);
         }
         
         [Test]
@@ -117,12 +117,12 @@ namespace RTLTMPro.Tests
             var text = new FastStringBuilder("text </closing> text");
             
             // Act
-            RichTextFixer.FindTag(text, 0, out var start, out var end, out int type, out _);
+            RichTextFixer.FindTag(text, 0, out var tag);
             
             // Assert
-            Assert.AreEqual(2, type);
-            Assert.AreEqual(5, start);
-            Assert.AreEqual(14, end);
+            Assert.AreEqual(RichTextFixer.TagType.Closing, tag.Type);
+            Assert.AreEqual(5, tag.Start);
+            Assert.AreEqual(14, tag.End);
         }
 
         [Test]
@@ -131,13 +131,13 @@ namespace RTLTMPro.Tests
             // Arrange
             var text1 = new FastStringBuilder("text <tag=15m/> text");
             var text2 = new FastStringBuilder("text </tag> text");
-            
+
             // Act
-            RichTextFixer.FindTag(text1, 0, out _, out _, out _, out int hash1);
-            RichTextFixer.FindTag(text2, 0, out _, out _, out _, out int hash2);
-            
+            RichTextFixer.FindTag(text1, 0, out var tag1);
+            RichTextFixer.FindTag(text2, 0, out var tag2);
+
             // Assert
-            Assert.AreEqual(hash1 ,hash2);   
+            Assert.AreEqual(tag1.HashCode, tag2.HashCode);   
         }
 
         [Test]
@@ -147,13 +147,13 @@ namespace RTLTMPro.Tests
             var text = new FastStringBuilder("text");
             
             // Act
-            RichTextFixer.FindTag(text, 0, out var start, out var end, out int type, out int hashCode);
+            RichTextFixer.FindTag(text, 0, out var tag);
             
             // Assert
-            Assert.AreEqual(0, start);
-            Assert.AreEqual(0, end);
-            Assert.AreEqual(0, type);
-            Assert.AreEqual(0, hashCode);
+            Assert.AreEqual(0, tag.Start);
+            Assert.AreEqual(0, tag.End);
+            Assert.AreEqual(RichTextFixer.TagType.None, tag.Type);
+            Assert.AreEqual(0, tag.HashCode);
         }
 
         [Test]
@@ -163,13 +163,74 @@ namespace RTLTMPro.Tests
             var text = new FastStringBuilder(" <tag> text");
             
             // Act
-            RichTextFixer.FindTag(text, 6, out var start, out var end, out int type, out int hashCode);
+            RichTextFixer.FindTag(text, 6, out var tag);
             
             // Assert
-            Assert.AreEqual(0, start);
-            Assert.AreEqual(0, end);
-            Assert.AreEqual(0, type);
-            Assert.AreEqual(0, hashCode);
+            Assert.AreEqual(0, tag.Start);
+            Assert.AreEqual(0, tag.End);
+            Assert.AreEqual(RichTextFixer.TagType.None, tag.Type);
+            Assert.AreEqual(0, tag.HashCode);
+        }
+
+        [Test]
+        public void FindTag_OpeningTagWithAttributes()
+        {
+            // Arrange
+            var text = new FastStringBuilder("test <mytag=4 name=\"asdf\" id=5> text");
+
+            // Act
+            RichTextFixer.FindTag(text, 0, out var tag);
+
+            // Assert
+            Assert.AreEqual(5, tag.Start);
+            Assert.AreEqual(30, tag.End);
+            Assert.AreEqual(RichTextFixer.TagType.Opening, tag.Type);
+        }
+
+        [Test]
+        public void FindTag_IgnoreTagWithoutClosingChar()
+        {
+            // Arrange
+            var text = new FastStringBuilder("test <my invalid tag<b> text");
+
+            // Act
+            RichTextFixer.FindTag(text, 0, out var tag);
+
+            // Assert
+            Assert.AreEqual(20, tag.Start);
+            Assert.AreEqual(22, tag.End);
+            Assert.AreEqual(RichTextFixer.TagType.Opening, tag.Type);
+        }
+
+        [Test]
+        public void FindTag_IgnoreTagStartingWithSpace()
+        {
+            // Arrange
+            var text = new FastStringBuilder("test < my invalid tag> text");
+
+            // Act
+            RichTextFixer.FindTag(text, 0, out var tag);
+
+            // Assert
+            Assert.AreEqual(0, tag.Start);
+            Assert.AreEqual(0, tag.End);
+            Assert.AreEqual(RichTextFixer.TagType.None, tag.Type);
+        }
+
+        // prevent regression for issue #56
+        [Test]
+        public void FindTag_SpriteWithIdTag()
+        {
+            // Arrange
+            var text = new FastStringBuilder("test <sprite=6> text");
+
+            // Act
+            RichTextFixer.FindTag(text, 0, out var tag);
+
+            // Assert
+            Assert.AreEqual(5, tag.Start);
+            Assert.AreEqual(14, tag.End);
+            Assert.AreEqual(RichTextFixer.TagType.Opening, tag.Type);
         }
 
         [Test]
