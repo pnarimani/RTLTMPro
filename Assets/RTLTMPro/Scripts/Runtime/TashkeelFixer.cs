@@ -8,22 +8,22 @@ namespace RTLTMPro
         private static readonly List<TashkeelLocation> TashkeelLocations = new List<TashkeelLocation>(100);
 
         private static readonly string ShaddaDammatan = new string(
-            new[] {(char)TashkeelCharacters.Shadda, (char)TashkeelCharacters.Dammatan});
+            new[] { (char)TashkeelCharacters.Shadda, (char)TashkeelCharacters.Dammatan });
 
         private static readonly string ShaddaKasratan = new string(
-            new[] {(char)TashkeelCharacters.Shadda, (char)TashkeelCharacters.Kasratan});
+            new[] { (char)TashkeelCharacters.Shadda, (char)TashkeelCharacters.Kasratan });
 
         private static readonly string ShaddaSuperscriptAlef = new string(
-            new[] {(char)TashkeelCharacters.Shadda, (char)TashkeelCharacters.SuperscriptAlef});
+            new[] { (char)TashkeelCharacters.Shadda, (char)TashkeelCharacters.SuperscriptAlef });
 
         private static readonly string ShaddaFatha = new string(
-            new[] {(char)TashkeelCharacters.Shadda, (char)TashkeelCharacters.Fatha});
+            new[] { (char)TashkeelCharacters.Shadda, (char)TashkeelCharacters.Fatha });
 
         private static readonly string ShaddaDamma = new string(
-            new[] {(char)TashkeelCharacters.Shadda, (char)TashkeelCharacters.Damma});
+            new[] { (char)TashkeelCharacters.Shadda, (char)TashkeelCharacters.Damma });
 
         private static readonly string ShaddaKasra = new string(
-            new[] {(char)TashkeelCharacters.Shadda, (char)TashkeelCharacters.Kasra});
+            new[] { (char)TashkeelCharacters.Shadda, (char)TashkeelCharacters.Kasra });
 
         private static readonly string ShaddaWithFathaIsolatedForm =
             ((char)TashkeelCharacters.ShaddaWithFathaIsolatedForm).ToString();
@@ -43,64 +43,56 @@ namespace RTLTMPro
         private static readonly string ShaddaWithSuperscriptAlefIsolatedForm =
             ((char)TashkeelCharacters.ShaddaWithSuperscriptAlefIsolatedForm).ToString();
 
+        private static readonly HashSet<char> TashkeelCharactersSet = new HashSet<char>() {
+            (char)TashkeelCharacters.Fathan,
+            (char)TashkeelCharacters.Dammatan,
+            (char)TashkeelCharacters.Kasratan,
+            (char)TashkeelCharacters.Fatha,
+            (char)TashkeelCharacters.Damma,
+            (char)TashkeelCharacters.Kasra,
+            (char)TashkeelCharacters.Shadda,
+            (char)TashkeelCharacters.Sukun,
+            (char)TashkeelCharacters.MaddahAbove,
+            (char)TashkeelCharacters.SuperscriptAlef,
+            (char)TashkeelCharacters.ShaddaWithDammatanIsolatedForm,
+            (char)TashkeelCharacters.ShaddaWithKasratanIsolatedForm,
+            (char)TashkeelCharacters.ShaddaWithFathaIsolatedForm,
+            (char)TashkeelCharacters.ShaddaWithDammaIsolatedForm,
+            (char)TashkeelCharacters.ShaddaWithKasraIsolatedForm,
+            (char)TashkeelCharacters.ShaddaWithSuperscriptAlefIsolatedForm
+        };
+
+        private static readonly Dictionary<char, char> ShaddaCombinationMap = new Dictionary<char, char>()
+        {
+            [(char)TashkeelCharacters.Dammatan] = (char)TashkeelCharacters.ShaddaWithDammatanIsolatedForm,
+            [(char)TashkeelCharacters.Kasratan] = (char)TashkeelCharacters.ShaddaWithKasratanIsolatedForm,
+            [(char)TashkeelCharacters.Fatha] = (char)TashkeelCharacters.ShaddaWithFathaIsolatedForm,
+            [(char)TashkeelCharacters.Damma] = (char)TashkeelCharacters.ShaddaWithDammaIsolatedForm,
+            [(char)TashkeelCharacters.Kasra] = (char)TashkeelCharacters.ShaddaWithKasraIsolatedForm,
+            [(char)TashkeelCharacters.SuperscriptAlef] = (char)TashkeelCharacters.ShaddaWithSuperscriptAlefIsolatedForm,
+        };
+
         /// <summary>
         ///     Removes tashkeel from text.
         /// </summary>
         public static void RemoveTashkeel(FastStringBuilder input)
         {
+            TashkeelLocations.Clear();
+            int j = 0; // write index
             for (int i = 0; i < input.Length; i++)
             {
-                switch ((TashkeelCharacters)input.Get(i))
+                var curChar = input.Get(i);
+                if (TashkeelCharactersSet.Contains(curChar))
                 {
-                    case TashkeelCharacters.Fathan:
-                        TashkeelLocations.Add(new TashkeelLocation(TashkeelCharacters.Fathan, i));
-                        break;
-                    case TashkeelCharacters.Dammatan:
-                        TashkeelLocations.Add(new TashkeelLocation(TashkeelCharacters.Dammatan, i));
-                        break;
-                    case TashkeelCharacters.Kasratan:
-                        TashkeelLocations.Add(new TashkeelLocation(TashkeelCharacters.Kasratan, i));
-                        break;
-                    case TashkeelCharacters.Fatha:
-                        TashkeelLocations.Add(new TashkeelLocation(TashkeelCharacters.Fatha, i));
-                        break;
-                    case TashkeelCharacters.Damma:
-                        TashkeelLocations.Add(new TashkeelLocation(TashkeelCharacters.Damma, i));
-                        break;
-                    case TashkeelCharacters.Kasra:
-                        TashkeelLocations.Add(new TashkeelLocation(TashkeelCharacters.Kasra, i));
-                        break;
-                    case TashkeelCharacters.Shadda:
-                        TashkeelLocations.Add(new TashkeelLocation(TashkeelCharacters.Shadda, i));
-                        break;
-                    case TashkeelCharacters.Sukun:
-                        TashkeelLocations.Add(new TashkeelLocation(TashkeelCharacters.Sukun, i));
-                        break;
-                    case TashkeelCharacters.MaddahAbove:
-                        TashkeelLocations.Add(
-                            new TashkeelLocation(TashkeelCharacters.MaddahAbove, i));
-                        break;
-                    case TashkeelCharacters.SuperscriptAlef:
-                        TashkeelLocations.Add(
-                            new TashkeelLocation(TashkeelCharacters.SuperscriptAlef, i));
-                        break;
+                    TashkeelLocations.Add(new TashkeelLocation((TashkeelCharacters)curChar, i));
+                }
+                else
+                {
+                    input.Set(j, curChar);
+                    j++;
                 }
             }
-
-
-            input.RemoveAll((char)TashkeelCharacters.Fathan);
-            input.RemoveAll((char)TashkeelCharacters.Dammatan);
-            input.RemoveAll((char)TashkeelCharacters.Kasratan);
-            input.RemoveAll((char)TashkeelCharacters.Fatha);
-            input.RemoveAll((char)TashkeelCharacters.Damma);
-            input.RemoveAll((char)TashkeelCharacters.Kasra);
-            input.RemoveAll((char)TashkeelCharacters.Shadda);
-            input.RemoveAll((char)TashkeelCharacters.Sukun);
-            input.RemoveAll((char)TashkeelCharacters.MaddahAbove);
-            input.RemoveAll((char)TashkeelCharacters.ShaddaWithFathaIsolatedForm);
-            input.RemoveAll((char)TashkeelCharacters.ShaddaWithDammaIsolatedForm);
-            input.RemoveAll((char)TashkeelCharacters.ShaddaWithKasraIsolatedForm);
-            input.RemoveAll((char)TashkeelCharacters.SuperscriptAlef);
+            input.Length = j;
         }
 
         /// <summary>
@@ -108,30 +100,41 @@ namespace RTLTMPro
         /// </summary>
         public static void RestoreTashkeel(FastStringBuilder letters)
         {
-            int letterWithTashkeelTracker = 0;
             foreach (TashkeelLocation location in TashkeelLocations)
             {
-                letters.Insert(location.Position + letterWithTashkeelTracker, location.Tashkeel);
-                //letterWithTashkeelTracker++;
+                letters.Insert(location.Position, location.Tashkeel);
             }
+        }
 
+        /// <summary>
+        /// Replace Shadda + Another Tashkeel with combined form 
+        /// </summary>
+        public static void FixShaddaCombinations(FastStringBuilder input)
+        {
             /*
              * Fix of https://github.com/mnarimani/RTLTMPro/issues/13
-             * The workaround is to replace Shadda + Another Tashkeel with combined form 
              */
-            letters.Replace(ShaddaFatha, ShaddaWithFathaIsolatedForm);
-
-            letters.Replace(ShaddaDamma, ShaddaWithDammaIsolatedForm);
-
-            letters.Replace(ShaddaKasra, ShaddaWithKasraIsolatedForm);
-
-            letters.Replace(ShaddaDammatan, ShaddaWithDammatanIsolatedForm);
-
-            letters.Replace(ShaddaKasratan, ShaddaWithKasratanIsolatedForm);
-
-            letters.Replace(ShaddaSuperscriptAlef, ShaddaWithSuperscriptAlefIsolatedForm);
-
-            TashkeelLocations.Clear();
+            int j = 0; // write index
+            int i = 0; // read index
+            while (i < input.Length)
+            {
+                char curChar = input.Get(i);
+                char nextChar = i < input.Length - 1 ? input.Get(i + 1) : (char)0;
+                if ((TashkeelCharacters)curChar == TashkeelCharacters.Shadda
+                    && ShaddaCombinationMap.ContainsKey(nextChar))
+                {
+                    input.Set(j, ShaddaCombinationMap[nextChar]);
+                    j++;
+                    i += 2;
+                }
+                else
+                {
+                    input.Set(j, curChar);
+                    j++;
+                    i++;
+                }
+            }
+            input.Length = j;
         }
     }
 }

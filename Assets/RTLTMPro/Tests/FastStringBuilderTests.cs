@@ -225,5 +225,16 @@ namespace RTLTMPro.Tests
             a.Append(append);
             Assert.AreEqual(expected, a.ToString());
         }
+
+        [TestCase("test", 5, "test")]
+        [TestCase("test", 4, "test")]
+        [TestCase("test", 2, "te")]
+        [TestCase("test", 0, "")]
+        public void Length_Set(string initial, int len, string expected)
+        {
+            var a = new FastStringBuilder(initial);
+            a.Length = len;
+            Assert.AreEqual(expected, a.ToString());
+        }
     }
 }

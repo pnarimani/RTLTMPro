@@ -1,13 +1,20 @@
 using System;
 using System.Runtime.CompilerServices;
-
+using System.Collections.Generic;
 namespace RTLTMPro
 {
     public class FastStringBuilder
     {
         // Using fields to be as efficient as possible
-        public int Length;
-
+        private int length;
+        public int Length
+        {
+            get { return length; }
+            set
+            {
+                if (value <= length) length = value;
+            }
+        }
         private char[] array;
         private int capacity;
 
@@ -43,26 +50,26 @@ namespace RTLTMPro
 
         public void SetValue(string text)
         {
-            Length = text.Length;
-            EnsureCapacity(Length, false);
+            length = text.Length;
+            EnsureCapacity(length, false);
 
             for (int i = 0; i < text.Length; i++) array[i] = text[i];
         }
 
         public void SetValue(FastStringBuilder other)
         {
-            EnsureCapacity(other.Length, false);
+            EnsureCapacity(other.length, false);
             Copy(other.array, array);
-            Length = other.Length;
+            length = other.length;
         }
 
         public void Append(char ch)
         {
-            Length++;
-            if (capacity < Length)
-                EnsureCapacity(Length, true);
+            length++;
+            if (capacity < length)
+                EnsureCapacity(length, true);
 
-            array[Length - 1] = ch;
+            array[length - 1] = ch;
         }
 
         public void Insert(int pos, FastStringBuilder str, int offset, int count)
@@ -70,10 +77,10 @@ namespace RTLTMPro
             if (str == this) throw new InvalidOperationException("You cannot pass the same string builder to insert");
             if (count == 0) return;
 
-            Length += count;
-            EnsureCapacity(Length, true);
+            length += count;
+            EnsureCapacity(length, true);
 
-            for (int i = Length - count - 1; i >= pos; i--)
+            for (int i = length - count - 1; i >= pos; i--)
             {
                 array[i + count] = array[i];
             }
@@ -86,15 +93,15 @@ namespace RTLTMPro
 
         public void Insert(int pos, FastStringBuilder str)
         {
-            Insert(pos, str, 0, str.Length);
+            Insert(pos, str, 0, str.length);
         }
 
         public void Insert(int pos, char ch)
         {
-            Length++;
-            EnsureCapacity(Length, true);
+            length++;
+            EnsureCapacity(length, true);
 
-            for (int i = Length - 2; i >= pos; i--)
+            for (int i = length - 2; i >= pos; i--)
                 array[i + 1] = array[i];
 
             array[pos] = ch;
@@ -102,21 +109,27 @@ namespace RTLTMPro
 
         public void RemoveAll(char character)
         {
-            for (int i = Length - 1; i >= 0; i--)
+            int j = 0; // write index
+            int i = 0; // read index
+            for (; i < length; i++)
             {
-                if (array[i] == character)
-                    Remove(i, 1);
+                if (array[i] == character) continue;
+
+                array[j] = array[i];
+                j++;
             }
+
+            length = j; 
         }
 
         public void Remove(int start, int length)
         {
-            for (int i = start; i < Length - length; i++)
+            for (int i = start; i < this.length - length; i++)
             {
                 array[i] = array[i + length];
             }
 
-            Length -= length;
+            this.length -= length;
         }
 
         public void Reverse(int startIndex, int length)
@@ -136,24 +149,24 @@ namespace RTLTMPro
 
         public void Reverse()
         {
-            Reverse(0, Length);
+            Reverse(0, length);
         }
 
         public void Substring(FastStringBuilder output, int start, int length)
         {
-            output.Length = 0;
+            output.length = 0;
             for (int i = 0; i < length; i++)
                 output.Append(array[start + i]);
         }
 
         public override string ToString()
         {
-            return new string(array, 0, Length);
+            return new string(array, 0, length);
         }
 
         public void Replace(char oldChar, char newChar)
         {
-            for (int i = 0; i < Length; i++)
+            for (int i = 0; i < length; i++)
             {
                 if (array[i] == oldChar)
                     array[i] = newChar;
@@ -162,7 +175,7 @@ namespace RTLTMPro
 
         public void Replace(string oldStr, string newStr)
         {
-            for (int i = 0; i < Length; i++)
+            for (int i = 0; i < length; i++)
             {
                 bool match = true;
                 for (int j = 0; j < oldStr.Length; j++)
@@ -187,11 +200,11 @@ namespace RTLTMPro
                 {
                     // We need to expand capacity
                     int diff = newStr.Length - oldStr.Length;
-                    Length += diff;
-                    EnsureCapacity(Length, true);
+                    length += diff;
+                    EnsureCapacity(length, true);
 
                     // Move everything forward by difference of length
-                    for (int k = Length - diff - 1; k >= i + oldStr.Length; k--)
+                    for (int k = length - diff - 1; k >= i + oldStr.Length; k--)
                     {
                         array[k + diff] = array[k];
                     }
@@ -208,7 +221,7 @@ namespace RTLTMPro
                     int diff = oldStr.Length - newStr.Length;
 
                     // Move everything backwards by diff
-                    for (int k = i + diff; k < Length - diff; k++)
+                    for (int k = i + diff; k < length - diff; k++)
                     {
                         array[k] = array[k + diff];
                     }
@@ -218,7 +231,7 @@ namespace RTLTMPro
                         array[i + k] = newStr[k];
                     }
 
-                    Length -= diff;
+                    length -= diff;
                 }
 
                 i += newStr.Length;
@@ -227,7 +240,7 @@ namespace RTLTMPro
 
         public void Clear()
         {
-            Length = 0;
+            length = 0;
         }
 
         private void EnsureCapacity(int cap, bool keepValues)
