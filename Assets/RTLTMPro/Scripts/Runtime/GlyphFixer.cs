@@ -206,7 +206,7 @@ namespace RTLTMPro
                     for (int j = i + 1; j < text.Length; j++)
                     {
                         char jChar = text.Get(j);
-                        if (jChar == ' ' || TextUtils.IsRTLCharacter(jChar))
+                        if ((j == i + 1 && jChar == ' ') || jChar == '<')
                         {
                             break;
                         } else if (jChar == '>')
