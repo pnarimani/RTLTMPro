@@ -1,0 +1,28 @@
+{
+    "name": "indie.mnarimani.rtltmpro",
+    "version": "0.0.1",
+    "unity": "2020.1",
+    "displayName": "RTL Text Mesh Pro",
+    "description": "This plugin adds Right-to-left language support to 'Text Mesh Pro' Unity plugin. You need to have TextMeshPro plugin in your project. You can install TMPro via Package Manager.",
+    "keywords": [
+        "TMPro",
+        "TMP",
+        "UI",
+        "Tools"
+    ],
+    "author": {
+        "name": "Peyman Narimani",
+        "email": "sorencoder@gmail.com",
+        "url": "https://github.com/mnarimani"
+    },
+    "dependencies": {
+        "com.unity.textmeshpro": "2.1.0"
+    },
+	"samples": [
+		{
+		 "displayName": "Sample Assets",
+		 "description": "Some sample scenes.",
+		 "path": "Samples~/Sample1"
+		}
+	]
+}
