@@ -1,3 +1,16 @@
+# MRK
+Forked to fix LTR character starting sentences containing RTL words, letters, etc
+
+### Old Behaviour
+"I'm مرك دا جودز aka MRK Da Gods على جيت هاب (on github)"
+  
+![](Screenshots/Old.png)
+
+### New Behaviour
+Tada!!
+
+![](Screenshots/New.png)
+
 # RTL Text Mesh Pro
 This plugin adds Right-to-left language support to "Text Mesh Pro" Unity plugin. 
 You need to have `TextMeshPro` plugin in your project. You can install TMPro via `Package Manager`.
