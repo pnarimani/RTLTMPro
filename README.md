@@ -5,25 +5,6 @@ You need to have `TextMeshPro` plugin in your project. You can install TMPro via
 # Attention
 Looking for maintainers. Send email to sorencoder@gmail.com
 
-# Installation
-## from .unitypackage file
-Download the latest release from the releases section and import it into your project from "Assets -> Import Package -> Custom Package..." menu in Unity.
-
-## from OpenUPM
-[hk1ll3r](https://github.com/hk1ll3r/) maintains a package manager version of this repo on [OpenUPM](https://openupm.com/packages/com.nosuchstudio.rtltmpro/).
-
-In Project Settings window, add OpenUPM as a scoped registry or if you have already added it, add the new scope to it.
-
-![ProjectSettings](Screenshots/ProjectSettings.PNG)
-
-Then in Package Manager window, change scope to *My Registries*. Select "RTL Text Mesh Pro" package and press *Install*.
-
-![PackageManager](Screenshots/PackageManager.PNG)
-
-The sample scenes and demo resources (fonts, shaders, etc.) are included in the package as a .unitypackage file. You need to import those into your Assets folder to use them. From the project window navigate to the package folder and double click "RTLTMPRo-demo-resources" file to import these assets into your project.
-
-![Project](Screenshots/Project.PNG)
-
 # Features
 ### Realtime RTL Text
 You don't need to convert, copy and paste texts. Start writing and texts will be converted right away.  
@@ -68,11 +49,27 @@ You can insert Zero-Width No-Joiner character with Ctrl+Shift+2 hotkey.
   
 ![ZWNJ Preview](Screenshots/zwnj.PNG)  
 
+# Installation
+* You need to have `TextMeshPro` plugin in your project. You can install TMPro via `Package Manager`. DO NOT Install Text Mesh Pro from Asset Store.
+### from .unitypackage file
+Download the latest unitypackage file from the [releases](https://github.com/sorencoder/RTLTMPro/releases) section and import it into your project from "Assets -> Import Package -> Custom Package..." menu in Unity.
 
+### from OpenUPM
+[hk1ll3r](https://github.com/hk1ll3r/) maintains a package manager version of this repo on [OpenUPM](https://openupm.com/packages/com.nosuchstudio.rtltmpro/).
+
+In Project Settings window, add OpenUPM as a scoped registry or if you have already added it, add the new scope to it.
+
+![ProjectSettings](Screenshots/ProjectSettings.PNG)
+
+Then in Package Manager window, change scope to *My Registries*. Select "RTL Text Mesh Pro" package and press *Install*.
+
+![PackageManager](Screenshots/PackageManager.PNG)
+
+The sample scenes and demo resources (fonts, shaders, etc.) are included in the package as a .unitypackage file. You need to import those into your Assets folder to use them. From the project window navigate to the package folder and double click "RTLTMPRo-demo-resources" file to import these assets into your project.
+
+![Project](Screenshots/Project.PNG)
 
 # How To Use
-* You need to have `TextMeshPro` plugin in your project. You can install TMPro via `Package Manager`. DO NOT Install Text Mesh Pro from Asset Store.
-* Go to [release](https://github.com/sorencoder/RTLTMPro/releases) page and download latest unitypackage file (or copy `RTLTMPro` folder from source to your project.)
 * Open one of the range files in `Assets/RTLTMPro/Ranges/` folder using your favorite text editor.
   * RTL Letters are in `LetterRanges.txt` file
   * English, Arabic and Farsi numbers are in `NumberRanges.txt` file
