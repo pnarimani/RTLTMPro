@@ -5,6 +5,25 @@ You need to have `TextMeshPro` plugin in your project. You can install TMPro via
 # Attention
 Looking for maintainers. Send email to sorencoder@gmail.com
 
+# Installation
+## from .unitypackage file
+Download the latest release from the releases section and import it into your project from "Assets -> Import Package -> Custom Package..." menu in Unity.
+
+## from OpenUPM
+[hk1ll3r](https://github.com/hk1ll3r/) maintains a package manager version of this repo on [OpenUPM](https://openupm.com/packages/com.nosuchstudio.rtltmpro/).
+
+In Project Settings window, add OpenUPM as a scoped registry or if you have already added it, add the new scope to it.
+
+![ProjectSettings](Screenshots/ProjectSettings.PNG)
+
+Then in Package Manager window, change scope to *My Registries*. Select "RTL Text Mesh Pro" package and press *Install*.
+
+![PackageManager](Screenshots/PackageManager.PNG)
+
+The sample scenes and demo resources (fonts, shaders, etc.) are included in the package as a .unitypackage file. You need to import those into your Assets folder to use them. From the project window navigate to the package folder and double click "RTLTMPRo-demo-resources" file to import these assets into your project.
+
+![Project](Screenshots/Project.PNG)
+
 # Features
 ### Realtime RTL Text
 You don't need to convert, copy and paste texts. Start writing and texts will be converted right away.  
