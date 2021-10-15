@@ -1,11 +1,18 @@
 # RTL Text Mesh Pro
-This plugin adds Right-to-left language support to "Text Mesh Pro" Unity plugin. 
+This plugin adds Right-to-left language support to "TextMeshPro" Unity plugin. 
 You need to have `TextMeshPro` plugin in your project. You can install TMPro via `Package Manager`.
+
+Currently Arabic, Farsi and Hebrew are supported. If you find an issue with one of these languages or want support for another RTL language, open an issue.
 
 # Attention
 Looking for maintainers. Send email to sorencoder@gmail.com
 
 # Features
+### Farsi, Arabic and Hebrew
+![Persian Text](Screenshots/Persian-Text.PNG)
+![Arabic Text](Screenshots/Arabic-Text.PNG)
+![Hebrew Text](Screenshots/Hebrew-Text.PNG)
+
 ### Realtime RTL Text
 You don't need to convert, copy and paste texts. Start writing and texts will be converted right away.  
   

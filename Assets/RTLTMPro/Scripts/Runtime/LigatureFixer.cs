@@ -167,6 +167,7 @@ namespace RTLTMPro
                     continue;
                 }
 
+                // handle surrogates
                 if (characterAtThisIndex >= (char)0xD800 &&
                     characterAtThisIndex <= (char)0xDBFF ||
                     characterAtThisIndex >= (char)0xDC00 && characterAtThisIndex <= (char)0xDFFF)
@@ -178,7 +179,7 @@ namespace RTLTMPro
                 FlushBufferToOutput(LtrTextHolder, output);
 
                 if (characterAtThisIndex != 0xFFFF &&
-                    characterAtThisIndex != (int)GeneralLetters.ZeroWidthNoJoiner)
+                    characterAtThisIndex != (int)ArabicGeneralLetters.ZeroWidthNoJoiner)
                 {
                     output.Append(characterAtThisIndex);
                 }

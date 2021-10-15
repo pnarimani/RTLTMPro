@@ -16,11 +16,11 @@ namespace RTLTMPro
         static GlyphTable()
         { 
             //using GetNames instead of GetValues to be able to match enums
-            var isolatedValues = Enum.GetNames(typeof(IsolatedLetters));
+            var isolatedValues = Enum.GetNames(typeof(ArabicIsolatedLetters));
             
             MapList = new Dictionary<char,char>(isolatedValues.Length);
             foreach (var value in isolatedValues)
-                MapList.Add((char)(int) Enum.Parse(typeof(GeneralLetters),value), (char) (int)Enum.Parse(typeof(IsolatedLetters),value));
+                MapList.Add((char)(int) Enum.Parse(typeof(ArabicGeneralLetters),value), (char) (int)Enum.Parse(typeof(ArabicIsolatedLetters),value));
         }
 
         public static char Convert(char toBeConverted)
