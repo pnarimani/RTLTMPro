@@ -3,7 +3,7 @@ namespace RTLTMPro
     /// <summary>
     /// Arabic Contextual forms General - Unicode
     /// </summary>
-    internal enum IsolatedLetters
+    internal enum ArabicIsolatedLetters
     {
         Hamza = 0xFE80,
         Alef = 0xFE8D,

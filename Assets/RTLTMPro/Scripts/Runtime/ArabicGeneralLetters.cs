@@ -3,7 +3,7 @@ namespace RTLTMPro
     /// <summary>
     /// Letters contextual forms - Isolated
     /// </summary>
-    public enum GeneralLetters
+    public enum ArabicGeneralLetters
     {
         Hamza = 0x0621,
         Alef = 0x0627,

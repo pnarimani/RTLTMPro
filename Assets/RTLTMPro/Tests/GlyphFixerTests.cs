@@ -97,7 +97,7 @@ namespace RTLTMPro.Tests
         public void GlyphFixer_FixesYah_WhenFarsiIsRequired()
         {
             var text = new FastStringBuilder(10);
-            text.Append((char) GeneralLetters.Ya);
+            text.Append((char) ArabicGeneralLetters.Ya);
 
             Debug.Log("Before: " + text);
 
@@ -105,7 +105,7 @@ namespace RTLTMPro.Tests
 
             Debug.Log("After: " + text);
 
-            Assert.AreEqual(((char) GeneralLetters.PersianYa).ToString(), text.ToString());
+            Assert.AreEqual(((char) ArabicGeneralLetters.PersianYa).ToString(), text.ToString());
         }
     }
 }
