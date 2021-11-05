@@ -64,8 +64,6 @@ namespace RTLTMPro.Tests
 
             GlyphFixer.Fix(text, output, false, true, false);
 
-            Debug.Log("Output: " + output);
-
             Assert.AreEqual(GetFarsiNumbers().ToString(), output.ToString());
         }
 
@@ -76,8 +74,6 @@ namespace RTLTMPro.Tests
             var output = new FastStringBuilder(10);
 
             GlyphFixer.Fix(text, output, false, false, false);
-
-            Debug.Log("Output: " + output);
 
             Assert.AreEqual(GetHinduNumbers().ToString(), output.ToString());
         }
@@ -99,11 +95,7 @@ namespace RTLTMPro.Tests
             var text = new FastStringBuilder(10);
             text.Append((char) ArabicGeneralLetters.Ya);
 
-            Debug.Log("Before: " + text);
-
             GlyphFixer.FixYah(text, true);
-
-            Debug.Log("After: " + text);
 
             Assert.AreEqual(((char) ArabicGeneralLetters.PersianYa).ToString(), text.ToString());
         }

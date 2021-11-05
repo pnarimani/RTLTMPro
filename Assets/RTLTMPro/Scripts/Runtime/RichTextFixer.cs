@@ -64,11 +64,11 @@ namespace RTLTMPro
                 tag.HashCode = 0;
                 for (int j = i + 1; j < str.Length; j++)
                 {
-                    char jChar = str.Get(j);
+                    int jChar = str.Get(j);
 
                     if (calculateHashCode)
                     {
-                        if (char.IsLetter(jChar))
+                        if (Char32Utils.IsLetter(jChar))
                         {
                             unchecked
                             {

@@ -33,19 +33,15 @@ namespace RTLTMPro
             bool preserveNumbers = false)
         {
             inputBuilder.SetValue(input);
-
             TashkeelFixer.RemoveTashkeel(inputBuilder);
-
             // The shape of the letters in shapeFixedLetters is fixed according to their position in word. But the flow of the text is not fixed.
             GlyphFixer.Fix(inputBuilder, glyphFixerOutput, preserveNumbers, farsi, fixTextTags);
             //Restore tashkeel to their places.
             TashkeelFixer.RestoreTashkeel(glyphFixerOutput);
             
             TashkeelFixer.FixShaddaCombinations(glyphFixerOutput);
-
             // Fix flow of the text and put the result in FinalLetters field
             LigatureFixer.Fix(glyphFixerOutput, output, farsi, fixTextTags, preserveNumbers);
-            
             if (fixTextTags)
             {
                 RichTextFixer.Fix(output);

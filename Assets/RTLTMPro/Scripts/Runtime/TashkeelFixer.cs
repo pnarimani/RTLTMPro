@@ -81,8 +81,8 @@ namespace RTLTMPro
             int j = 0; // write index
             for (int i = 0; i < input.Length; i++)
             {
-                var curChar = input.Get(i);
-                if (TashkeelCharactersSet.Contains(curChar))
+                int curChar = input.Get(i);
+                if (Char32Utils.IsUnicode16Char(curChar) && TashkeelCharactersSet.Contains((char)curChar))
                 {
                     TashkeelLocations.Add(new TashkeelLocation((TashkeelCharacters)curChar, i));
                 }
@@ -118,12 +118,12 @@ namespace RTLTMPro
             int i = 0; // read index
             while (i < input.Length)
             {
-                char curChar = input.Get(i);
-                char nextChar = i < input.Length - 1 ? input.Get(i + 1) : (char)0;
+                int curChar = input.Get(i);
+                int nextChar = i < input.Length - 1 ? input.Get(i + 1) : (char)0;
                 if ((TashkeelCharacters)curChar == TashkeelCharacters.Shadda
-                    && ShaddaCombinationMap.ContainsKey(nextChar))
+                    && ShaddaCombinationMap.ContainsKey((char)nextChar))
                 {
-                    input.Set(j, ShaddaCombinationMap[nextChar]);
+                    input.Set(j, ShaddaCombinationMap[(char)nextChar]);
                     j++;
                     i += 2;
                 }

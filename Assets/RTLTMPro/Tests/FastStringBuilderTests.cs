@@ -120,11 +120,10 @@ namespace RTLTMPro.Tests
         [TestCase("abcdefg", "efg", "klmn", "abcdklmn")]
         public void Replace_CanReplaceStrings(string text, string oldStr, string newStr, string expected)
         {
-            var fastString = new FastStringBuilder(text);
-            
+            var fastString = (FastStringBuilder)text;
             fastString.Replace(oldStr, newStr);
             
-            Assert.AreEqual(expected, fastString.ToString());
+            Assert.AreEqual(expected, (string)fastString);
         }
 
         [TestCase(0, 1, "abcdef")]
