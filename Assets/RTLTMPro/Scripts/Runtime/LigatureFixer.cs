@@ -4,8 +4,8 @@ namespace RTLTMPro
 {
     public static class LigatureFixer
     {
-        private static readonly List<char> LtrTextHolder = new List<char>(512);
-        private static readonly List<char> TagTextHolder = new List<char>(512);
+        private static readonly List<int> LtrTextHolder = new List<int>(512);
+        private static readonly List<int> TagTextHolder = new List<int>(512);
         private static readonly Dictionary<char, char> MirroredCharsMap = new Dictionary<char, char>()
         {
             ['('] = ')',
@@ -14,7 +14,7 @@ namespace RTLTMPro
             ['«'] = '»',
         };
         private static readonly HashSet<char> MirroredCharsSet = new HashSet<char>(MirroredCharsMap.Keys);
-        private static void FlushBufferToOutput(List<char> buffer, FastStringBuilder output)
+        private static void FlushBufferToOutput(List<int> buffer, FastStringBuilder output)
         {
             for (int j = 0; j < buffer.Count; j++)
             {
@@ -39,13 +39,13 @@ namespace RTLTMPro
                 bool isAtBeginning = i == 0;
                 bool isAtEnd = i == input.Length - 1;
 
-                char characterAtThisIndex = input.Get(i);
+                int characterAtThisIndex = input.Get(i);
 
-                char nextCharacter = default;
+                int nextCharacter = default;
                 if (!isAtEnd)
                     nextCharacter = input.Get(i + 1);
 
-                char previousCharacter = default;
+                int previousCharacter = default;
                 if (!isAtBeginning)
                     previousCharacter = input.Get(i - 1);
 
@@ -91,27 +91,26 @@ namespace RTLTMPro
                     }
                 }
 
-                if (char.IsPunctuation(characterAtThisIndex) || char.IsSymbol(characterAtThisIndex))
+                if (Char32Utils.IsPunctuation(characterAtThisIndex) || Char32Utils.IsSymbol(characterAtThisIndex))
                 {
-
-                    if (MirroredCharsSet.Contains(characterAtThisIndex))
+                    if (MirroredCharsSet.Contains((char)characterAtThisIndex))
                     {
                         // IsRTLCharacter returns false for null
-                        bool isAfterRTLCharacter = TextUtils.IsRTLCharacter(previousCharacter);
-                        bool isBeforeRTLCharacter = TextUtils.IsRTLCharacter(nextCharacter);
+                        bool isAfterRTLCharacter = Char32Utils.IsRTLCharacter(previousCharacter);
+                        bool isBeforeRTLCharacter = Char32Utils.IsRTLCharacter(nextCharacter);
 
                         if (isAfterRTLCharacter || isBeforeRTLCharacter)
                         {
-                            characterAtThisIndex = MirroredCharsMap[characterAtThisIndex];
+                            characterAtThisIndex = MirroredCharsMap[(char)characterAtThisIndex];
                         }
                     }
 
                     if (isInMiddle)
                     {
-                        bool isAfterRTLCharacter = TextUtils.IsRTLCharacter(previousCharacter);
-                        bool isBeforeRTLCharacter = TextUtils.IsRTLCharacter(nextCharacter);
-                        bool isBeforeWhiteSpace = char.IsWhiteSpace(nextCharacter);
-                        bool isAfterWhiteSpace = char.IsWhiteSpace(previousCharacter);
+                        bool isAfterRTLCharacter = Char32Utils.IsRTLCharacter(previousCharacter);
+                        bool isBeforeRTLCharacter = Char32Utils.IsRTLCharacter(nextCharacter);
+                        bool isBeforeWhiteSpace = Char32Utils.IsWhiteSpace(nextCharacter);
+                        bool isAfterWhiteSpace = Char32Utils.IsWhiteSpace(previousCharacter);
                         bool isUnderline = characterAtThisIndex == '_';
                         bool isSpecialPunctuation = characterAtThisIndex == '.' ||
                                                     characterAtThisIndex == '،' ||
@@ -142,12 +141,12 @@ namespace RTLTMPro
 
                 if (isInMiddle)
                 {
-                    bool isAfterEnglishChar = TextUtils.IsEnglishLetter(previousCharacter);
-                    bool isBeforeEnglishChar = TextUtils.IsEnglishLetter(nextCharacter);
-                    bool isAfterNumber = TextUtils.IsNumber(previousCharacter, preserveNumbers, farsi);
-                    bool isBeforeNumber = TextUtils.IsNumber(nextCharacter, preserveNumbers, farsi);
-                    bool isAfterSymbol = char.IsSymbol(previousCharacter);
-                    bool isBeforeSymbol = char.IsSymbol(nextCharacter);
+                    bool isAfterEnglishChar = Char32Utils.IsEnglishLetter(previousCharacter);
+                    bool isBeforeEnglishChar = Char32Utils.IsEnglishLetter(nextCharacter);
+                    bool isAfterNumber = Char32Utils.IsNumber(previousCharacter, preserveNumbers, farsi);
+                    bool isBeforeNumber = Char32Utils.IsNumber(nextCharacter, preserveNumbers, farsi);
+                    bool isAfterSymbol = Char32Utils.IsSymbol(previousCharacter);
+                    bool isBeforeSymbol = Char32Utils.IsSymbol(nextCharacter);
 
                     // For cases where english words and farsi/arabic are mixed. This allows for using farsi/arabic, english and numbers in one sentence.
                     // If the space is between numbers,symbols or English words, keep the order
@@ -160,8 +159,8 @@ namespace RTLTMPro
                     }
                 }
 
-                if (TextUtils.IsEnglishLetter(characterAtThisIndex) ||
-                    TextUtils.IsNumber(characterAtThisIndex, preserveNumbers, farsi))
+                if (Char32Utils.IsEnglishLetter(characterAtThisIndex) ||
+                    Char32Utils.IsNumber(characterAtThisIndex, preserveNumbers, farsi))
                 {
                     LtrTextHolder.Add(characterAtThisIndex);
                     continue;

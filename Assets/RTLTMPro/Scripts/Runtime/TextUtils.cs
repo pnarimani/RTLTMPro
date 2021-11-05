@@ -31,19 +31,14 @@ namespace RTLTMPro
         private const char ArabicPresentationFormsBBlockLow  = (char)0xFE70;
         private const char ArabicPresentationFormsBBlockHigh = (char)0xFEFF;
 
-        private static readonly HashSet<char> ArabicLetters;
-        static TextUtils() {
-            ArabicLetters = new HashSet<char>();
-        }
-
         public static bool IsPunctuation(char ch)
         {
             throw new NotImplementedException();
         }
 
-        public static bool IsNumber(char ch, bool preserverNumbers, bool farsi)
+        public static bool IsNumber(char ch, bool preserveNumbers, bool farsi)
         {
-            if (preserverNumbers)
+            if (preserveNumbers)
                 return IsEnglishNumber(ch);
 
             if (farsi)
@@ -415,21 +410,10 @@ namespace RTLTMPro
                     case '<':
                         insideTag = true;
                         continue;
+
                     case '>':
                         insideTag = false;
                         continue;
-
-                    // Arabic Tashkeel
-                    case (char)TashkeelCharacters.Fathan:
-                    case (char)TashkeelCharacters.Dammatan:
-                    case (char)TashkeelCharacters.Kasratan:
-                    case (char)TashkeelCharacters.Fatha:
-                    case (char)TashkeelCharacters.Damma:
-                    case (char)TashkeelCharacters.Kasra:
-                    case (char)TashkeelCharacters.Shadda:
-                    case (char)TashkeelCharacters.Sukun:
-                    case (char)TashkeelCharacters.MaddahAbove:
-                        return true;
                 }
 
                 if (insideTag)
