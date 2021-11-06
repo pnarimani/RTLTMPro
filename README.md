@@ -4,6 +4,8 @@ You need to have `TextMeshPro` plugin in your project. You can install TMPro via
 
 Currently Arabic, Farsi and Hebrew are supported. If you find an issue with one of these languages or want support for another RTL language, open an issue.
 
+[![openupm](https://img.shields.io/npm/v/com.nosuchstudio.rtltmpro?label=openupm&registry_uri=https://package.openupm.com)](https://openupm.com/packages/com.nosuchstudio.rtltmpro/)
+
 # Attention
 Looking for maintainers. Send email to sorencoder@gmail.com
 
