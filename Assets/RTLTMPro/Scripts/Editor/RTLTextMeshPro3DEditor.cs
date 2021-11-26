@@ -16,7 +16,7 @@ namespace RTLTMPro
         private bool foldout;
         private RTLTextMeshPro3D tmpro;
 
-        private new void OnEnable()
+        protected override void OnEnable()
         {
             base.OnEnable();
             foldout = true;
