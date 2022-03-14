@@ -336,9 +336,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: Sample 3D text using RTLTMPro
-  m_isRightToLeft: 1
+  m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3fbde2e562e333d488bc46986fc6f4f1, type: 2}
-  m_sharedMaterial: {fileID: 21623836076631360, guid: 3fbde2e562e333d488bc46986fc6f4f1,
+  m_sharedMaterial: {fileID: -6949820610600499109, guid: 3fbde2e562e333d488bc46986fc6f4f1,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -439,7 +439,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 21623836076631360, guid: 3fbde2e562e333d488bc46986fc6f4f1, type: 2}
+  - {fileID: -6949820610600499109, guid: 3fbde2e562e333d488bc46986fc6f4f1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -703,12 +703,12 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uFEE3\uFE98\uFEE6 \uFEE7\uFEE4\uFEEE\uFEE7\uFEEA \u06F3\uFE91\uFECC\uFEAA\u06CC
-    \uFED3\uFE8E\u0631\uFEB3\uFBFD \uFE91\uFE8E \u0627\uFEB3\uFE98\uFED4\uFE8E\u062F\u0647
-    \u0627\u0632 orPMTLTR"
+  m_text: "\uFEE3\uFE98\uFEE6 \uFEE7\uFEE4\uFEEE\uFEE7\uFEEA \u06F3\uFE91\uFECC\uFEAA\uFBFC
+    \uFED3\uFE8E\uFEAD\uFEB3\uFBFD \uFE91\uFE8E \uFE8D\uFEB3\uFE98\uFED4\uFE8E\uFEA9\uFEE9
+    \uFE8D\uFEAF orPMTLTR"
   m_isRightToLeft: 1
   m_fontAsset: {fileID: 11400000, guid: 3fbde2e562e333d488bc46986fc6f4f1, type: 2}
-  m_sharedMaterial: {fileID: 21623836076631360, guid: 3fbde2e562e333d488bc46986fc6f4f1,
+  m_sharedMaterial: {fileID: -6949820610600499109, guid: 3fbde2e562e333d488bc46986fc6f4f1,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -811,7 +811,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 21623836076631360, guid: 3fbde2e562e333d488bc46986fc6f4f1, type: 2}
+  - {fileID: -6949820610600499109, guid: 3fbde2e562e333d488bc46986fc6f4f1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -894,7 +894,7 @@ MonoBehaviour:
     orPMTLTR"
   m_isRightToLeft: 1
   m_fontAsset: {fileID: 11400000, guid: 743ff6528cc67d24bbc54d2969f0af93, type: 2}
-  m_sharedMaterial: {fileID: -5326902941860171661, guid: 743ff6528cc67d24bbc54d2969f0af93,
+  m_sharedMaterial: {fileID: -6212919841344071475, guid: 743ff6528cc67d24bbc54d2969f0af93,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -997,7 +997,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -5326902941860171661, guid: 743ff6528cc67d24bbc54d2969f0af93, type: 2}
+  - {fileID: -6212919841344071475, guid: 743ff6528cc67d24bbc54d2969f0af93, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1075,12 +1075,12 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uFEE7\uFEE4\uFEEE\u0630\u062C \uFEDF\uFEE8\uFEBA \uFE9B\uFEFC\uFE9B\uFBFD
-    \u0627\uFEF7\uFE91\uFECC\uFE8E\u062F \uFE91\uFE8E\uFEB3\uFE98\uFEA8\uFEAA\u0627\u0645
+  m_text: "\uFEE7\uFEE4\uFEEE\uFEAB\uFE9D \uFEDF\uFEE8\uFEBA \uFE9B\uFEFC\uFE9B\uFEF2
+    \uFE8D\uFEF7\uFE91\uFECC\uFE8E\uFEA9 \uFE91\uFE8E\uFEB3\uFE98\uFEA8\uFEAA\uFE8D\uFEE1
     orPMTLTR"
   m_isRightToLeft: 1
   m_fontAsset: {fileID: 11400000, guid: 3fbde2e562e333d488bc46986fc6f4f1, type: 2}
-  m_sharedMaterial: {fileID: 21623836076631360, guid: 3fbde2e562e333d488bc46986fc6f4f1,
+  m_sharedMaterial: {fileID: -6949820610600499109, guid: 3fbde2e562e333d488bc46986fc6f4f1,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -1151,7 +1151,7 @@ MonoBehaviour:
   _SortingLayerID: 0
   _SortingOrder: 0
   preserveNumbers: 0
-  farsi: 1
+  farsi: 0
   originalText: "\u0646\u0645\u0648\u0630\u062C \u0644\u0646\u0635 \u062B\u0644\u0627\u062B\u064A
     \u0627\u0644\u0623\u0628\u0639\u0627\u062F \u0628\u0627\u0633\u062A\u062E\u062F\u0627\u0645
     RTLTMPro"
@@ -1183,7 +1183,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 21623836076631360, guid: 3fbde2e562e333d488bc46986fc6f4f1, type: 2}
+  - {fileID: -6949820610600499109, guid: 3fbde2e562e333d488bc46986fc6f4f1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

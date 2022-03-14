@@ -178,7 +178,7 @@ namespace RTLTMPro
                 FlushBufferToOutput(LtrTextHolder, output);
 
                 if (characterAtThisIndex != 0xFFFF &&
-                    characterAtThisIndex != (int)ArabicGeneralLetters.ZeroWidthNoJoiner)
+                    characterAtThisIndex != (int)SpecialCharacters.ZeroWidthNoJoiner)
                 {
                     output.Append(characterAtThisIndex);
                 }

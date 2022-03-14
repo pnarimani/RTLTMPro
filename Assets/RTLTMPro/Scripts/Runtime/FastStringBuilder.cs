@@ -168,6 +168,17 @@ namespace RTLTMPro {
             return sb.ToString();
         }
 
+        public string ToDebugString()
+        {
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < length; i++)
+            {
+                sb.Append("\\");
+                sb.Append(array[i].ToString("X"));
+            }
+            return sb.ToString();
+        }
+
         public void Replace(int oldChar, int newChar) {
             for (int i = 0; i < length; i++) {
                 if (array[i] == oldChar)

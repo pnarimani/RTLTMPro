@@ -97,7 +97,7 @@ namespace RTLTMPro
 
             if (!shortcutPressed) return;
 
-            originalTextProp.stringValue = originalTextProp.stringValue.Insert(editor.cursorIndex, ((char) ArabicGeneralLetters.ZeroWidthNoJoiner).ToString());
+            originalTextProp.stringValue = originalTextProp.stringValue.Insert(editor.cursorIndex, ((char) SpecialCharacters.ZeroWidthNoJoiner).ToString());
             editor.selectIndex++;
             editor.cursorIndex++;
             Event.current.Use();
