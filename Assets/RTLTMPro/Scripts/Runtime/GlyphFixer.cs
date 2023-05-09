@@ -32,7 +32,71 @@ namespace RTLTMPro
             [(char)EnglishNumbers.Nine] = (char)HinduNumbers.Nine,
         };
 
+        public static void Fix_Taged(FastStringBuilder output, FastStringBuilder originalshape, bool farsi)
+        {
 
+            FixLa(output);
+            FixLa(originalshape);
+            int j = 0; // write index
+            for (int i = 0; i < output.Length; i++)
+            {
+                int iChar = output.Get(i);
+
+                if (iChar < 0xFFFF && TextUtils.IsGlyphFixedArabicCharacter((char)iChar))
+                {
+                    int jChar = originalshape.Get(j);
+
+                    if (jChar < 0xFFFF && TextUtils.IsGlyphFixedArabicCharacter((char)jChar))
+                    {
+                        output.ReplaceOne(iChar, jChar, i);
+                        j++;
+                    }
+                }
+            }
+
+        }
+        public static void FixYah(FastStringBuilder str)
+        {
+            int j = 0;
+            for (int i = 0; i < str.Length; i++)
+            {
+                int iChar = str.Get(i);
+                if (iChar < 0xFFFF && TextUtils.IsGlyphFixedArabicCharacter((char)iChar))
+                {
+
+
+                    int iChar_next = str.Get(j);
+
+                    string jStr = iChar.ToString("X");
+                    string jStr_next = iChar_next.ToString("X");
+                    //  && jStr_next == "FBFC"
+                    if (i == 0 && jStr == "FBFC")
+                    {
+                        str.ReplaceOne(iChar, 0xFBFD);
+                    }
+
+                    j++;
+                }
+            }
+        }
+        public static void FixLa(FastStringBuilder str)
+        {
+            for (int i = 0; i < str.Length; i++)
+            {
+                int iChar = str.Get(i);
+                if (iChar < 0xFFFF && TextUtils.IsGlyphFixedArabicCharacter((char)iChar))
+                {
+
+                    string jStr = iChar.ToString("X");
+                    if (jStr == "FEFC" || jStr == "FEFB")
+                    {
+                        str.ReplaceOne(iChar, 0xFE8E, i);
+                        str.Insert(i + 1, 0xFEE0);
+                    }
+
+                }
+            }
+        }
         /// <summary>
         ///     Fixes the shape of letters based on their position.
         /// </summary>
@@ -77,10 +141,12 @@ namespace RTLTMPro
                     if (IsMiddleLetter(input, i))
                     {
                         output.Set(i, (char)(converted + 3));
-                    } else if (IsFinishingLetter(input, i))
+                    }
+                    else if (IsFinishingLetter(input, i))
                     {
                         output.Set(i, (char)(converted + 1));
-                    } else if (IsLeadingLetter(input, i))
+                    }
+                    else if (IsLeadingLetter(input, i))
                     {
                         output.Set(i, (char)(converted + 2));
                     }
@@ -99,7 +165,8 @@ namespace RTLTMPro
                 if (fixTextTags)
                 {
                     FixNumbersOutsideOfTags(output, farsi);
-                } else
+                }
+                else
                 {
                     FixNumbers(output, farsi);
                 }
@@ -119,7 +186,8 @@ namespace RTLTMPro
                 if (farsi && text.Get(i) == (int)ArabicGeneralLetters.Ya)
                 {
                     text.Set(i, (char)ArabicGeneralLetters.PersianYa);
-                } else if (farsi == false && text.Get(i) == (int)ArabicGeneralLetters.PersianYa)
+                }
+                else if (farsi == false && text.Get(i) == (int)ArabicGeneralLetters.PersianYa)
                 {
                     text.Set(i, (char)ArabicGeneralLetters.Ya);
                 }
@@ -209,7 +277,8 @@ namespace RTLTMPro
                         if ((j == i + 1 && jChar == ' ') || jChar == '<')
                         {
                             break;
-                        } else if (jChar == '>')
+                        }
+                        else if (jChar == '>')
                         {
                             i = j;
                             sawValidTag = true;

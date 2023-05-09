@@ -25,7 +25,30 @@ namespace RTLTMPro
                 HashCode = hashCode;
             }
         }
+        /// <summary>
+        ///     Fixes rich text tags in input string with the original shape of the RTL text and returns the result.
+        /// </summary>
+        public static void Fix(FastStringBuilder text, FastStringBuilder originalShapes)
+        {
+            for (int i = 0; i < text.Length; i++)
+            {
+                FindTag(text, i, out Tag tag);
 
+                // If we couldn't find a tag, end the process
+                if (tag.Type == TagType.None)
+                {
+                    break;
+                }
+
+                text.Reverse(tag.Start, tag.End - tag.Start + 1);
+                i = tag.End;
+            }
+            for (int i = 0; i < originalShapes.Length; i++)
+            {
+                text.Replace(originalShapes.Get(i), originalShapes.Get(i));
+            }
+
+        }
         /// <summary>
         ///     Fixes rich text tags in input string and returns the result.
         /// </summary>
@@ -46,7 +69,27 @@ namespace RTLTMPro
                 i = tag.End;
             }
         }
+        /// <summary>
+        ///     Fixes rich text untaged in input string and returns the result.
+        /// </summary>
+        public static void GetUntaged(string text, FastStringBuilder output)
+        {
+            FastStringBuilder taged_string = new FastStringBuilder(RTLSupport.DefaultBufferSize);
+            taged_string.SetValue(text);
 
+            for (int i = 0; i < taged_string.Length; i++)
+            {
+                FindTag(taged_string, i, out Tag tag);
+
+                // If we couldn't find a tag, end the process
+                if (tag.Type == TagType.None) break;
+                i = 0;
+
+                taged_string.Remove(tag.Start, tag.End - tag.Start + 1);
+
+            }
+            output.Append(taged_string);
+        }
         public static void FindTag(
             FastStringBuilder str,
             int start,
