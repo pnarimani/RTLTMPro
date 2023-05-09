@@ -55,30 +55,6 @@ namespace RTLTMPro
             }
 
         }
-        public static void FixYah(FastStringBuilder str)
-        {
-            int j = 0;
-            for (int i = 0; i < str.Length; i++)
-            {
-                int iChar = str.Get(i);
-                if (iChar < 0xFFFF && TextUtils.IsGlyphFixedArabicCharacter((char)iChar))
-                {
-
-
-                    int iChar_next = str.Get(j);
-
-                    string jStr = iChar.ToString("X");
-                    string jStr_next = iChar_next.ToString("X");
-                    //  && jStr_next == "FBFC"
-                    if (i == 0 && jStr == "FBFC")
-                    {
-                        str.ReplaceOne(iChar, 0xFBFD);
-                    }
-
-                    j++;
-                }
-            }
-        }
         public static void FixLa(FastStringBuilder str)
         {
             for (int i = 0; i < str.Length; i++)

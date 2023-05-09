@@ -284,56 +284,5 @@ namespace RTLTMPro.Tests
             // Assert
             Assert.AreEqual("text >nepo/< text >431=nepo<", text.ToString());
         }
-        [Test]
-        public void Fix_Reverses_SelfContainedTags()
-        {
-            // Arrange
-            var text = new FastStringBuilder("text <self-contained/> text");
-
-            // Act
-            RichTextFixer.Fix(text, text);
-
-            // Assert
-            Assert.AreEqual("text >/deniatnoc-fles< text", text.ToString());
-        }
-
-        [Test]
-        public void Fix_Reverses_OpenTag_ThatDoesntHaveClosingTag()
-        {
-            // Arrange
-            var text = new FastStringBuilder("text <open> text");
-
-            // Act
-            RichTextFixer.Fix(text, text);
-
-            // Assert
-            Assert.AreEqual("text >nepo< text", text.ToString());
-        }
-
-        [Test]
-        public void Fix_Reverses_SimpleOpenAndClosingTag()
-        {
-            // Arrange
-            var text = new FastStringBuilder("text </open> text <open>");
-
-            // Act
-            RichTextFixer.Fix(text, text);
-
-            // Assert
-            Assert.AreEqual("text >nepo/< text >nepo<", text.ToString());
-        }
-
-        [Test]
-        public void Fix_Reverses_SimpleOpenAndClosingTagWithValue()
-        {
-            // Arrange
-            var text = new FastStringBuilder("text </open> text <open=134>");
-
-            // Act
-            RichTextFixer.Fix(text, text);
-
-            // Assert
-            Assert.AreEqual("text >nepo/< text >431=nepo<", text.ToString());
-        }
     }
 }
