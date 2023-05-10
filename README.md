@@ -6,8 +6,12 @@ Currently Arabic, Farsi and Hebrew are supported. If you find an issue with one 
 
 [![openupm](https://img.shields.io/npm/v/com.nosuchstudio.rtltmpro?label=openupm&registry_uri=https://package.openupm.com)](https://openupm.com/packages/com.nosuchstudio.rtltmpro/)
 
-# Attention
-Looking for maintainers. Send email to sorencoder@gmail.com
+- [Features](#features)
+- [Installation](#installation)
+- [Creating Fonts](#how-to-create-font-assets)
+- [Usage](#usage-description)
+- [Known Issues](#known-issues)
+- [Contribution](#contribution)
 
 # Features
 ### Farsi, Arabic and Hebrew
@@ -59,7 +63,8 @@ You can insert Zero-Width No-Joiner character with Ctrl+Shift+2 hotkey.
 ![ZWNJ Preview](Screenshots/zwnj.PNG)  
 
 # Installation
-* You need to have `TextMeshPro` plugin in your project. You can install TMPro via `Package Manager`. DO NOT Install Text Mesh Pro from Asset Store.
+> :information_source: You need to have `TextMeshPro` plugin in your project. You can install TMPro via `Package Manager`. DO NOT Install Text Mesh Pro from Asset Store.
+ 
 ### from .unitypackage file
 Download the latest unitypackage file from the [releases](https://github.com/sorencoder/RTLTMPro/releases) section and import it into your project from "Assets -> Import Package -> Custom Package..." menu in Unity.
 
@@ -78,23 +83,31 @@ The sample scenes and demo resources (fonts, shaders, etc.) are included in the 
 
 ![Project](Screenshots/Project.PNG)
 
-# How To Use
-* Open one of the range files in `Assets/RTLTMPro/Ranges/` folder using your favorite text editor.
-  * RTL Letters are in `LetterRanges.txt` file
-  * English, Arabic and Farsi numbers are in `NumberRanges.txt` file
-  * Arabic tashil are in `TashkilRanges.txt` file.
-* Make sure you have copied ranges that you want to use
-* Open `Window/TextMeshPro/Font Asset Creator` window.
-* Assign your font in `Font Source` field (Your font must support RTL characters)
-* Set `Character Set` to `Unicode Range`
-* Paste copied ranges inside  `Character Sequence (Hex)`
-* Press `Generate Font Atlas` button and wait for it to generate the atlas file.
-* Press `Save TextMeshPro Font Asset` and save the asset.
+# How To Create Font Assets
+You need to create font assets from font files to use them with TextMeshPro. Here are basic instructions for convenience. You can check out the [official TextMeshPro documentation](https://docs.unity3d.com/Packages/com.unity.textmeshpro@4.0/manual/FontAssetsCreator.html) to learn more.
+  
+Open `Window/TextMeshPro/Font Asset Creator` window.
+
+![FontAssetCreatorWindow](Screenshots/FontAssetCreator.PNG)
+
+1. Assign your font in `Font Source` field (Your font must include your characters)
+2. Set atlas size. For Arabic we recomment 512x512 and for Hebrew 128x128 as a minimum. A larger atlas will have better quality but larger size on disk.
+3. Set `Character Set` to `Unicode Range`.
+4. Copy character ranges from files under `Assets/RTLTMPro/Ranges` folder into `Character Sequence (Hex)`.
+   * Arabic letters are in `ArabicLetters.txt` file
+   * Arabic digits are in `ArabicDigits.txt` file
+   * Arabic tashkeel letter are in `ArabicTashkeel.txt` file.
+   * All arabic characters are in `ArabicAll.txt`. Normally you would use this to create your font asset.
+   * Hebrew letters are in `HebrewLetters.txt`.
+6. Press `Generate Font Atlas` button and wait for it to generate the atlas.
+7. Press `Save TextMeshPro Font Asset` and save the font asset.
+  
+## Usage Description
+
 * Use `GameObject/UI/* - RTLTMP` menu to create RTL UI elements. (Alternatively you can replace `Text Mesh Pro UGUI` components with `RTL Text Mesh Pro`)
 * Assign your font asset `Font Asset` property in `RTL Text Mesh Pro` component 
 * Enter text in `RTL TEXT INPUT BOX` secion.
-  
-## Usage Description
+
 ### Farsi
 When checked, English numbers will be converted to Farsi numbers.
 When unchecked, English numbers will be converted to Arabic numbers.  
@@ -111,7 +124,7 @@ Checking this checkbox forces RTL TextMeshPro to fix the text even when it start
 When checked, RTL Text Mesh Pro will try to fix rich text tags.  
 
 # Known Issues
-* **Fixed in latest version. For older versions follow the steps below**
+* **Fixed in latest version. For older versions follow the steps below**.
   We need to override the `text` property of `TextMeshProUGUI`. But the `text` property is not defined `virtual`. You need to manually make the property virtual.  
   * Open `TMP_Text.cs` from TextMeshPro source code
   * add virtual keyword to text property.  
@@ -120,6 +133,8 @@ When checked, RTL Text Mesh Pro will try to fix rich text tags.
   * Now you can use InputFields and Dropdowns.
   
 # Contribution
-All contributions are welcomed. Just make sure you follow the project's code style.  
+All contributions are welcome. Make sure you follow the project's code style. We actively monitor pull requests.
 
-Contact: sorencoder@gmail.com
+Contact: 
+- sorencoder@gmail.com
+- hossein.shbz@gmail.com
