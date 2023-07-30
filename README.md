@@ -68,6 +68,9 @@ You can insert Zero-Width No-Joiner character with Ctrl+Shift+2 hotkey.
 ### from .unitypackage file
 Download the latest unitypackage file from the [releases](https://github.com/sorencoder/RTLTMPro/releases) section and import it into your project from "Assets -> Import Package -> Custom Package..." menu in Unity.
 
+## from UPM
+https://github.com/AlonTalmi/RTLTMPro.git?path=Assets/RTLTMPro
+
 ### from OpenUPM
 [hk1ll3r](https://github.com/hk1ll3r/) maintains a package manager version of this repo on [OpenUPM](https://openupm.com/packages/com.nosuchstudio.rtltmpro/).
 
