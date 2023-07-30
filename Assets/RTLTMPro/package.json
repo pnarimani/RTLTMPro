@@ -1,0 +1,12 @@
+{
+  "name": "com.pnarimani.rtltmpro",
+  "displayName": "RTLTMPro",
+  "version": "3.4.3",
+  "description": "This plugin adds Right-to-left language support to \"TextMeshPro\" Unity plugin. Currently Arabic, Farsi and Hebrew are supported.",
+  "author": "pnarimani",
+  "unity": "2021.3",
+  "unityRelease": "22f1",
+  "documentationUrl": "https://github.com/pnarimani/RTLTMPro",
+  "changelogUrl": "https://github.com/pnarimani/RTLTMPro",
+  "licensesUrl": "https://github.com/pnarimani/RTLTMPro/blob/master/LICENSE"
+}
