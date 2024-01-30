@@ -1,5 +1,7 @@
-﻿// ReSharper disable IdentifierTypo
+// ReSharper disable IdentifierTypo
 // ReSharper disable CommentTypo
+
+using UnityEngine;
 
 namespace RTLTMPro
 {
@@ -38,16 +40,17 @@ namespace RTLTMPro
             GlyphFixer.Fix(inputBuilder, glyphFixerOutput, preserveNumbers, farsi, fixTextTags);
             //Restore tashkeel to their places.
             TashkeelFixer.RestoreTashkeel(glyphFixerOutput);
-            
+
             TashkeelFixer.FixShaddaCombinations(glyphFixerOutput);
+
             // Fix flow of the text and put the result in FinalLetters field
             LigatureFixer.Fix(glyphFixerOutput, output, farsi, fixTextTags, preserveNumbers);
             if (fixTextTags)
             {
-                RichTextFixer.Fix(output);
+                RichTextFixer.CorrectTagOrder(output);
             }
+
             inputBuilder.Clear();
         }
-
     }
 }
