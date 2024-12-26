@@ -51,22 +51,29 @@ namespace RTLTMPro
 
             base.OnInspectorGUI();
 
-            foldout = EditorGUILayout.Foldout(foldout, "RTL Settings", TMP_UIStyleManager.boldFoldout);
+            DrawRtlSettings();
+
+            if (m_HavePropertiesChanged)
+                OnChanged();
+
+            serializedObject.ApplyModifiedProperties();
+        }
+
+        private void DrawRtlSettings()
+        {
+            Rect rect = EditorGUILayout.GetControlRect(false, 24);
+
+            if (GUI.Button(rect, new GUIContent("<b>RTL Settings</b>"), TMP_UIStyleManager.sectionHeader))
+                foldout = !foldout;
+
+            GUI.Label(rect, (foldout ? k_UiStateLabel[0] : k_UiStateLabel[1]), TMP_UIStyleManager.rightLabel);
             if (foldout)
             {
                 DrawOptions();
 
                 if (GUILayout.Button("Re-Fix"))
                     m_HavePropertiesChanged = true;
-
-                if (EditorGUI.EndChangeCheck())
-                    m_HavePropertiesChanged = true;
             }
-
-            if (m_HavePropertiesChanged)
-                OnChanged();
-
-            serializedObject.ApplyModifiedProperties();
         }
 
         protected void OnChanged()
@@ -80,16 +87,16 @@ namespace RTLTMPro
 
         protected virtual void DrawOptions()
         {
-            EditorGUILayout.BeginHorizontal();
             EditorGUI.BeginChangeCheck();
-            farsiProp.boolValue = GUILayout.Toggle(farsiProp.boolValue, new GUIContent("Farsi"));
-            forceFixProp.boolValue = GUILayout.Toggle(forceFixProp.boolValue, new GUIContent("Force Fix"));
-            preserveNumbersProp.boolValue = GUILayout.Toggle(preserveNumbersProp.boolValue, new GUIContent("Preserve Numbers"));
-
+            
+            EditorGUILayout.PropertyField(farsiProp, new GUIContent("Farsi"));
+            EditorGUILayout.PropertyField(forceFixProp, new GUIContent("Force Fix"));
+            EditorGUILayout.PropertyField(preserveNumbersProp, new GUIContent("Preserve Numbers"));
             if (tmpro.richText)
-                fixTagsProp.boolValue = GUILayout.Toggle(fixTagsProp.boolValue, new GUIContent("FixTags"));
-
-            EditorGUILayout.EndHorizontal();
+                EditorGUILayout.PropertyField(fixTagsProp, new GUIContent("Fix Tags"));
+            
+            if (EditorGUI.EndChangeCheck())
+                m_HavePropertiesChanged = true;
         }
 
         protected virtual void ListenForZeroWidthNoJoiner()
