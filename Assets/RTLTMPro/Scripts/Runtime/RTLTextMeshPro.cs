@@ -94,12 +94,18 @@ namespace RTLTMPro
 
         protected readonly FastStringBuilder finalText = new FastStringBuilder(RTLSupport.DefaultBufferSize);
 
-        protected void Update()
+        protected override void OnEnable()
         {
-            if (havePropertiesChanged)
-            {
-                UpdateText();
-            }
+            base.OnEnable();
+
+            m_OnDirtyLayoutCallback += UpdateText;
+        }
+
+        protected override void OnDisable()
+        {
+            base.OnDisable();
+
+            m_OnDirtyLayoutCallback -= UpdateText;
         }
 
         public void UpdateText()
