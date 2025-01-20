@@ -278,5 +278,18 @@ namespace RTLTMPro {
             for (int i = 0; i < src.Length; i++)
                 dst[i] = src[i];
         }
+
+        public void Join(FastStringBuilder output, params FastStringBuilder[] inputs)
+        {
+            output.Clear();
+            
+            foreach (var input in inputs)
+            {
+                for (int i = 0; i < input.length; i++)
+                {
+                    output.Append(input.Get(i));
+                }
+            }
+        }
     }
 }
