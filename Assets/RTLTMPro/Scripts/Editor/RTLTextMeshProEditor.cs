@@ -2,7 +2,7 @@
 using UnityEditor;
 using UnityEngine;
 
-#if TMP_VERSION_2_1_0_OR_NEWER
+#if TMP_VERSION_2_1_0_OR_NEWER || UNITY_6000_0_OR_NEWER
 using TMP_UiEditorPanel = TMPro.EditorUtilities.TMP_EditorPanelUI;
 #else
 using TMP_UiEditorPanel = TMPro.EditorUtilities.TMP_UiEditorPanel;
