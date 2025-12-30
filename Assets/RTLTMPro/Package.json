@@ -1,20 +1,55 @@
 {
-    "name": "indie.pnarimani.rtltmpro",
-    "version": "0.0.1",
-    "unity": "2020.1",
-    "displayName": "RTL Text Mesh Pro",
-    "description": "This plugin adds Right-to-left language support to 'Text Mesh Pro' Unity plugin. You need to have TextMeshPro plugin in your project. You can install TMPro via Package Manager.",
-    "keywords": [
-        "TMPro",
-        "TMP",
-        "UI",
-        "Tools"
-    ],
-    "author": {
-        "name": "Peyman Narimani",
-        "email": "sorencoder@gmail.com",
-        "url": "https://github.com/mnarimani"
+  "name": "indie.pnarimani.rtltmpro",
+  "version": "3.3.1",
+  "unity": "2020.1",
+  "displayName": "RTL Text Mesh Pro",
+  "description": "This plugin adds Right-to-left language support to 'Text Mesh Pro' Unity plugin. You need to have TextMeshPro plugin in your project. You can install TMPro via Package Manager.",
+  "keywords": [
+    "TMPro",
+    "TMP",
+    "RTL",
+    "Bidirectional",
+    "Text",
+    "Arabic",
+    "Persian",
+    "Hebrew",
+    "Urdu",
+    "Localization",
+    "UI",
+    "Typography"
+  ],
+  "category": "Text",
+  "author": {
+    "name": "Peyman Narimani",
+    "email": "sorencoder@gmail.com",
+    "url": "https://github.com/pnarimani"
+  },
+  "dependencies": {
+  },
+  "samples": [
+    {
+      "displayName": "Scenes",
+      "description": "Advanced usage examples including mixed LTR/RTL text",
+      "path": "Scenes"
     },
-    "dependencies": {
+    {
+      "displayName": "Font Examples",
+      "description": "Examples using bundled RTL fonts",
+      "path": "Fonts"
+    },
+    {
+      "displayName": "Font Ranges",
+      "description": "Examples using bundled RTL fonts ranges",
+      "path": "Ranges"
     }
+  ],
+  "documentationUrl": "https://github.com/pnarimani/RTLTMPro/blob/master/README.md",
+  "changelogUrl": "https://github.com/pnarimani/RTLTMPro/releases",
+  "licensesUrl": "https://github.com/pnarimani/RTLTMPro/blob/master/LICENSE.md",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pnarimani/RTLTMPro.git",
+    "directory": "RTLTMPRO"
+  },
+  "hideInEditor": false
 }
