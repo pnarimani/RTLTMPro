@@ -29,7 +29,7 @@ namespace RTLTMPro
         private static void CreateTextMeshProGuiObjectPerform(MenuCommand command)
         {
             // Check if there is a Canvas in the scene
-            var canvas = FindObjectOfType<Canvas>();
+            var canvas = FindAnyObjectByType<Canvas>();
             if (canvas == null)
             {
                 // Create new Canvas since none exists in the scene.
@@ -92,7 +92,7 @@ namespace RTLTMPro
 
 
             // Check if an event system already exists in the scene
-            if (!FindObjectOfType<EventSystem>())
+            if (!FindAnyObjectByType<EventSystem>())
             {
                 var eventObject = new GameObject("EventSystem", typeof(EventSystem));
                 eventObject.AddComponent<StandaloneInputModule>();
@@ -293,7 +293,7 @@ namespace RTLTMPro
 
         private static void CreateEventSystem(bool select, GameObject parent)
         {
-            var esys = FindObjectOfType<EventSystem>();
+            var esys = FindAnyObjectByType<EventSystem>();
             if (esys == null)
             {
                 var eventSystem = new GameObject("EventSystem");
@@ -318,7 +318,7 @@ namespace RTLTMPro
                 return canvas.gameObject;
 
             // No canvas in selection or its parents? Then use just any canvas..
-            canvas = FindObjectOfType(typeof(Canvas)) as Canvas;
+            canvas = FindAnyObjectByType<Canvas>();
             if (canvas != null && canvas.gameObject.activeInHierarchy)
                 return canvas.gameObject;
             

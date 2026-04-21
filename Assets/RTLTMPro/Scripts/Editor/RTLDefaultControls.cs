@@ -147,7 +147,7 @@ namespace RTLTMPro
 
             RTLTextMeshPro text = childText.AddComponent<RTLTextMeshPro>();
             text.text = "";
-            text.enableWordWrapping = false;
+            text.textWrappingMode = TMPro.TextWrappingModes.Normal;
             text.extraPadding = true;
             text.richText = true;
             text.autoSizeTextContainer = true;
@@ -166,7 +166,7 @@ namespace RTLTMPro
             placeholder.fontSizeMin = 10;
             placeholder.fontSizeMax = 100;
             placeholder.fontStyle = FontStyles.Italic;
-            placeholder.enableWordWrapping = false;
+            placeholder.textWrappingMode = TMPro.TextWrappingModes.Normal;
             placeholder.extraPadding = true;
             placeholder.alignment = TextAlignmentOptions.Right;
 
