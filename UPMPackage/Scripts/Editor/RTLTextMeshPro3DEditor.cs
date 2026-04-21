@@ -16,7 +16,7 @@ namespace RTLTMPro
         private bool foldout;
         private RTLTextMeshPro3D tmpro;
 
-        private new void OnEnable()
+        protected override void OnEnable()
         {
             base.OnEnable();
             foldout = true;
@@ -97,7 +97,7 @@ namespace RTLTMPro
 
             if (!shortcutPressed) return;
 
-            originalTextProp.stringValue = originalTextProp.stringValue.Insert(editor.cursorIndex, ((char) ArabicGeneralLetters.ZeroWidthNoJoiner).ToString());
+            originalTextProp.stringValue = originalTextProp.stringValue.Insert(editor.cursorIndex, ((char) SpecialCharacters.ZeroWidthNoJoiner).ToString());
             editor.selectIndex++;
             editor.cursorIndex++;
             Event.current.Use();

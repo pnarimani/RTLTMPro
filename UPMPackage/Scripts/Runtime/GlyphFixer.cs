@@ -64,8 +64,8 @@ namespace RTLTMPro
                 }
 
                 // We don't want to fix tatweel or zwnj character
-                if (iChar == (int)ArabicGeneralLetters.ArabicTatweel ||
-                    iChar == (int)ArabicGeneralLetters.ZeroWidthNoJoiner)
+                if (iChar == (int)ArabicGeneralLetters.Tatweel ||
+                    iChar == (int)SpecialCharacters.ZeroWidthNoJoiner)
                 {
                     continue;
                 }
@@ -83,6 +83,9 @@ namespace RTLTMPro
                     } else if (IsLeadingLetter(input, i))
                     {
                         output.Set(i, (char)(converted + 2));
+                    } else
+                    {
+                        output.Set(i, (char)converted);
                     }
                 }
 
@@ -116,12 +119,12 @@ namespace RTLTMPro
         {
             for (int i = 0; i < text.Length; i++)
             {
-                if (farsi && text.Get(i) == (int)ArabicGeneralLetters.Ya)
+                if (farsi && text.Get(i) == (int)ArabicGeneralLetters.Yeh)
                 {
-                    text.Set(i, (char)ArabicGeneralLetters.PersianYa);
-                } else if (farsi == false && text.Get(i) == (int)ArabicGeneralLetters.PersianYa)
+                    text.Set(i, (char)ArabicGeneralLetters.FarsiYeh);
+                } else if (farsi == false && text.Get(i) == (int)ArabicGeneralLetters.FarsiYeh)
                 {
-                    text.Set(i, (char)ArabicGeneralLetters.Ya);
+                    text.Set(i, (char)ArabicGeneralLetters.Yeh);
                 }
             }
         }
@@ -138,7 +141,7 @@ namespace RTLTMPro
             bool isFixed;
             switch (input.Get(i + 1))
             {
-                case (char)ArabicGeneralLetters.AlefMaksoor:
+                case (char)ArabicGeneralLetters.AlefHamzaBelow:
                     output.Set(i, (char)0xFEF7);
                     isFixed = true;
                     break;
@@ -146,11 +149,11 @@ namespace RTLTMPro
                     output.Set(i, (char)0xFEF9);
                     isFixed = true;
                     break;
-                case (char)ArabicGeneralLetters.AlefHamza:
+                case (char)ArabicGeneralLetters.AlefHamzaAbove:
                     output.Set(i, (char)0xFEF5);
                     isFixed = true;
                     break;
-                case (char)ArabicGeneralLetters.AlefMad:
+                case (char)ArabicGeneralLetters.AlefMaddaAbove:
                     output.Set(i, (char)0xFEF3);
                     isFixed = true;
                     break;
@@ -245,51 +248,53 @@ namespace RTLTMPro
 
             bool isPreviousLetterNonConnectable = index == 0 ||
                                                   (previousIndexLetter < 0xFFFF && !TextUtils.IsGlyphFixedArabicCharacter((char)previousIndexLetter)) ||
+                                                  previousIndexLetter == (int)ArabicGeneralLetters.Hamza ||
+                                                  previousIndexLetter == (int)ArabicGeneralLetters.AlefMaddaAbove ||
+                                                  previousIndexLetter == (int)ArabicGeneralLetters.AlefHamzaAbove ||
+                                                  previousIndexLetter == (int)ArabicGeneralLetters.AlefHamzaBelow ||
+                                                  previousIndexLetter == (int)ArabicGeneralLetters.WawHamzaAbove ||
                                                   previousIndexLetter == (int)ArabicGeneralLetters.Alef ||
                                                   previousIndexLetter == (int)ArabicGeneralLetters.Dal ||
                                                   previousIndexLetter == (int)ArabicGeneralLetters.Thal ||
-                                                  previousIndexLetter == (int)ArabicGeneralLetters.Ra2 ||
-                                                  previousIndexLetter == (int)ArabicGeneralLetters.Zeen ||
-                                                  previousIndexLetter == (int)ArabicGeneralLetters.PersianZe ||
+                                                  previousIndexLetter == (int)ArabicGeneralLetters.Reh ||
+                                                  previousIndexLetter == (int)ArabicGeneralLetters.Zain ||
+                                                  previousIndexLetter == (int)ArabicGeneralLetters.Jeh ||
                                                   previousIndexLetter == (int)ArabicGeneralLetters.Waw ||
-                                                  previousIndexLetter == (int)ArabicGeneralLetters.AlefMad ||
-                                                  previousIndexLetter == (int)ArabicGeneralLetters.AlefHamza ||
-                                                  previousIndexLetter == (int)ArabicGeneralLetters.Hamza ||
-                                                  previousIndexLetter == (int)ArabicGeneralLetters.AlefMaksoor ||
-                                                  previousIndexLetter == (int)ArabicGeneralLetters.ZeroWidthNoJoiner ||
-                                                  previousIndexLetter == (int)ArabicGeneralLetters.WawHamza ||
+                                                  previousIndexLetter == (int)ArabicIsolatedLetters.AlefMaddaAbove ||
+                                                  previousIndexLetter == (int)ArabicIsolatedLetters.AlefHamzaAbove ||
+                                                  previousIndexLetter == (int)ArabicIsolatedLetters.AlefHamzaBelow ||
+                                                  previousIndexLetter == (int)ArabicIsolatedLetters.WawHamzaAbove ||
                                                   previousIndexLetter == (int)ArabicIsolatedLetters.Alef ||
+                                                  previousIndexLetter == (int)ArabicIsolatedLetters.Hamza ||
                                                   previousIndexLetter == (int)ArabicIsolatedLetters.Dal ||
                                                   previousIndexLetter == (int)ArabicIsolatedLetters.Thal ||
-                                                  previousIndexLetter == (int)ArabicIsolatedLetters.Ra2 ||
-                                                  previousIndexLetter == (int)ArabicIsolatedLetters.Zeen ||
-                                                  previousIndexLetter == (int)ArabicIsolatedLetters.PersianZe ||
+                                                  previousIndexLetter == (int)ArabicIsolatedLetters.Reh ||
+                                                  previousIndexLetter == (int)ArabicIsolatedLetters.Zain ||
+                                                  previousIndexLetter == (int)ArabicIsolatedLetters.Jeh ||
                                                   previousIndexLetter == (int)ArabicIsolatedLetters.Waw ||
-                                                  previousIndexLetter == (int)ArabicIsolatedLetters.AlefMad ||
-                                                  previousIndexLetter == (int)ArabicIsolatedLetters.AlefHamza ||
-                                                  previousIndexLetter == (int)ArabicIsolatedLetters.Hamza ||
-                                                  previousIndexLetter == (int)ArabicIsolatedLetters.AlefMaksoor;
+                                                  previousIndexLetter == (int)SpecialCharacters.ZeroWidthNoJoiner;
 
 
             bool canThisLetterBeLeading = currentIndexLetter != ' ' &&
+                                          currentIndexLetter != (int)ArabicGeneralLetters.Hamza &&
+                                          currentIndexLetter != (int)ArabicGeneralLetters.AlefHamzaAbove &&
+                                          currentIndexLetter != (int)ArabicGeneralLetters.AlefHamzaBelow &&
+                                          currentIndexLetter != (int)ArabicGeneralLetters.AlefMaddaAbove &&
+                                          currentIndexLetter != (int)ArabicGeneralLetters.WawHamzaAbove &&
+                                          currentIndexLetter != (int)ArabicGeneralLetters.Alef &&
                                           currentIndexLetter != (int)ArabicGeneralLetters.Dal &&
                                           currentIndexLetter != (int)ArabicGeneralLetters.Thal &&
-                                          currentIndexLetter != (int)ArabicGeneralLetters.Ra2 &&
-                                          currentIndexLetter != (int)ArabicGeneralLetters.Zeen &&
-                                          currentIndexLetter != (int)ArabicGeneralLetters.PersianZe &&
-                                          currentIndexLetter != (int)ArabicGeneralLetters.Alef &&
-                                          currentIndexLetter != (int)ArabicGeneralLetters.AlefHamza &&
-                                          currentIndexLetter != (int)ArabicGeneralLetters.AlefMaksoor &&
-                                          currentIndexLetter != (int)ArabicGeneralLetters.AlefMad &&
-                                          currentIndexLetter != (int)ArabicGeneralLetters.WawHamza &&
+                                          currentIndexLetter != (int)ArabicGeneralLetters.Reh &&
+                                          currentIndexLetter != (int)ArabicGeneralLetters.Zain &&
+                                          currentIndexLetter != (int)ArabicGeneralLetters.Jeh &&
                                           currentIndexLetter != (int)ArabicGeneralLetters.Waw &&
-                                          currentIndexLetter != (int)ArabicGeneralLetters.ZeroWidthNoJoiner &&
-                                          currentIndexLetter != (int)ArabicGeneralLetters.Hamza;
+                                          currentIndexLetter != (int)SpecialCharacters.ZeroWidthNoJoiner;
+                                          
 
             bool isNextLetterConnectable = index < letters.Length - 1 &&
                                            (nextIndexLetter < 0xFFFF && TextUtils.IsGlyphFixedArabicCharacter((char)nextIndexLetter)) &&
                                            nextIndexLetter != (int)ArabicGeneralLetters.Hamza &&
-                                           nextIndexLetter != (int)ArabicGeneralLetters.ZeroWidthNoJoiner;
+                                           nextIndexLetter != (int)SpecialCharacters.ZeroWidthNoJoiner;
 
             return isPreviousLetterNonConnectable &&
                    canThisLetterBeLeading &&
@@ -310,36 +315,36 @@ namespace RTLTMPro
 
             bool isPreviousLetterConnectable = index != 0 &&
                                                previousIndexLetter != ' ' &&
+                                               previousIndexLetter != (int)ArabicGeneralLetters.Hamza &&
+                                               previousIndexLetter != (int)ArabicGeneralLetters.AlefMaddaAbove &&
+                                               previousIndexLetter != (int)ArabicGeneralLetters.AlefHamzaAbove &&
+                                               previousIndexLetter != (int)ArabicGeneralLetters.AlefHamzaBelow &&
+                                               previousIndexLetter != (int)ArabicGeneralLetters.WawHamzaAbove &&
+                                               previousIndexLetter != (int)ArabicGeneralLetters.Alef &&
                                                previousIndexLetter != (int)ArabicGeneralLetters.Dal &&
                                                previousIndexLetter != (int)ArabicGeneralLetters.Thal &&
-                                               previousIndexLetter != (int)ArabicGeneralLetters.Ra2 &&
-                                               previousIndexLetter != (int)ArabicGeneralLetters.Zeen &&
-                                               previousIndexLetter != (int)ArabicGeneralLetters.PersianZe &&
+                                               previousIndexLetter != (int)ArabicGeneralLetters.Reh &&
+                                               previousIndexLetter != (int)ArabicGeneralLetters.Zain &&
+                                               previousIndexLetter != (int)ArabicGeneralLetters.Jeh &&
                                                previousIndexLetter != (int)ArabicGeneralLetters.Waw &&
-                                               previousIndexLetter != (int)ArabicGeneralLetters.Alef &&
-                                               previousIndexLetter != (int)ArabicGeneralLetters.AlefMad &&
-                                               previousIndexLetter != (int)ArabicGeneralLetters.AlefHamza &&
-                                               previousIndexLetter != (int)ArabicGeneralLetters.AlefMaksoor &&
-                                               previousIndexLetter != (int)ArabicGeneralLetters.WawHamza &&
-                                               previousIndexLetter != (int)ArabicGeneralLetters.Hamza &&
-                                               previousIndexLetter != (int)ArabicGeneralLetters.ZeroWidthNoJoiner &&
+                                               previousIndexLetter != (int)ArabicIsolatedLetters.Hamza &&
+                                               previousIndexLetter != (int)ArabicIsolatedLetters.AlefMaddaAbove &&
+                                               previousIndexLetter != (int)ArabicIsolatedLetters.AlefHamzaAbove &&
+                                               previousIndexLetter != (int)ArabicIsolatedLetters.AlefHamzaBelow &&
+                                               previousIndexLetter != (int)ArabicIsolatedLetters.WawHamzaAbove &&
+                                               previousIndexLetter != (int)ArabicIsolatedLetters.Alef &&
                                                previousIndexLetter != (int)ArabicIsolatedLetters.Dal &&
                                                previousIndexLetter != (int)ArabicIsolatedLetters.Thal &&
-                                               previousIndexLetter != (int)ArabicIsolatedLetters.Ra2 &&
-                                               previousIndexLetter != (int)ArabicIsolatedLetters.Zeen &&
-                                               previousIndexLetter != (int)ArabicIsolatedLetters.PersianZe &&
+                                               previousIndexLetter != (int)ArabicIsolatedLetters.Reh &&
+                                               previousIndexLetter != (int)ArabicIsolatedLetters.Zain &&
+                                               previousIndexLetter != (int)ArabicIsolatedLetters.Jeh &&
                                                previousIndexLetter != (int)ArabicIsolatedLetters.Waw &&
-                                               previousIndexLetter != (int)ArabicIsolatedLetters.Alef &&
-                                               previousIndexLetter != (int)ArabicIsolatedLetters.AlefMad &&
-                                               previousIndexLetter != (int)ArabicIsolatedLetters.AlefHamza &&
-                                               previousIndexLetter != (int)ArabicIsolatedLetters.AlefMaksoor &&
-                                               previousIndexLetter != (int)ArabicIsolatedLetters.WawHamza &&
-                                               previousIndexLetter != (int)ArabicIsolatedLetters.Hamza &&
+                                               previousIndexLetter != (int)SpecialCharacters.ZeroWidthNoJoiner &&
                                                (previousIndexLetter < 0xFFFF && TextUtils.IsGlyphFixedArabicCharacter((char)previousIndexLetter));
 
 
             bool canThisLetterBeFinishing = currentIndexLetter != ' ' &&
-                                            currentIndexLetter != (int)ArabicGeneralLetters.ZeroWidthNoJoiner &&
+                                            currentIndexLetter != (int)SpecialCharacters.ZeroWidthNoJoiner &&
                                             currentIndexLetter != (int)ArabicGeneralLetters.Hamza;
 
             return isPreviousLetterConnectable && canThisLetterBeFinishing;
@@ -362,51 +367,51 @@ namespace RTLTMPro
                 nextIndexLetter = letters.Get(index + 1);
 
             bool middleLetterCheck = index != 0 &&
+                                     currentIndexLetter != (int)ArabicGeneralLetters.Hamza &&
+                                     currentIndexLetter != (int)ArabicGeneralLetters.AlefMaddaAbove &&
+                                     currentIndexLetter != (int)ArabicGeneralLetters.AlefHamzaAbove &&
+                                     currentIndexLetter != (int)ArabicGeneralLetters.AlefHamzaBelow &&
+                                     currentIndexLetter != (int)ArabicGeneralLetters.WawHamzaAbove &&
                                      currentIndexLetter != (int)ArabicGeneralLetters.Alef &&
                                      currentIndexLetter != (int)ArabicGeneralLetters.Dal &&
                                      currentIndexLetter != (int)ArabicGeneralLetters.Thal &&
-                                     currentIndexLetter != (int)ArabicGeneralLetters.Ra2 &&
-                                     currentIndexLetter != (int)ArabicGeneralLetters.Zeen &&
-                                     currentIndexLetter != (int)ArabicGeneralLetters.PersianZe &&
+                                     currentIndexLetter != (int)ArabicGeneralLetters.Reh &&
+                                     currentIndexLetter != (int)ArabicGeneralLetters.Zain &&
+                                     currentIndexLetter != (int)ArabicGeneralLetters.Jeh &&
                                      currentIndexLetter != (int)ArabicGeneralLetters.Waw &&
-                                     currentIndexLetter != (int)ArabicGeneralLetters.AlefMad &&
-                                     currentIndexLetter != (int)ArabicGeneralLetters.AlefHamza &&
-                                     currentIndexLetter != (int)ArabicGeneralLetters.AlefMaksoor &&
-                                     currentIndexLetter != (int)ArabicGeneralLetters.WawHamza &&
-                                     currentIndexLetter != (int)ArabicGeneralLetters.ZeroWidthNoJoiner &&
-                                     currentIndexLetter != (int)ArabicGeneralLetters.Hamza;
+                                     currentIndexLetter != (int)SpecialCharacters.ZeroWidthNoJoiner;
 
             bool previousLetterCheck = index != 0 &&
+                                       previousIndexLetter != (int)ArabicIsolatedLetters.Hamza &&
+                                       previousIndexLetter != (int)ArabicIsolatedLetters.AlefMaddaAbove &&
+                                       previousIndexLetter != (int)ArabicIsolatedLetters.AlefHamzaAbove &&
+                                       previousIndexLetter != (int)ArabicIsolatedLetters.AlefHamzaBelow &&
+                                       previousIndexLetter != (int)ArabicIsolatedLetters.WawHamzaAbove &&
                                        previousIndexLetter != (int)ArabicGeneralLetters.Alef &&
                                        previousIndexLetter != (int)ArabicGeneralLetters.Dal &&
                                        previousIndexLetter != (int)ArabicGeneralLetters.Thal &&
-                                       previousIndexLetter != (int)ArabicGeneralLetters.Ra2 &&
-                                       previousIndexLetter != (int)ArabicGeneralLetters.Zeen &&
-                                       previousIndexLetter != (int)ArabicGeneralLetters.PersianZe &&
+                                       previousIndexLetter != (int)ArabicGeneralLetters.Reh &&
+                                       previousIndexLetter != (int)ArabicGeneralLetters.Zain &&
+                                       previousIndexLetter != (int)ArabicGeneralLetters.Jeh &&
                                        previousIndexLetter != (int)ArabicGeneralLetters.Waw &&
-                                       previousIndexLetter != (int)ArabicGeneralLetters.AlefMad &&
-                                       previousIndexLetter != (int)ArabicGeneralLetters.AlefHamza &&
-                                       previousIndexLetter != (int)ArabicGeneralLetters.AlefMaksoor &&
-                                       previousIndexLetter != (int)ArabicGeneralLetters.WawHamza &&
+                                       previousIndexLetter != (int)ArabicGeneralLetters.AlefMaddaAbove &&
+                                       previousIndexLetter != (int)ArabicGeneralLetters.AlefHamzaAbove &&
+                                       previousIndexLetter != (int)ArabicGeneralLetters.AlefHamzaBelow &&
+                                       previousIndexLetter != (int)ArabicGeneralLetters.WawHamzaAbove &&
                                        previousIndexLetter != (int)ArabicGeneralLetters.Hamza &&
-                                       previousIndexLetter != (int)ArabicGeneralLetters.ZeroWidthNoJoiner &&
                                        previousIndexLetter != (int)ArabicIsolatedLetters.Alef &&
                                        previousIndexLetter != (int)ArabicIsolatedLetters.Dal &&
                                        previousIndexLetter != (int)ArabicIsolatedLetters.Thal &&
-                                       previousIndexLetter != (int)ArabicIsolatedLetters.Ra2 &&
-                                       previousIndexLetter != (int)ArabicIsolatedLetters.Zeen &&
-                                       previousIndexLetter != (int)ArabicIsolatedLetters.PersianZe &&
+                                       previousIndexLetter != (int)ArabicIsolatedLetters.Reh &&
+                                       previousIndexLetter != (int)ArabicIsolatedLetters.Zain &&
+                                       previousIndexLetter != (int)ArabicIsolatedLetters.Jeh &&
                                        previousIndexLetter != (int)ArabicIsolatedLetters.Waw &&
-                                       previousIndexLetter != (int)ArabicIsolatedLetters.AlefMad &&
-                                       previousIndexLetter != (int)ArabicIsolatedLetters.AlefHamza &&
-                                       previousIndexLetter != (int)ArabicIsolatedLetters.AlefMaksoor &&
-                                       previousIndexLetter != (int)ArabicIsolatedLetters.WawHamza &&
-                                       previousIndexLetter != (int)ArabicIsolatedLetters.Hamza &&
+                                       previousIndexLetter != (int)SpecialCharacters.ZeroWidthNoJoiner &&
                                        (previousIndexLetter < 0xFFFF && TextUtils.IsGlyphFixedArabicCharacter((char)previousIndexLetter));
 
             bool nextLetterCheck = index < letters.Length - 1 &&
                                    (nextIndexLetter < 0xFFFF && TextUtils.IsGlyphFixedArabicCharacter((char)nextIndexLetter)) &&
-                                   nextIndexLetter != (int)ArabicGeneralLetters.ZeroWidthNoJoiner &&
+                                   nextIndexLetter != (int)SpecialCharacters.ZeroWidthNoJoiner &&
                                    nextIndexLetter != (int)ArabicGeneralLetters.Hamza &&
                                    nextIndexLetter != (int)ArabicIsolatedLetters.Hamza;
 

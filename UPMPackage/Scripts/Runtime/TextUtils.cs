@@ -107,51 +107,56 @@ namespace RTLTMPro
                 return true;
             }
 
+            if (ch >= (char)ArabicIsolatedLetters.AlefMaddaAbove && ch <= (char)ArabicIsolatedLetters.AlefMaddaAbove + 1)
+            {
+                return true;
+            }
+
+            if (ch >= (char)ArabicIsolatedLetters.AlefHamzaAbove &&
+                ch <= (char)ArabicIsolatedLetters.AlefHamzaAbove + 1)
+            {
+                return true;
+            }
+
+            if (ch >= (char)ArabicIsolatedLetters.WawHamzaAbove && ch <= (char)ArabicIsolatedLetters.WawHamzaAbove + 1)
+            {
+                return true;
+            }
+
+            if (ch >= (char)ArabicIsolatedLetters.AlefHamzaBelow &&
+                ch <= (char)ArabicIsolatedLetters.AlefHamzaBelow + 1)
+            {
+                return true;
+            }
+
+            if (ch >= (char)ArabicIsolatedLetters.YehHamzaAbove &&
+                ch <= (char)ArabicIsolatedLetters.YehHamzaAbove + 3)
+            {
+                return true;
+            }
+
             if (ch >= (char)ArabicIsolatedLetters.Alef && ch <= (char)ArabicIsolatedLetters.Alef + 3)
             {
                 return true;
             }
 
-            if (ch >= (char)ArabicIsolatedLetters.AlefHamza &&
-                ch <= (char)ArabicIsolatedLetters.AlefHamza + 3)
+            if (ch >= (char)ArabicIsolatedLetters.Beh && ch <= (char)ArabicIsolatedLetters.Beh + 3)
             {
                 return true;
             }
 
-            if (ch >= (char)ArabicIsolatedLetters.WawHamza && ch <= (char)ArabicIsolatedLetters.WawHamza + 3)
+            if (ch >= (char)ArabicIsolatedLetters.TehMarbuta &&
+                ch <= (char)ArabicIsolatedLetters.TehMarbuta + 1)
             {
                 return true;
             }
 
-            if (ch >= (char)ArabicIsolatedLetters.AlefMaksoor &&
-                ch <= (char)ArabicIsolatedLetters.AlefMaksoor + 3)
+            if (ch >= (char)ArabicIsolatedLetters.Teh && ch <= (char)ArabicIsolatedLetters.Teh + 3)
             {
                 return true;
             }
 
-            if (ch >= (char)ArabicIsolatedLetters.AlefMaksura &&
-                ch <= (char)ArabicIsolatedLetters.AlefMaksura + 3)
-            {
-                return true;
-            }
-
-            if (ch >= (char)ArabicIsolatedLetters.HamzaNabera &&
-                ch <= (char)ArabicIsolatedLetters.HamzaNabera + 3)
-            {
-                return true;
-            }
-
-            if (ch >= (char)ArabicIsolatedLetters.Ba && ch <= (char)ArabicIsolatedLetters.Ba + 3)
-            {
-                return true;
-            }
-
-            if (ch >= (char)ArabicIsolatedLetters.Ta && ch <= (char)ArabicIsolatedLetters.Ta + 3)
-            {
-                return true;
-            }
-
-            if (ch >= (char)ArabicIsolatedLetters.Tha2 && ch <= (char)ArabicIsolatedLetters.Tha2 + 3)
+            if (ch >= (char)ArabicIsolatedLetters.Theh && ch <= (char)ArabicIsolatedLetters.Theh + 3)
             {
                 return true;
             }
@@ -161,32 +166,32 @@ namespace RTLTMPro
                 return true;
             }
 
-            if (ch >= (char)ArabicIsolatedLetters.H7aa && ch <= (char)ArabicIsolatedLetters.H7aa + 3)
+            if (ch >= (char)ArabicIsolatedLetters.Hah && ch <= (char)ArabicIsolatedLetters.Hah + 3)
             {
                 return true;
             }
 
-            if (ch >= (char)ArabicIsolatedLetters.Khaa2 && ch <= (char)ArabicIsolatedLetters.Khaa2 + 3)
+            if (ch >= (char)ArabicIsolatedLetters.Khah && ch <= (char)ArabicIsolatedLetters.Khah + 3)
             {
                 return true;
             }
 
-            if (ch >= (char)ArabicIsolatedLetters.Dal && ch <= (char)ArabicIsolatedLetters.Dal + 3)
+            if (ch >= (char)ArabicIsolatedLetters.Dal && ch <= (char)ArabicIsolatedLetters.Dal + 1)
             {
                 return true;
             }
 
-            if (ch >= (char)ArabicIsolatedLetters.Thal && ch <= (char)ArabicIsolatedLetters.Thal + 3)
+            if (ch >= (char)ArabicIsolatedLetters.Thal && ch <= (char)ArabicIsolatedLetters.Thal + 1)
             {
                 return true;
             }
 
-            if (ch >= (char)ArabicIsolatedLetters.Ra2 && ch <= (char)ArabicIsolatedLetters.Ra2 + 3)
+            if (ch >= (char)ArabicIsolatedLetters.Reh && ch <= (char)ArabicIsolatedLetters.Reh + 1)
             {
                 return true;
             }
 
-            if (ch >= (char)ArabicIsolatedLetters.Zeen && ch <= (char)ArabicIsolatedLetters.Zeen + 3)
+            if (ch >= (char)ArabicIsolatedLetters.Zain && ch <= (char)ArabicIsolatedLetters.Zain + 1)
             {
                 return true;
             }
@@ -201,22 +206,22 @@ namespace RTLTMPro
                 return true;
             }
 
-            if (ch >= (char)ArabicIsolatedLetters.S9a && ch <= (char)ArabicIsolatedLetters.S9a + 3)
+            if (ch >= (char)ArabicIsolatedLetters.Sad && ch <= (char)ArabicIsolatedLetters.Sad + 3)
             {
                 return true;
             }
 
-            if (ch >= (char)ArabicIsolatedLetters.Dha && ch <= (char)ArabicIsolatedLetters.Dha + 3)
+            if (ch >= (char)ArabicIsolatedLetters.Dad && ch <= (char)ArabicIsolatedLetters.Dad + 3)
             {
                 return true;
             }
 
-            if (ch >= (char)ArabicIsolatedLetters.T6a && ch <= (char)ArabicIsolatedLetters.T6a + 3)
+            if (ch >= (char)ArabicIsolatedLetters.Tah && ch <= (char)ArabicIsolatedLetters.Tah + 3)
             {
                 return true;
             }
 
-            if (ch >= (char)ArabicIsolatedLetters.T6ha && ch <= (char)ArabicIsolatedLetters.T6ha + 3)
+            if (ch >= (char)ArabicIsolatedLetters.Zah && ch <= (char)ArabicIsolatedLetters.Zah + 3)
             {
                 return true;
             }
@@ -226,17 +231,17 @@ namespace RTLTMPro
                 return true;
             }
 
-            if (ch >= (char)ArabicIsolatedLetters.Gain && ch <= (char)ArabicIsolatedLetters.Gain + 3)
+            if (ch >= (char)ArabicIsolatedLetters.Ghain && ch <= (char)ArabicIsolatedLetters.Ghain + 3)
             {
                 return true;
             }
 
-            if (ch >= (char)ArabicIsolatedLetters.Fa && ch <= (char)ArabicIsolatedLetters.Fa + 3)
+            if (ch >= (char)ArabicIsolatedLetters.Feh && ch <= (char)ArabicIsolatedLetters.Feh + 3)
             {
                 return true;
             }
 
-            if (ch >= (char)ArabicIsolatedLetters.Gaf && ch <= (char)ArabicIsolatedLetters.Gaf + 3)
+            if (ch >= (char)ArabicIsolatedLetters.Qaf && ch <= (char)ArabicIsolatedLetters.Qaf + 3)
             {
                 return true;
             }
@@ -261,64 +266,59 @@ namespace RTLTMPro
                 return true;
             }
 
-            if (ch >= (char)ArabicIsolatedLetters.Ha && ch <= (char)ArabicIsolatedLetters.Ha + 3)
+            if (ch >= (char)ArabicIsolatedLetters.Heh && ch <= (char)ArabicIsolatedLetters.Heh + 3)
             {
                 return true;
             }
 
-            if (ch >= (char)ArabicIsolatedLetters.Waw && ch <= (char)ArabicIsolatedLetters.Waw + 3)
+            if (ch >= (char)ArabicIsolatedLetters.Waw && ch <= (char)ArabicIsolatedLetters.Waw + 1)
             {
                 return true;
             }
 
-            if (ch >= (char)ArabicIsolatedLetters.Ya && ch <= (char)ArabicIsolatedLetters.Ya + 3)
+            if (ch >= (char)ArabicIsolatedLetters.AlefMaksura &&
+                ch <= (char)ArabicIsolatedLetters.AlefMaksura + 1)
             {
                 return true;
             }
 
-            if (ch >= (char)ArabicIsolatedLetters.AlefMad && ch <= (char)ArabicIsolatedLetters.AlefMad + 3)
+            if (ch >= (char)ArabicIsolatedLetters.Yeh && ch <= (char)ArabicIsolatedLetters.Yeh + 3)
             {
                 return true;
             }
 
-            if (ch >= (char)ArabicIsolatedLetters.TaMarboota &&
-                ch <= (char)ArabicIsolatedLetters.TaMarboota + 3)
+            if (ch >= (char)ArabicIsolatedLetters.Peh &&
+                ch <= (char)ArabicIsolatedLetters.Peh + 3)
             {
                 return true;
             }
 
-            if (ch >= (char)ArabicIsolatedLetters.PersianPe &&
-                ch <= (char)ArabicIsolatedLetters.PersianPe + 3)
+            if (ch >= (char)ArabicIsolatedLetters.FarsiYeh &&
+                ch <= (char)ArabicIsolatedLetters.FarsiYeh + 3)
             {
                 return true;
             }
 
-            if (ch >= (char)ArabicIsolatedLetters.PersianYa &&
-                ch <= (char)ArabicIsolatedLetters.PersianYa + 3)
+            if (ch >= (char)ArabicIsolatedLetters.TCheh &&
+                ch <= (char)ArabicIsolatedLetters.TCheh + 3)
             {
                 return true;
             }
 
-            if (ch >= (char)ArabicIsolatedLetters.PersianChe &&
-                ch <= (char)ArabicIsolatedLetters.PersianChe + 3)
+            if (ch >= (char)ArabicIsolatedLetters.Jeh &&
+                ch <= (char)ArabicIsolatedLetters.Jeh + 1)
             {
                 return true;
             }
 
-            if (ch >= (char)ArabicIsolatedLetters.PersianZe &&
-                ch <= (char)ArabicIsolatedLetters.PersianZe + 3)
+            if (ch >= (char)ArabicIsolatedLetters.Gaf &&
+                ch <= (char)ArabicIsolatedLetters.Gaf + 3)
             {
                 return true;
             }
 
-            if (ch >= (char)ArabicIsolatedLetters.PersianGaf &&
-                ch <= (char)ArabicIsolatedLetters.PersianGaf + 3)
-            {
-                return true;
-            }
-
-            if (ch >= (char)ArabicIsolatedLetters.PersianGaf2 &&
-                ch <= (char)ArabicIsolatedLetters.PersianGaf2 + 3)
+            if (ch >= (char)ArabicIsolatedLetters.Keheh &&
+                ch <= (char)ArabicIsolatedLetters.Keheh + 3)
             {
                 return true;
             }
@@ -347,49 +347,49 @@ namespace RTLTMPro
             switch (ch)
             {
                 case (char)ArabicGeneralLetters.Hamza:
+                case (char)ArabicGeneralLetters.AlefMaddaAbove:
+                case (char)ArabicGeneralLetters.AlefHamzaAbove:
+                case (char)ArabicGeneralLetters.WawHamzaAbove:
+                case (char)ArabicGeneralLetters.AlefHamzaBelow:
+                case (char)ArabicGeneralLetters.YehHamzaAbove:
                 case (char)ArabicGeneralLetters.Alef:
-                case (char)ArabicGeneralLetters.AlefHamza:
-                case (char)ArabicGeneralLetters.WawHamza:
-                case (char)ArabicGeneralLetters.AlefMaksoor:
-                case (char)ArabicGeneralLetters.AlefMaksura:
-                case (char)ArabicGeneralLetters.HamzaNabera:
-                case (char)ArabicGeneralLetters.Ba:
-                case (char)ArabicGeneralLetters.Ta:
-                case (char)ArabicGeneralLetters.Tha2:
+                case (char)ArabicGeneralLetters.Beh:
+                case (char)ArabicGeneralLetters.TehMarbuta:
+                case (char)ArabicGeneralLetters.Teh:
+                case (char)ArabicGeneralLetters.Theh:
                 case (char)ArabicGeneralLetters.Jeem:
-                case (char)ArabicGeneralLetters.H7aa:
-                case (char)ArabicGeneralLetters.Khaa2:
+                case (char)ArabicGeneralLetters.Hah:
+                case (char)ArabicGeneralLetters.Khah:
                 case (char)ArabicGeneralLetters.Dal:
                 case (char)ArabicGeneralLetters.Thal:
-                case (char)ArabicGeneralLetters.Ra2:
-                case (char)ArabicGeneralLetters.Zeen:
+                case (char)ArabicGeneralLetters.Reh:
+                case (char)ArabicGeneralLetters.Zain:
                 case (char)ArabicGeneralLetters.Seen:
                 case (char)ArabicGeneralLetters.Sheen:
-                case (char)ArabicGeneralLetters.S9a:
-                case (char)ArabicGeneralLetters.Dha:
-                case (char)ArabicGeneralLetters.T6a:
-                case (char)ArabicGeneralLetters.T6ha:
+                case (char)ArabicGeneralLetters.Sad:
+                case (char)ArabicGeneralLetters.Dad:
+                case (char)ArabicGeneralLetters.Tah:
+                case (char)ArabicGeneralLetters.Zah:
                 case (char)ArabicGeneralLetters.Ain:
-                case (char)ArabicGeneralLetters.Gain:
-                case (char)ArabicGeneralLetters.Fa:
-                case (char)ArabicGeneralLetters.Gaf:
+                case (char)ArabicGeneralLetters.Ghain:
+                case (char)ArabicGeneralLetters.Feh:
+                case (char)ArabicGeneralLetters.Qaf:
                 case (char)ArabicGeneralLetters.Kaf:
                 case (char)ArabicGeneralLetters.Lam:
                 case (char)ArabicGeneralLetters.Meem:
                 case (char)ArabicGeneralLetters.Noon:
-                case (char)ArabicGeneralLetters.Ha:
+                case (char)ArabicGeneralLetters.Heh:
                 case (char)ArabicGeneralLetters.Waw:
-                case (char)ArabicGeneralLetters.Ya:
-                case (char)ArabicGeneralLetters.AlefMad:
-                case (char)ArabicGeneralLetters.TaMarboota:
-                case (char)ArabicGeneralLetters.PersianPe:
-                case (char)ArabicGeneralLetters.PersianChe:
-                case (char)ArabicGeneralLetters.PersianZe:
-                case (char)ArabicGeneralLetters.PersianGaf:
-                case (char)ArabicGeneralLetters.PersianGaf2:
-                case (char)ArabicGeneralLetters.PersianYa:
-                case (char)ArabicGeneralLetters.ArabicTatweel:
-                case (char)ArabicGeneralLetters.ZeroWidthNoJoiner:
+                case (char)ArabicGeneralLetters.AlefMaksura:
+                case (char)ArabicGeneralLetters.Yeh:
+                case (char)ArabicGeneralLetters.FarsiYeh:
+                case (char)ArabicGeneralLetters.Peh:
+                case (char)ArabicGeneralLetters.TCheh:
+                case (char)ArabicGeneralLetters.Jeh:
+                case (char)ArabicGeneralLetters.Keheh:
+                case (char)ArabicGeneralLetters.Gaf:
+                case (char)ArabicGeneralLetters.Tatweel:
+                case (char)SpecialCharacters.ZeroWidthNoJoiner:
                     return true;
             }
 

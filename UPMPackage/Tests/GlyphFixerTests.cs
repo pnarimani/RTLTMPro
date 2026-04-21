@@ -93,11 +93,11 @@ namespace RTLTMPro.Tests
         public void GlyphFixer_FixesYah_WhenFarsiIsRequired()
         {
             var text = new FastStringBuilder(10);
-            text.Append((char) ArabicGeneralLetters.Ya);
+            text.Append((char) ArabicGeneralLetters.Yeh);
 
             GlyphFixer.FixYah(text, true);
 
-            Assert.AreEqual(((char) ArabicGeneralLetters.PersianYa).ToString(), text.ToString());
+            Assert.AreEqual(((char) ArabicGeneralLetters.FarsiYeh).ToString(), text.ToString());
         }
     }
 }

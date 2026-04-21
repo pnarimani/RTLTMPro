@@ -2,7 +2,7 @@
 using UnityEditor;
 using UnityEngine;
 
-#if TMP_VERSION_2_1_0_OR_NEWER
+#if TMP_VERSION_2_1_0_OR_NEWER || UNITY_6000_0_OR_NEWER
 using TMP_UiEditorPanel = TMPro.EditorUtilities.TMP_EditorPanelUI;
 #else
 using TMP_UiEditorPanel = TMPro.EditorUtilities.TMP_UiEditorPanel;
@@ -22,7 +22,7 @@ namespace RTLTMPro
         private bool foldout;
         private RTLTextMeshPro tmpro;
 
-        private new void OnEnable()
+        protected override void OnEnable()
         {
             base.OnEnable();
             foldout = true;
@@ -103,7 +103,7 @@ namespace RTLTMPro
 
             if (!shortcutPressed) return;
 
-            originalTextProp.stringValue = originalTextProp.stringValue.Insert(editor.cursorIndex, ((char)ArabicGeneralLetters.ZeroWidthNoJoiner).ToString());
+            originalTextProp.stringValue = originalTextProp.stringValue.Insert(editor.cursorIndex, ((char)SpecialCharacters.ZeroWidthNoJoiner).ToString());
             editor.selectIndex++;
             editor.cursorIndex++;
             Event.current.Use();
