@@ -10,7 +10,6 @@ Currently Arabic, Farsi and Hebrew are supported. If you find an issue with one 
 - [Installation](#installation)
 - [Creating Fonts](#how-to-create-font-assets)
 - [Usage](#usage-description)
-- [Known Issues](#known-issues)
 - [Contribution](#contribution)
 
 # Features
@@ -29,12 +28,12 @@ All `Text Mesh Pro`'s tags are available in `RTL Text Mesh Pro`
   
 ![Rich Text Preview](Screenshots/Rich%20Text.PNG)
 
-### RTL InputField (See [known issues](#known-issues))
+### RTL InputField
 Realtime InputField is supported.  
   
 ![Input Field Preview](Screenshots/InputField.gif)  
 
-### RTL Dropdown (See [known issues](#known-issues))
+### RTL Dropdown 
   
 ![Dropdown Preview](Screenshots/Dropdown.gif)
 
@@ -64,13 +63,25 @@ You can insert Zero-Width No-Joiner character with Ctrl+Shift+2 hotkey.
 
 # Installation
 > :information_source: You need to have `TextMeshPro` plugin in your project. You can install TMPro via `Package Manager`. DO NOT Install Text Mesh Pro from Asset Store.
- 
-### from .unitypackage file
-Download the latest unitypackage file from the [releases](https://github.com/sorencoder/RTLTMPro/releases) section and import it into your project from "Assets -> Import Package -> Custom Package..." menu in Unity.
 
-### from OpenUPM
+## from Unity Package Manager (UPM) 
 [hk1ll3r](https://github.com/hk1ll3r/) maintains a package manager version of this repo on [OpenUPM](https://openupm.com/packages/com.nosuchstudio.rtltmpro/).
 
+The sample scenes and demo resources (fonts, shaders, etc.) are included in the package version as a .unitypackage file. You can optionally import them into your Assets folder to use them. From the project window navigate to the package folder and double click "RTLTMPRo-demo-resources" file to import these assets into your project.
+
+![Project](Screenshots/Project.PNG)
+
+Using the package version is recommended so you get the stable state of the repo. This however doesn't allow you to modify the scripts. You can get the packaged version in two ways.
+
+### from Git URL [Recommended 👍]
+0. Open Unity Package Manager (UPM) in Unity Editor.
+1. Press the add button `+`.
+2. Enter this repo's URL: https://github.com/hk1ll3r/RTLTMPro.git?path=/UPMPackage
+3. Press `Install`.
+
+![ScreenshotGitURL](Screenshots/GitURL.PNG)
+
+### from OpenUPM
 In Project Settings window, add OpenUPM as a scoped registry or if you have already added it, add the new scope to it.
 
 ![ProjectSettings](Screenshots/ProjectSettings.PNG)
@@ -79,9 +90,10 @@ Then in Package Manager window, change scope to *My Registries*. Select "RTL Tex
 
 ![PackageManager](Screenshots/PackageManager.PNG)
 
-The sample scenes and demo resources (fonts, shaders, etc.) are included in the package as a .unitypackage file. You need to import those into your Assets folder to use them. From the project window navigate to the package folder and double click "RTLTMPRo-demo-resources" file to import these assets into your project.
+## from .unitypackage file
+Download the latest unitypackage file from the [releases](https://github.com/sorencoder/RTLTMPro/releases) section and import it into your project from "Assets -> Import Package -> Custom Package..." menu in Unity.
 
-![Project](Screenshots/Project.PNG)
+This will include both the scripts and the demo resources (the sample fonts and scenes) into your projects Assets folder. It is a good starting point to see everything in your project. For optimized builds of your game it is better to remove the demo resources.
 
 # How To Create Font Assets
 You need to create font assets from font files to use them with TextMeshPro. Here are basic instructions for convenience. You can check out the [official TextMeshPro documentation](https://docs.unity3d.com/Packages/com.unity.textmeshpro@4.0/manual/FontAssetsCreator.html) to learn more.
