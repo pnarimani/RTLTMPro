@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Text;
 using NUnit.Framework;
-using UnityEngine;
 
 namespace RTLTMPro.Tests
 {

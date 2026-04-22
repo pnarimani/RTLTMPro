@@ -1,5 +1,4 @@
-﻿using System.Text;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
 namespace RTLTMPro.Tests
 {

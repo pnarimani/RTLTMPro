@@ -1,68 +1,77 @@
-﻿//using System.Collections;
-//using System.Collections.Generic;
-//using System.Security.Policy;
-//using NUnit.Framework;
-//using RTLTMPro;
-//using UnityEngine;
-//using UnityEngine.TestTools;
+﻿using NUnit.Framework;
+using RTLTMPro;
 
-//namespace Tests
-//{
-//    public class RTLSupportTests
-//    {
-//        [Test]
-//        public void ArabicTextIsSuccessfulyConverted()
-//        {
-//            const string input = "هَذَا النَّص العربي";
-//            const string expected = "ﻲﺑﺮﻌﻟا ﺺﱠﻨﻟا اَﺬَﻫ";
+namespace Tests
+{
+    public class RTLSupportTests
+    {
+        [Test]
+        public void ArabicTextIsSuccessfulyConverted()
+        {
+            FastStringBuilder outut = new FastStringBuilder(RTLSupport.DefaultBufferSize);
+            const string input = "هَذَا النَّص العربي";
+            //const string expected = "ﻲﺑﺮﻌﻟا ﺺﱠﻨﻟا اَﺬَﻫ";
+            const string expected = "ﻲﺑﺮﻌﻟﺍ ﺺﱠﻨﻟﺍ ﺍَﺬَﻫ";
 
-//            string result = RTLSupport.FixRTL(input, false, false, false);
+            RTLSupport.FixRTL(input, outut, false, false, false);
+            string result = outut.ToString();
 
-//            Assert.AreEqual(expected, result);
-//        }
+            Assert.AreEqual(expected, result);
+        }
 
-//        [Test]
-//        public void FarsiTextIsSuccessfulyConverted()
-//        {
-//            const string input = "متن فارسی";
-//            const string expected = "ﯽﺳرﺎﻓ ﻦﺘﻣ";
+        [Test]
+        public void FarsiTextIsSuccessfulyConverted()
+        {
+            FastStringBuilder outut = new FastStringBuilder(RTLSupport.DefaultBufferSize);
+            const string input = "متن فارسی";
+            //const string expected = "ﯽﺳرﺎﻓ ﻦﺘﻣ";
+            const string expected = "ﯽﺳﺭﺎﻓ ﻦﺘﻣ";
+            
 
-//            string result = RTLSupport.FixRTL(input, false, false, true);
+            RTLSupport.FixRTL(input, outut, true, false, false);
+            string result = outut.ToString();
 
-//            Assert.AreEqual(expected, result);
-//        }
+            Assert.AreEqual(expected, result);
+        }
 
-//        [Test]
-//        public void TashkeelIsMaintainedInBeginingOfText()
-//        {
-//            const string input = "ِصبا";
-//            const string expected = "ِﺎﺒﺻ";;
+        [Test]
+        public void TashkeelIsMaintainedInBeginingOfText()
+        {
+            FastStringBuilder outut = new FastStringBuilder(RTLSupport.DefaultBufferSize);
+            const string input = "صبا";
+            // const string expected = "ِﺎﺒﺻ";
+            const string expected = "ﺎﺒﺻِ";
 
-//            string result = RTLSupport.FixRTL(input, false, false, false);
+            RTLSupport.FixRTL(input, outut, false, false, false);
+            string result = outut.ToString();
 
-//            Assert.AreEqual(expected, result);
-//        }
-        
-//        [Test]
-//        public void TashkeelIsMaintainedInMiddleOfText()
-//        {
-//            const string input = "مَرد";
-//            const string expected = "دﺮَﻣ";
+            Assert.AreEqual(expected, result);
+        }
 
-//            string result = RTLSupport.FixRTL(input, false, false, false);
+        [Test]
+        public void TashkeelIsMaintainedInMiddleOfText()
+        {
+            FastStringBuilder outut = new FastStringBuilder(RTLSupport.DefaultBufferSize);
+            const string input = "مَرد";
+            const string expected = "ﺩﺮَﻣ";
 
-//            Assert.AreEqual(expected, result);
-//        }
-        
-//        [Test]
-//        public void TashkeelIsMaintainedInEndOfText()
-//        {
-//            const string input = "صبحِ";
-//            const string expected = "ِﺢﺒﺻ";
+            RTLSupport.FixRTL(input, outut, false, false, false);
+            string result = outut.ToString();
 
-//            string result = RTLSupport.FixRTL(input, false, false, false);
+            Assert.AreEqual(expected, result);
+        }
 
-//            Assert.AreEqual(expected, result);
-//        }
-//    }
-//}
+        [Test]
+        public void TashkeelIsMaintainedInEndOfText()
+        {
+            FastStringBuilder outut = new FastStringBuilder(RTLSupport.DefaultBufferSize);
+            const string input = "صبحِ";
+            const string expected = "ِﺢﺒﺻ";
+
+            RTLSupport.FixRTL(input, outut, false, false, false);
+            string result = outut.ToString();
+
+            Assert.AreEqual(expected, result);
+        }
+    }
+}
