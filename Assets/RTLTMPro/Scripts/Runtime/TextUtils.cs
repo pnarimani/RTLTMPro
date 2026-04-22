@@ -31,6 +31,12 @@ namespace RTLTMPro
         private const char ArabicPresentationFormsBBlockLow  = (char)0xFE70;
         private const char ArabicPresentationFormsBBlockHigh = (char)0xFEFF;
 
+        public static bool IsArabicPresentationForm(char ch)
+        {
+            return ch >= ArabicPresentationFormsABlockLow && ch <= ArabicPresentationFormsABlockHigh
+                || ch >= ArabicPresentationFormsBBlockLow && ch <= ArabicPresentationFormsBBlockHigh;
+        }
+
         public static bool IsPunctuation(char ch)
         {
             throw new NotImplementedException();

@@ -70,7 +70,7 @@ namespace RTLTMPro
                     continue;
                 }
 
-                if (iChar < 0xFFFF && TextUtils.IsGlyphFixedArabicCharacter((char)iChar))
+                if (iChar < 0xFFFF && TextUtils.IsGlyphFixedArabicCharacter((char)iChar) && !TextUtils.IsArabicPresentationForm((char)iChar))
                 {
                     char converted = GlyphTable.Convert((char)iChar);
 
