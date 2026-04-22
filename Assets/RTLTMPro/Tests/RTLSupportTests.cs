@@ -5,70 +5,19 @@ namespace Tests
 {
     public class RTLSupportTests
     {
-        [Test]
-        public void ArabicTextIsSuccessfulyConverted()
+        [TestCase("هَذَا النَّص العربي", "ﻲﺑﺮﻌﻟﺍ ﺺﱠﻨﻟﺍ ﺍَﺬَﻫ", false, true, true, TestName = "Arabic text is successfully converted")]
+        [TestCase("متن فارسی", "ﯽﺳﺭﺎﻓ ﻦﺘﻣ", true, true, true, TestName = "Farsi text is successfully converted")]
+        [TestCase("صبا", "ﺎﺒﺻ", false, true, true, TestName = "Tashkeel is maintained in beginning of text")]
+        [TestCase("مَرد", "ﺩﺮَﻣ", false, true, true, TestName = "Tashkeel is maintained in middle of text")]
+        [TestCase("صبحِ", "ِﺢﺒﺻ", false, true, true, TestName = "Tashkeel is maintained at end of text")]
+        [TestCase("العالم", "ﻢﻟﺎﻌﻟﺍ", false, true, true, TestName = "Arabic word conversion")]
+        [TestCase("ﺍﻟﻌﺎﻟﻢ", "ﻢﻟﺎﻌﻟﺍ", false, true, true, TestName = "Arabic presentation form word should not convert")]
+        [TestCase("ﻣﺘﻦ ﻓﺎﺭﺳﯽ", "ﯽﺳﺭﺎﻓ ﻦﺘﻣ", true, true, true, TestName = "Persian presentation form word should not convert")]
+        public void FixRTL(string input, string expected, bool farsi, bool fixTags, bool preserveNumbers)
         {
             FastStringBuilder outut = new FastStringBuilder(RTLSupport.DefaultBufferSize);
-            const string input = "هَذَا النَّص العربي";
-            //const string expected = "ﻲﺑﺮﻌﻟا ﺺﱠﻨﻟا اَﺬَﻫ";
-            const string expected = "ﻲﺑﺮﻌﻟﺍ ﺺﱠﻨﻟﺍ ﺍَﺬَﻫ";
-
-            RTLSupport.FixRTL(input, outut, false, false, false);
-            string result = outut.ToString();
-
-            Assert.AreEqual(expected, result);
-        }
-
-        [Test]
-        public void FarsiTextIsSuccessfulyConverted()
-        {
-            FastStringBuilder outut = new FastStringBuilder(RTLSupport.DefaultBufferSize);
-            const string input = "متن فارسی";
-            //const string expected = "ﯽﺳرﺎﻓ ﻦﺘﻣ";
-            const string expected = "ﯽﺳﺭﺎﻓ ﻦﺘﻣ";
             
-
-            RTLSupport.FixRTL(input, outut, true, false, false);
-            string result = outut.ToString();
-
-            Assert.AreEqual(expected, result);
-        }
-
-        [Test]
-        public void TashkeelIsMaintainedInBeginingOfText()
-        {
-            FastStringBuilder outut = new FastStringBuilder(RTLSupport.DefaultBufferSize);
-            const string input = "صبا";
-            // const string expected = "ِﺎﺒﺻ";
-            const string expected = "ﺎﺒﺻِ";
-
-            RTLSupport.FixRTL(input, outut, false, false, false);
-            string result = outut.ToString();
-
-            Assert.AreEqual(expected, result);
-        }
-
-        [Test]
-        public void TashkeelIsMaintainedInMiddleOfText()
-        {
-            FastStringBuilder outut = new FastStringBuilder(RTLSupport.DefaultBufferSize);
-            const string input = "مَرد";
-            const string expected = "ﺩﺮَﻣ";
-
-            RTLSupport.FixRTL(input, outut, false, false, false);
-            string result = outut.ToString();
-
-            Assert.AreEqual(expected, result);
-        }
-
-        [Test]
-        public void TashkeelIsMaintainedInEndOfText()
-        {
-            FastStringBuilder outut = new FastStringBuilder(RTLSupport.DefaultBufferSize);
-            const string input = "صبحِ";
-            const string expected = "ِﺢﺒﺻ";
-
-            RTLSupport.FixRTL(input, outut, false, false, false);
+            RTLSupport.FixRTL(input, outut, farsi, fixTags, preserveNumbers);
             string result = outut.ToString();
 
             Assert.AreEqual(expected, result);
