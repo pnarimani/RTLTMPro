@@ -272,21 +272,12 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'The <color=yellow>RTLTMPro</color> plugin allows you to use all the features
-    of <b>Unity TextMeshPro</b> plugin in Persian, Arabic and Hebrew.
-
-
-    This
-    plugin is <color=#20bbff>open-source</color> and <color=#20bbff>free</color>.
-
-
-    This
+  m_text: "The <color=yellow>RTLTMPro</color> plugin allows you to use all the features
+    of <b>Unity TextMeshPro</b> plugin in Persian, Arabic and Hebrew.\n\nThis plugin
+    is <color=#20bbff>open-source</color> and <color=#20bbff>free</color>.\n\nThis
     plugin fully supports long Persian and English texts, Rich Text and AutoSize
-    (BestFit).
-
-
-    You can report possible issues on the <sprite=0/> page of this
-    plugin.'
+    (BestFit).\n\nemojis are supported! \U0001F603\n\nYou can report possible issues
+    on the <sprite=0/> page of this plugin."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3fbde2e562e333d488bc46986fc6f4f1, type: 2}
   m_sharedMaterial: {fileID: -6949820610600499109, guid: 3fbde2e562e333d488bc46986fc6f4f1,
@@ -361,21 +352,12 @@ MonoBehaviour:
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
   preserveNumbers: 1
   farsi: 1
-  originalText: 'The <color=yellow>RTLTMPro</color> plugin allows you to use all
-    the features of <b>Unity TextMeshPro</b> plugin in Persian, Arabic and Hebrew.
-
-
-    This
-    plugin is <color=#20bbff>open-source</color> and <color=#20bbff>free</color>.
-
-
-    This
+  originalText: "The <color=yellow>RTLTMPro</color> plugin allows you to use all
+    the features of <b>Unity TextMeshPro</b> plugin in Persian, Arabic and Hebrew.\n\nThis
+    plugin is <color=#20bbff>open-source</color> and <color=#20bbff>free</color>.\n\nThis
     plugin fully supports long Persian and English texts, Rich Text and AutoSize
-    (BestFit).
-
-
-    You can report possible issues on the <sprite=0/> page of this
-    plugin.'
+    (BestFit).\n\nemojis are supported! \U0001F603\n\nYou can report possible issues
+    on the <sprite=0/> page of this plugin."
   fixTags: 1
   forceFix: 0
 --- !u!222 &645895904
@@ -596,7 +578,6 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
-  m_UseReflectionProbes: 0
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0

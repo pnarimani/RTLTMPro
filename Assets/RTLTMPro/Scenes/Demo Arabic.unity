@@ -93,9 +93,9 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 112000000, guid: 45c7dff61e7c16a4e91f7f985998c2f5,
+  m_LightingDataAsset: {fileID: 112000000, guid: 85d75069929b29642aeb796b0ef46ebe,
     type: 2}
-  m_LightingSettings: {fileID: 4890085278179872738, guid: a2be0e155243941428665e7931769fb8,
+  m_LightingSettings: {fileID: 4890085278179872738, guid: 9a974b182fcedc74792c299c2d048cf6,
     type: 2}
 --- !u!196 &4
 NavMeshSettings:
@@ -248,10 +248,10 @@ RectTransform:
   m_Father: {fileID: 1404080890}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -200, y: -200}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &645895903
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -272,22 +272,14 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u05EA\u05D5\u05E1\u05E3 <color=yellow>orPMTLTR</color> \u05DE\u05D0\u05E4\u05E9\u05E8
-    \u05DC\u05DA \u05DC\u05D4\u05E9\u05EA\u05DE\u05E9 \u05D1\u05DB\u05DC \u05D4\u05EA\u05DB\u05D5\u05E0\u05D5\u05EA
-    \u05E9\u05DC \u05D4\u05EA\u05D5\u05E1\u05E3 <b>orPhseMtxeT ytinU</b> \u05DC\u05E9\u05E4\u05D4
-    \u05E4\u05E8\u05E1\u05D9\u05EA.\n\n\u05D4\u05EA\u05D5\u05E1\u05E3 \u05D4\u05D6\u05D4
-    \u05D4\u05D5\u05D0 <color=#20bbff>\u05E7\u05D5\u05D3 \u05E4\u05EA\u05D5\u05D7</color>
-    \u05D5\u05DC\u05DC\u05D0 \u05EA\u05E9\u05DC\u05D5\u05DD.\n\n\u05EA\u05D5\u05E1\u05E3
-    \u05D6\u05D4 \u05EA\u05D5\u05DE\u05DA \u05D1\u05DE\u05DC\u05D5\u05D0\u05D5 \u05D1\u05D8\u05E7\u05E1\u05D8\u05D9\u05DD
-    \u05E4\u05E8\u05E1\u05D9\u05DD \u05D5\u05D0\u05E0\u05D2\u05DC\u05D9\u05DD \u05D0\u05E8\u05D5\u05DB\u05D9\u05DD,
-    \u05D8\u05E7\u05E1\u05D8 \u05E2\u05E9\u05D9\u05E8 \u05D5\u05D2\u05D5\u05D3\u05DC
-    \u05D0\u05D5\u05D8\u05D5\u05DE\u05D8\u05D9 .)tiFtseB(\n\n\u05D0\u05D9\u05DE\u05D5\u05D2'\u05D9\u05DD
-    \u05E0\u05EA\u05DE\u05DB\u05D9\u05DD! \U0001F603\n\n\u05D0\u05EA\u05D4 \u05D9\u05DB\u05D5\u05DC
-    \u05DC\u05D4\u05E2\u05DC\u05D5\u05EA \u05D1\u05E2\u05D9\u05D5\u05EA \u05D0\u05E4\u05E9\u05E8\u05D9\u05D5\u05EA
-    \u05D1\u05D3\u05E3 <sprite=0/> \u05E9\u05DC \u05EA\u05D5\u05E1\u05E3 \u05D6\u05D4."
+  m_text: "\uFE97\uFEB8\uFB91\uFEF4\uFEDE: \uFE91\uFE92\u064E\uFE92\u0650\uFE92\u064F\uFE92\u064B\uFE92\u064D\uFE92\u064C\uFE92\u0652\uFE92\u0651\uFE92\uFC60\uFE92\uFC62\uFE92\uFC61\uFE92\u0651\u064B\uFE92\uFC5F\uFE92\uFC5E\uFE90\u060C
+    \uFEE3\uFEE8\uFEC8\uFC60\uFEE2\u060C \uFE8D\uFEDF\uFEE4\uFE86\uFE9B\uFEAE\uFE8D\uFE95
+    \uFE8D\uFEDF\uFEBC\uFEEE\uFE97\uFEF4\uFE94\n\n\uFE8D\uFEDF\uFEDC\uFEE0\uFEE4\uFE8E\uFE95
+    \uFE8D\uFEDF\uFECC\uFEAE\uFE91\uFEF4\uFE94 hsilgnE dna \uFE9F\uFEE8\uFE92\u064B\uFE8E
+    \uFE87\uFEDF\uFEF0 \uFE9F\uFEE8\uFE90"
   m_isRightToLeft: 1
-  m_fontAsset: {fileID: 11400000, guid: 743ff6528cc67d24bbc54d2969f0af93, type: 2}
-  m_sharedMaterial: {fileID: -6212919841344071475, guid: 743ff6528cc67d24bbc54d2969f0af93,
+  m_fontAsset: {fileID: 11400000, guid: 3fbde2e562e333d488bc46986fc6f4f1, type: 2}
+  m_sharedMaterial: {fileID: -6949820610600499109, guid: 3fbde2e562e333d488bc46986fc6f4f1,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -304,7 +296,7 @@ MonoBehaviour:
     bottomLeft: {r: 1, g: 1, b: 1, a: 1}
     bottomRight: {r: 1, g: 1, b: 1, a: 1}
   m_fontColorGradientPreset: {fileID: 0}
-  m_spriteAsset: {fileID: 11400000, guid: 0a1d17fe7885fe246b76da5ea9f32feb, type: 2}
+  m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
   m_StyleSheet: {fileID: 0}
   m_TextStyleHashCode: -1183493901
@@ -312,10 +304,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 60.1
+  m_fontSize: 60
   m_fontSizeBase: 60
   m_fontWeight: 400
-  m_enableAutoSizing: 1
+  m_enableAutoSizing: 0
   m_fontSizeMin: 21.2
   m_fontSizeMax: 72
   m_fontStyle: 0
@@ -325,7 +317,7 @@ MonoBehaviour:
   m_characterSpacing: 0
   m_characterHorizontalScale: 1
   m_wordSpacing: 0
-  m_lineSpacing: 0
+  m_lineSpacing: 34.18
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
@@ -358,20 +350,12 @@ MonoBehaviour:
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
   preserveNumbers: 1
-  farsi: 1
-  originalText: "\u05EA\u05D5\u05E1\u05E3 <color=yellow>RTLTMPro</color> \u05DE\u05D0\u05E4\u05E9\u05E8
-    \u05DC\u05DA \u05DC\u05D4\u05E9\u05EA\u05DE\u05E9 \u05D1\u05DB\u05DC \u05D4\u05EA\u05DB\u05D5\u05E0\u05D5\u05EA
-    \u05E9\u05DC \u05D4\u05EA\u05D5\u05E1\u05E3 <b>Unity TextMeshPro</b> \u05DC\u05E9\u05E4\u05D4
-    \u05E4\u05E8\u05E1\u05D9\u05EA.\n\n\u05D4\u05EA\u05D5\u05E1\u05E3 \u05D4\u05D6\u05D4
-    \u05D4\u05D5\u05D0 <color=#20bbff>\u05E7\u05D5\u05D3 \u05E4\u05EA\u05D5\u05D7</color>
-    \u05D5\u05DC\u05DC\u05D0 \u05EA\u05E9\u05DC\u05D5\u05DD.\n\n\u05EA\u05D5\u05E1\u05E3
-    \u05D6\u05D4 \u05EA\u05D5\u05DE\u05DA \u05D1\u05DE\u05DC\u05D5\u05D0\u05D5 \u05D1\u05D8\u05E7\u05E1\u05D8\u05D9\u05DD
-    \u05E4\u05E8\u05E1\u05D9\u05DD \u05D5\u05D0\u05E0\u05D2\u05DC\u05D9\u05DD \u05D0\u05E8\u05D5\u05DB\u05D9\u05DD,
-    \u05D8\u05E7\u05E1\u05D8 \u05E2\u05E9\u05D9\u05E8 \u05D5\u05D2\u05D5\u05D3\u05DC
-    \u05D0\u05D5\u05D8\u05D5\u05DE\u05D8\u05D9 (BestFit).\n\n\u05D0\u05D9\u05DE\u05D5\u05D2'\u05D9\u05DD
-    \u05E0\u05EA\u05DE\u05DB\u05D9\u05DD! \U0001F603\n\n\u05D0\u05EA\u05D4 \u05D9\u05DB\u05D5\u05DC
-    \u05DC\u05D4\u05E2\u05DC\u05D5\u05EA \u05D1\u05E2\u05D9\u05D5\u05EA \u05D0\u05E4\u05E9\u05E8\u05D9\u05D5\u05EA
-    \u05D1\u05D3\u05E3 <sprite=0/> \u05E9\u05DC \u05EA\u05D5\u05E1\u05E3 \u05D6\u05D4."
+  farsi: 0
+  originalText: "\u062A\u0634\u06A9\u06CC\u0644: \u0628\u0628\u064E\u0628\u0650\u0628\u064F\u0628\u064B\u0628\u064D\u0628\u064C\u0628\u0652\u0628\u0651\u0628\u0651\u064E\u0628\u0651\u0650\u0628\u0651\u064F\u0628\u0651\u064B\u0628\u0651\u064D\u0628\u0651\u064C\u0628\u060C
+    \u0645\u0646\u0638\u0651\u064E\u0645\u060C \u0627\u0644\u0645\u0624\u062B\u0631\u0627\u062A
+    \u0627\u0644\u0635\u0648\u062A\u064A\u0629\n\n\u0627\u0644\u0643\u0644\u0645\u0627\u062A
+    \u0627\u0644\u0639\u0631\u0628\u064A\u0629 and English \u062C\u0646\u0628\u064B\u0627
+    \u0625\u0644\u0649 \u062C\u0646\u0628"
   fixTags: 1
   forceFix: 0
 --- !u!222 &645895904
@@ -393,7 +377,7 @@ GameObject:
   - component: {fileID: 681459122}
   - component: {fileID: 681459124}
   m_Layer: 0
-  m_Name: 'TMP SubMeshUI [TextMeshPro/Sprite]'
+  m_Name: 'TMP SubMeshUI [segoeui RTL SDF Material + LiberationSans SDF Atlas]'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -505,7 +489,7 @@ GameObject:
   - component: {fileID: 1127370893}
   - component: {fileID: 1127370895}
   m_Layer: 0
-  m_Name: 'TMP SubMeshUI [segoeui Atlas Material + LiberationSans SDF Atlas]'
+  m_Name: 'TMP SubMeshUI [segoeui RTL SDF Material + segoeui Tashkil SDF Atlas]'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -550,6 +534,7 @@ GameObject:
   - component: {fileID: 1404080889}
   - component: {fileID: 1404080888}
   - component: {fileID: 1404080891}
+  - component: {fileID: 1404080892}
   m_Layer: 0
   m_Name: Canvas
   m_TagString: Untagged
@@ -640,6 +625,32 @@ MonoBehaviour:
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
   m_PresetInfoIsWorld: 0
+--- !u!114 &1404080892
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1404080887}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 0
+    m_Bottom: 0
+  m_ChildAlignment: 4
+  m_Spacing: 0
+  m_ChildForceExpandWidth: 1
+  m_ChildForceExpandHeight: 1
+  m_ChildControlWidth: 1
+  m_ChildControlHeight: 1
+  m_ChildScaleWidth: 0
+  m_ChildScaleHeight: 0
+  m_ReverseArrangement: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
