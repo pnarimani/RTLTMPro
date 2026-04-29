@@ -12,6 +12,10 @@ namespace RTLTMPro
             [')'] = '(',
             ['»'] = '«',
             ['«'] = '»',
+            ['{'] = '}',
+            ['}'] = '{',
+            ['['] = ']',
+            [']'] = '[',
         };
         private static readonly HashSet<char> MirroredCharsSet = new HashSet<char>(MirroredCharsMap.Keys);
         private static void FlushBufferToOutput(List<int> buffer, FastStringBuilder output)
